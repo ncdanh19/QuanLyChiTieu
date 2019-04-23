@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/backgroundCol"
+tools:context=".fragment.ChiTienFragment">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorItem"
+        android:id="@+id/display">
+        <TextView
+            android:id="@+id/tv_soTien"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="Số tiền"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"/>
+
+        <EditText
+            android:id="@+id/edt_SoTien"
+            android:layout_width="match_parent"
+            android:layout_height="210px"
+            android:layout_below="@+id/tv_soTien"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="number"
+            android:text=""
+            android:textSize="35dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/display"
+        android:background="@color/colorItem"
+        android:layout_marginTop="12dp">
+        <Button
+            android:background="@drawable/ripple_effect"
+            android:id="@+id/btn_HangMuc"
+            android:layout_width="match_parent"
+            android:layout_height="180px"
+            android:gravity="left|center"
+            android:text="Chọn mục chi"
+            android:textSize="20dp"
+            android:paddingLeft="10dp"
+            android:drawableLeft="@drawable/ic_chamhoi"
+            android:drawablePadding="10dp"
+            />
+        <View
+            android:id="@+id/line1"
+            android:layout_below="@+id/btn_HangMuc"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginLeft="65dp"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line1"
+            android:id="@+id/line_mota"
+            android:background="@color/colorItem"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:id="@+id/icon_mota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_mota"
+                app:srcCompat="@drawable/ic_mota"
+                tools:srcCompat="@drawable/ic_mota" />
+
+            <EditText
+                android:id="@+id/edt_MoTa"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:layout_toRightOf="@id/icon_mota"
+                android:hint="Mô tả"
+                android:paddingLeft="10dp"
+                android:background="@null"
+                    android:inputType="textPersonName" />
+        </RelativeLayout>
+        <View
+            android:id="@+id/line2"
+            android:layout_below="@+id/line_mota"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginLeft="65dp"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line2"
+            android:id="@+id/line_ngaygio"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:id="@+id/icon_lich"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                app:srcCompat="@drawable/ic_lich"
+                tools:srcCompat="@drawable/ic_lich"/>
+            <Button
+                android:layout_toRightOf="@id/icon_lich"
+                android:id="@+id/btn_Ngay"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center|left"
+                android:textSize="15dp"
+                android:background="@drawable/ripple_effect"
+                android:paddingLeft="10dp"/>
+            <TextView
+                android:id="@+id/tv_ChonNgay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                />
+        </RelativeLayout>
+        <View
+            android:id="@+id/line3"
+            android:layout_below="@+id/line_ngaygio"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginLeft="65dp"/>
+        <Button
+            android:background="@drawable/ripple_effect"
+            android:drawableLeft="@drawable/ic_vi"
+            android:id="@+id/btn_ChonVi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line_ngaygio"
+            android:gravity="center|left"
+            android:text=" Chọn ví"
+            android:textSize="15dp"
+            android:drawablePadding="5dp"
+            android:paddingLeft="10dp"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_Luu"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_body"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:text="Lưu"
+        android:textColor="#ffffff"
+        android:background="@drawable/button_corner_shape"
+        android:foreground="@drawable/ripple_effect_button"/>
+
+</RelativeLayout>

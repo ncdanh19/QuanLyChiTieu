@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.sinhvien.quanlychitieu">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".activity.LoaiTaiKhoanActivity"></activity>
+        <activity android:name=".activity.TaoTaiKhoanActivity" />
+        <activity android:name=".activity.HangMucThu" />
+        <activity android:name=".activity.HangMucChi" />
+        <activity
+            android:name=".activity.TaiKhoanActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.HangMucActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.OrtherActivity" />
+        <activity android:name=".activity.TongQuanActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.ThuChiActivity" />
+        <activity android:name=".activity.MainActivity" />
+    </application>
+
+</manifest>

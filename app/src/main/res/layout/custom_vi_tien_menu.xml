@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageButton
+        android:id="@+id/them"
+        android:src="@drawable/ic_them"
+        android:layout_height="50dp"
+        android:layout_width="50dp"
+        android:background="?attr/actionBarItemBackground"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"/>
+
+    <ImageButton
+        android:id="@+id/trolai"
+        android:src="@drawable/ic_trolai"
+        android:layout_height="50dp"
+        android:layout_width="50dp"
+        android:background="?attr/actionBarItemBackground"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"/>
+
+</RelativeLayout>

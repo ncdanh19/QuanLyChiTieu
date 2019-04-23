@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/them"
+        android:title="add"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_them"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/trolai"
+        android:title="back"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_trolai"
+        app:showAsAction="always"/>
+</menu>

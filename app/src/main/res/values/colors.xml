@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#B39DDB</color>
+    <color name="colorPrimaryDark">#7E57C2</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorItem">#FFFFFF</color>
+    <color name="colorText">#B39DDB</color>
+    <color name="colorIcon">#FF9C9999</color>
+
+    <!--Navigation color-->
+    <color name="tablayout">#9575CD</color>
+    <color name="colorNavIcon"> #e0e0d1</color>
+    <color name="colorNavText"> #e0e0d1</color>
+
+    <color name="buttonCol">#F8CB8A</color>
+    <color name="buttonEffect">#EDE7F6</color>
+    <color name="spinnerCol">#D1C4E9</color>
+    <color name="Titlebar">#9575CD</color>
+    <color name="backgroundCol">#f5f5f0</color>
+</resources>
