@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundCol"
     tools:context=".activity.LoaiTaiKhoanActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -48,10 +49,10 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_LoaiTaiKhoan"
+        android:background="@color/colorItem"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar">
-
     </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +34,9 @@ public class ChiTienFragment extends Fragment {
     TextView chonNgay;
     EditText mSoTien;
     EditText mMoTa;
+    ImageView mIconViTien;
+    TextView mTextViTien;
+    LinearLayout btnLoaiTaiKhoan;
     private DatabaseReference mDatabase;
     final Calendar calendar = Calendar.getInstance();
 
@@ -66,7 +71,7 @@ public class ChiTienFragment extends Fragment {
         });
 
         //Button chọn ví
-        mChonVi.setOnClickListener(new View.OnClickListener() {
+        btnLoaiTaiKhoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToViTien(v);
@@ -132,6 +137,9 @@ public class ChiTienFragment extends Fragment {
         mMoTa=(EditText) view.findViewById(R.id.edt_MoTa);
         mLuu=(Button)view.findViewById(R.id.btn_Luu);
         mNgay.setText(simpleDateFormat.format(calendar.getTime()));
+        mIconViTien = (ImageView) view.findViewById(R.id.image_icon);
+        mTextViTien = (TextView) view.findViewById(R.id.text_item);
+        btnLoaiTaiKhoan = (LinearLayout) view.findViewById(R.id.btn_chonvi);
     }
 }
 

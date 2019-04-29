@@ -2,16 +2,23 @@ package com.sinhvien.quanlychitieu.fragment;
 
 
 import android.app.DatePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,8 +34,10 @@ public class ThuTienFragment extends Fragment {
     View view;
     Button mNgay;
     Button mChonHangMuc;
-    Button mChonVi;
     Button mLuu;
+    ImageView mIconViTien;
+    TextView mTextViTien;
+    LinearLayout btnLoaiTaiKhoan;
     TextView chonNgay;
     EditText mSoTien;
     EditText mMoTa;
@@ -69,7 +78,7 @@ public class ThuTienFragment extends Fragment {
 
 
         //Button chọn ví
-        mChonVi.setOnClickListener(new View.OnClickListener() {
+        btnLoaiTaiKhoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToViTien(v);
@@ -86,6 +95,27 @@ public class ThuTienFragment extends Fragment {
         });
         return view;
     }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mReceiver, new IntentFilter("data"));
+//
+//    }
+//
+//    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            Bundle i = intent.getExtras();
+//            if (i != null) {
+//                final String text = i.getString("text");
+//                final int img = i.getInt("img");
+//                mTextViTien.setText(text);
+//                mIconViTien.setImageResource(img);
+//            }
+//        }
+//    };
+
 
     //Intent chuyển sang hạng mục
     public void goToHangMuc(View v)
@@ -127,7 +157,9 @@ public class ThuTienFragment extends Fragment {
         mNgay = (Button)view.findViewById(R.id.btn_Ngay);
         chonNgay=(TextView)view.findViewById(R.id.tv_ChonNgay);
         mChonHangMuc=(Button) view.findViewById(R.id.btn_HangMuc);
-        mChonVi=(Button) view.findViewById(R.id.btn_ChonVi);
+        mIconViTien = (ImageView) view.findViewById(R.id.image_icon);
+        mTextViTien = (TextView) view.findViewById(R.id.text_item);
+        btnLoaiTaiKhoan = (LinearLayout) view.findViewById(R.id.btn_chonvi);
         mSoTien=(EditText) view.findViewById(R.id.edt_SoTien);
         mMoTa=(EditText) view.findViewById(R.id.edt_MoTa);
         mLuu=(Button)view.findViewById(R.id.btn_Luu);

@@ -3,7 +3,9 @@ package com.sinhvien.quanlychitieu.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
@@ -21,12 +23,17 @@ import java.util.ArrayList;
 public class LoaiTaiKhoanActivity extends AppCompatActivity {
 
     ImageButton mTroLai;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
+
     private final String tenloai[] = {
-            "Tiền mặt"
+            "Tiền mặt",
+            "Tài khoản ngân hàng"
     };
 
-    private final int imagerls[] = {
-            R.drawable.ic_tienmat
+    private final int image[] = {
+            R.drawable.ic_tienmat, R.drawable.ic_nganhang
+
     };
 
     @Override
@@ -38,36 +45,48 @@ public class LoaiTaiKhoanActivity extends AppCompatActivity {
         mTroLai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finish();
             }
         });
-
     }
-    private void initViews(){
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.list_LoaiTaiKhoan);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
-        recyclerView.setLayoutManager(layoutManager);
 
-        ArrayList<LoaiTaiKhoan> androidVersions = prepareData();
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getApplicationContext(),androidVersions);
+    private void initViews() {
+        recyclerView = (RecyclerView) findViewById(R.id.list_LoaiTaiKhoan);
+        recyclerView.setHasFixedSize(true);
+        //chia ngang recyclerview
+        DividerItemDecoration dividerHorizontal =
+                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerHorizontal);
+
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        //gắn list vào adapter
+        ArrayList<LoaiTaiKhoan> loaiTaiKhoans = prepareData();
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getApplicationContext(), loaiTaiKhoans, new RecyclerViewAdapter.OnPagerItemSelected() {
+            @Override
+            public void pagerItemSelected() {
+                finish();
+            }
+        });
         recyclerView.setAdapter(adapter);
 
     }
-    private ArrayList<LoaiTaiKhoan> prepareData(){
 
-        ArrayList<LoaiTaiKhoan> android_version = new ArrayList<>();
-        for(int i=0;i<tenloai.length;i++){
-            LoaiTaiKhoan androidVersion = new LoaiTaiKhoan();
-            androidVersion.setTenLoai(tenloai[i]);
-            androidVersion.setImg_URL(imagerls[i]);
-            android_version.add(androidVersion);
+    //danh sách loại tài khoản
+    private ArrayList<LoaiTaiKhoan> prepareData() {
+
+        ArrayList<LoaiTaiKhoan> list = new ArrayList<>();
+        for (int i = 0; i < tenloai.length; i++) {
+            LoaiTaiKhoan loaiTaiKhoan = new LoaiTaiKhoan();
+            loaiTaiKhoan.setTenLoai(tenloai[i]);
+            loaiTaiKhoan.setImg(image[i]);
+            list.add(loaiTaiKhoan);
         }
-        return android_version;
+        return list;
     }
 
-    private void anhXa()
-    {
-        mTroLai=(ImageButton) findViewById(R.id.trolai);
+    private void anhXa() {
+        mTroLai = (ImageButton) findViewById(R.id.trolai);
     }
 }

@@ -11,7 +11,8 @@ tools:context=".fragment.ChiTienFragment">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/colorItem"
-        android:id="@+id/display">
+        android:id="@+id/display"
+        android:layout_marginTop="4dp">
         <TextView
             android:id="@+id/tv_soTien"
             android:layout_width="70dp"
@@ -20,18 +21,33 @@ tools:context=".fragment.ChiTienFragment">
             android:textSize="18sp"
             android:layout_marginLeft="10dp"/>
 
-        <EditText
-            android:id="@+id/edt_SoTien"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="210px"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tv_soTien"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="2dp"
-            android:ems="10"
-            android:gravity="right"
-            android:inputType="number"
-            android:text=""
-            android:textSize="35dp" />
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <EditText
+                android:id="@+id/edt_SoTien"
+                android:layout_width="match_parent"
+                android:layout_height="210px"
+                android:layout_below="@+id/tv_soTien"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="right|bottom"
+                android:inputType="number"
+                android:textSize="35dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="đ"
+                android:textSize="30dp" />
+        </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
@@ -132,18 +148,34 @@ tools:context=".fragment.ChiTienFragment">
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"
             android:layout_marginLeft="65dp"/>
-        <Button
-            android:background="@drawable/ripple_effect"
-            android:drawableLeft="@drawable/ic_vi"
-            android:id="@+id/btn_ChonVi"
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/btn_chonvi"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/line_ngaygio"
-            android:gravity="center|left"
-            android:text=" Chọn ví"
-            android:textSize="15dp"
-            android:drawablePadding="5dp"
-            android:paddingLeft="10dp"/>
+            android:layout_height="50dp"
+            android:layout_below="@id/line3"
+            android:foreground="@drawable/ripple_effect"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:id="@+id/image_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_vi" />
+
+            <TextView
+                android:id="@+id/text_item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="CHỌN VÍ"
+                android:textSize="15dp" />
+        </LinearLayout>
 
     </RelativeLayout>
 

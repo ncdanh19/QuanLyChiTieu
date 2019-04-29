@@ -1,6 +1,8 @@
 package com.sinhvien.quanlychitieu.Database;
 
-public class LoaiTaiKhoan {
+import java.io.Serializable;
+
+public class LoaiTaiKhoan implements Serializable {
     private String tenLoai;
     private int img_URL;
 
@@ -10,7 +12,7 @@ public class LoaiTaiKhoan {
         return tenLoai;
     }
 
-    public int getImg_Url(){
+    public int getImg(){
         return  img_URL;
     }
 
@@ -18,7 +20,7 @@ public class LoaiTaiKhoan {
         this.tenLoai=tenLoai;
     }
 
-    public void setImg_URL(int img_URL){
+    public void setImg(int img_URL){
         this.img_URL=img_URL;
     }
 
