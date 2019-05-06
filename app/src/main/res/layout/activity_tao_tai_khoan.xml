@@ -152,19 +152,19 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@id/line1"
-            android:foreground="@drawable/ripple_effect"
+            android:foreground="@drawable/ripple_effect_button"
             android:orientation="horizontal"
             android:paddingLeft="10dp">
 
             <ImageView
-                android:id="@+id/image_icon"
+                android:id="@+id/image_vitien"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ic_chamhoi" />
 
             <TextView
-                android:id="@+id/text_item"
+                android:id="@+id/text_vitien"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"

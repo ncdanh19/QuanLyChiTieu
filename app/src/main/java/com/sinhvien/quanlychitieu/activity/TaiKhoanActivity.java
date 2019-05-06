@@ -1,9 +1,6 @@
 package com.sinhvien.quanlychitieu.activity;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,8 +15,8 @@ import android.widget.ImageButton;
 import com.sinhvien.quanlychitieu.Database.TaiKhoan;
 import com.sinhvien.quanlychitieu.Database.TaiKhoanHelper;
 import com.sinhvien.quanlychitieu.R;
+import com.sinhvien.quanlychitieu.adapter.OnPagerItemSelected;
 import com.sinhvien.quanlychitieu.adapter.TaiKhoanAdapter;
-import com.sinhvien.quanlychitieu.adapter.TaiKhoanDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +49,7 @@ public class TaiKhoanActivity extends AppCompatActivity {
         mTroLai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finish();
             }
         });
 
@@ -93,7 +90,8 @@ public class TaiKhoanActivity extends AppCompatActivity {
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-        //chia ngang recyclerview
+
+        //chia ngang mỗi item
         DividerItemDecoration dividerHorizontal =
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerHorizontal);
@@ -104,7 +102,12 @@ public class TaiKhoanActivity extends AppCompatActivity {
         //gắn list vào adapter
         database = new TaiKhoanHelper(getApplicationContext());
         listTaiKhoan = database.getdata();
-        adapter = new TaiKhoanAdapter(getApplicationContext(), listTaiKhoan);
+        adapter = new TaiKhoanAdapter(getApplicationContext(), listTaiKhoan, new OnPagerItemSelected() {
+            @Override
+            public void pagerItemSelected() {
+                finish();
+            }
+        });
         recyclerView.setAdapter(adapter);
     }
 
@@ -113,8 +116,5 @@ public class TaiKhoanActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mTroLai = (ImageButton) findViewById(R.id.trolai);
         mTaoVi = (ImageButton) findViewById(R.id.btn_them);
-    }
-    public static Bitmap getImage(byte[] image) {
-        return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 }

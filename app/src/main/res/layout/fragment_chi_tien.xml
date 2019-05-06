@@ -57,18 +57,32 @@ tools:context=".fragment.ChiTienFragment">
         android:layout_below="@+id/display"
         android:background="@color/colorItem"
         android:layout_marginTop="12dp">
-        <Button
-            android:background="@drawable/ripple_effect"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/btn_HangMuc"
             android:layout_width="match_parent"
-            android:layout_height="180px"
-            android:gravity="left|center"
-            android:text="Chọn mục chi"
-            android:textSize="20dp"
-            android:paddingLeft="10dp"
-            android:drawableLeft="@drawable/ic_chamhoi"
-            android:drawablePadding="10dp"
-            />
+            android:layout_height="60dp"
+            android:foreground="@drawable/ripple_effect_button"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:id="@+id/image_hangmuc"
+                android:layout_marginTop="5dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_chamhoi"/>
+
+            <TextView
+                android:id="@+id/text_hangmuc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="Chọn mục chi"
+                android:textSize="20dp" />
+        </LinearLayout>
         <View
             android:id="@+id/line1"
             android:layout_below="@+id/btn_HangMuc"
@@ -111,7 +125,7 @@ tools:context=".fragment.ChiTienFragment">
             android:background="@android:color/darker_gray"
             android:layout_marginLeft="65dp"/>
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/line2"
             android:id="@+id/line_ngaygio"
@@ -124,22 +138,17 @@ tools:context=".fragment.ChiTienFragment">
                 android:gravity="center"
                 app:srcCompat="@drawable/ic_lich"
                 tools:srcCompat="@drawable/ic_lich"/>
-            <Button
+            <TextView
                 android:layout_toRightOf="@id/icon_lich"
                 android:id="@+id/btn_Ngay"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center|left"
                 android:textSize="15dp"
-                android:background="@drawable/ripple_effect"
+                android:textStyle="bold"
+                android:background="@color/colorItem"
+                android:foreground="@drawable/ripple_effect_button"
                 android:paddingLeft="10dp"/>
-            <TextView
-                android:id="@+id/tv_ChonNgay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                />
         </RelativeLayout>
         <View
             android:id="@+id/line3"
@@ -154,19 +163,19 @@ tools:context=".fragment.ChiTienFragment">
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@id/line3"
-            android:foreground="@drawable/ripple_effect"
+            android:foreground="@drawable/ripple_effect_button"
             android:orientation="horizontal"
             android:paddingLeft="10dp">
 
             <ImageView
-                android:id="@+id/image_icon"
+                android:id="@+id/image_vitien"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ic_vi" />
 
             <TextView
-                android:id="@+id/text_item"
+                android:id="@+id/text_vitien"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
@@ -189,6 +198,6 @@ tools:context=".fragment.ChiTienFragment">
         android:text="Lưu"
         android:textColor="#ffffff"
         android:background="@drawable/button_corner_shape"
-        android:foreground="@drawable/ripple_effect_button"/>
+        android:foreground="@drawable/ripple_effect"/>
 
 </RelativeLayout>

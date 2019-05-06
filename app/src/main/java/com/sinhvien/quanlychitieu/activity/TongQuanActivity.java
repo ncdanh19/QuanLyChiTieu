@@ -10,6 +10,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
@@ -18,13 +21,24 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.sinhvien.quanlychitieu.Database.ThuChi;
+import com.sinhvien.quanlychitieu.Database.ThuChiHelper;
 import com.sinhvien.quanlychitieu.R;
+import com.sinhvien.quanlychitieu.adapter.TongQuanAdapter;
+
+import java.util.List;
 
 public class TongQuanActivity extends AppCompatActivity {
 
     DrawerLayout mDrawerLayout;
     FloatingActionButton btnThuChi;
     TextView mSotien;
+    RecyclerView recyclerView;
+    TongQuanAdapter adapter;
+    ThuChiHelper database;
+    List<ThuChi> listThuChi ;
+    private LinearLayoutManager linearLayoutManager;
+
     private DatabaseReference mDatabase;
 
     @Override
@@ -32,6 +46,7 @@ public class TongQuanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tong_quan);
         anhXa();
+        initViews();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -118,10 +133,30 @@ public class TongQuanActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void initViews() {
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+
+        //chia ngang mỗi item
+        DividerItemDecoration dividerHorizontal =
+                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerHorizontal);
+
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        //gắn list vào adapter
+        database = new ThuChiHelper(getApplicationContext());
+        listThuChi = database.getdata();
+        adapter = new TongQuanAdapter(getApplicationContext(), listThuChi);
+        recyclerView.setAdapter(adapter);
+    }
     private void anhXa() {
         btnThuChi=(FloatingActionButton) findViewById(R.id.btn_ThuChi);
         mDrawerLayout=(DrawerLayout) findViewById(R.id.drawer_layout);
         mSotien=(TextView) findViewById(R.id.tv_SoTien);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
     }
 
 }

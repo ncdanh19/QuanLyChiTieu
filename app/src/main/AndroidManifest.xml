@@ -13,15 +13,13 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name=".activity.LoaiTaiKhoanActivity"></activity>
         <activity android:name=".activity.TaoTaiKhoanActivity" />
-        <activity android:name=".activity.HangMucThu" />
-        <activity android:name=".activity.HangMucChi" />
+
         <activity
             android:name=".activity.TaiKhoanActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.HangMucActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.OrtherActivity" />
         <activity android:name=".activity.TongQuanActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

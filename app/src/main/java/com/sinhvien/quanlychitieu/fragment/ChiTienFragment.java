@@ -1,9 +1,14 @@
 package com.sinhvien.quanlychitieu.fragment;
 
 import android.app.DatePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +22,12 @@ import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sinhvien.quanlychitieu.Database.ThuChi;
+import com.sinhvien.quanlychitieu.Database.ThuChiHelper;
 import com.sinhvien.quanlychitieu.R;
-import com.sinhvien.quanlychitieu.activity.HangMucChi;
+import com.sinhvien.quanlychitieu.activity.HangMucActivity;
 import com.sinhvien.quanlychitieu.activity.TaiKhoanActivity;
+import com.sinhvien.quanlychitieu.activity.TongQuanActivity;
+import com.sinhvien.quanlychitieu.adapter.ChuyenImage;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,16 +35,19 @@ import java.util.Calendar;
 
 public class ChiTienFragment extends Fragment {
     View view;
-    Button mNgay;
-    Button mChonHangMuc;
+    TextView mNgay;
+    LinearLayout mChonHangMuc;
     Button mChonVi;
     Button mLuu;
     TextView chonNgay;
     EditText mSoTien;
     EditText mMoTa;
-    ImageView mIconViTien;
-    TextView mTextViTien;
+    ImageView imageViTien;
+    ImageView imageHangMuc;
+    TextView textHangMuc;
+    TextView textViTien;
     LinearLayout btnLoaiTaiKhoan;
+    ChuyenImage chuyendoi;
     private DatabaseReference mDatabase;
     final Calendar calendar = Calendar.getInstance();
 
@@ -82,19 +93,54 @@ public class ChiTienFragment extends Fragment {
         mLuu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                writeNewData();
-                getActivity().onBackPressed();
+                //writeNewData();
+                them();
+                getActivity().finish();
             }
         });
 
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("taikhoan"));
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("hangmucchi"));
+    }
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle i = intent.getExtras();
+            String action = intent.getAction();
+            if (i != null) {
+                if (action.equals("taikhoan")) {
+                    final String text = i.getString("text");
+                    final String img = i.getString("img");
+                    textViTien.setText(text);
+                    imageViTien.setImageBitmap(chuyendoi.getStringtoImage(img));
+                    imageViTien.setDrawingCacheEnabled(true);
+
+                }
+                if(action.equals("hangmucchi")) {
+                    final String text = i.getString("text");
+                    final int img = i.getInt("img");
+                    textHangMuc.setText(text);
+                    imageHangMuc.setImageResource(img);
+                    imageHangMuc.setDrawingCacheEnabled(true);
+
+                }
+            }
+        }
+    };
+
     //Intend chuyển sang hạng mục
     public void goToHangMuc(View v)
     {
-        Intent intent = new Intent(getActivity().getApplication(), HangMucChi.class);
-        startActivity(intent);
+       Intent intent = new Intent(getContext(), HangMucActivity.class);
+       intent.putExtra("page",0);
+       startActivity(intent);
     }
 
 
@@ -121,25 +167,58 @@ public class ChiTienFragment extends Fragment {
 
     //Lưu dữ liệu
     public void writeNewData() {
-        int soTien= Integer.parseInt(mSoTien.getText().toString());
+        String soTien= mSoTien.getText().toString();
+        imageViTien.getDrawingCache();
+        imageHangMuc.getDrawingCache();
+        Bitmap bmapViTien = imageViTien.getDrawingCache();
+        Bitmap bmapHangMuc = imageHangMuc.getDrawingCache();
+        String imageViTien = chuyendoi.getString(bmapViTien);
+        String imageHangMuc = chuyendoi.getString(bmapHangMuc);
+        String tenHangMuc = textHangMuc.getText().toString();
         String moTa = mMoTa.getText().toString();
         String ngayThang = mNgay.getText().toString();
-        ThuChi thuChi = new ThuChi(soTien,moTa,ngayThang);
-        mDatabase.child("ChiTien").push().setValue(thuChi);
+        String tenViTien = textViTien.getText().toString();
+        ThuChi thuChi = new ThuChi(soTien,imageHangMuc,tenHangMuc,moTa,ngayThang,imageViTien,tenViTien,0);
+        mDatabase.child("ThuChi").push().setValue(thuChi);
     }
 
+    public void them(){
+        String soTien= mSoTien.getText().toString();
+        imageViTien.getDrawingCache();
+        imageHangMuc.getDrawingCache();
+        Bitmap bmapViTien = imageViTien.getDrawingCache();
+        Bitmap bmapHangMuc = imageHangMuc.getDrawingCache();
+        String imageViTien = chuyendoi.getString(bmapViTien);
+        String imageHangMuc = chuyendoi.getString(bmapHangMuc);
+        String tenHangMuc = textHangMuc.getText().toString();
+        String moTa = mMoTa.getText().toString();
+        String ngayThang = mNgay.getText().toString();
+        String tenViTien = textViTien.getText().toString();
+
+        ThuChiHelper database = new ThuChiHelper(getContext());
+        boolean trt = database.insertdata(soTien,imageHangMuc,
+                tenHangMuc,moTa,
+                ngayThang,imageViTien,
+                tenViTien,0);
+        Intent intent = new Intent(getContext(), TongQuanActivity.class);
+        startActivity(intent);
+    }
+
+
     public void anhXa(){
-        mNgay = (Button)view.findViewById(R.id.btn_Ngay);
+        mNgay = (TextView)view.findViewById(R.id.btn_Ngay);
         chonNgay=(TextView)view.findViewById(R.id.tv_ChonNgay);
-        mChonHangMuc=(Button) view.findViewById(R.id.btn_HangMuc);
+        mChonHangMuc=(LinearLayout) view.findViewById(R.id.btn_HangMuc);
         mChonVi=(Button) view.findViewById(R.id.btn_ChonVi);
         mSoTien=(EditText) view.findViewById(R.id.edt_SoTien);
         mMoTa=(EditText) view.findViewById(R.id.edt_MoTa);
         mLuu=(Button)view.findViewById(R.id.btn_Luu);
         mNgay.setText(simpleDateFormat.format(calendar.getTime()));
-        mIconViTien = (ImageView) view.findViewById(R.id.image_icon);
-        mTextViTien = (TextView) view.findViewById(R.id.text_item);
+        imageViTien = (ImageView) view.findViewById(R.id.image_vitien);
+        textViTien = (TextView) view.findViewById(R.id.text_vitien);
         btnLoaiTaiKhoan = (LinearLayout) view.findViewById(R.id.btn_chonvi);
+        imageHangMuc=(ImageView)view.findViewById(R.id.image_hangmuc);
+        textHangMuc=(TextView)view.findViewById(R.id.text_hangmuc);
     }
 }
 

@@ -1,43 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/list_root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/image_vitien"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp" />
+
     <LinearLayout
-        android:id="@+id/list_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/image_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            />
-        <LinearLayout
-            android:orientation="vertical"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_tentaikhoan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="8dp">
-            <TextView
-                android:id="@+id/tv_tentaikhoan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tên tài khoản"
-                android:textSize="16dp"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/tv_sotien"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:textSize="14dp"
-                android:text="Số tiền"/>
-        </LinearLayout>
-    </LinearLayout>
+            android:text="Tên tài khoản"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
-</android.support.v7.widget.CardView>
+        <TextView
+            android:id="@+id/tv_sotien"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Số tiền"
+            android:textSize="14dp" />
+    </LinearLayout>
+</LinearLayout>

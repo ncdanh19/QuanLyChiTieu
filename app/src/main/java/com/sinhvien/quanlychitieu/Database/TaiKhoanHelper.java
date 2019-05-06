@@ -15,7 +15,7 @@ public class TaiKhoanHelper extends SQLiteOpenHelper {
     private static final String TEN_DATABASE = "QuanLyChiTieuDB";
     // Tên bảng
     public static final String TEN_BANG_TAIKHOAN = "TaiKhoan";
-    // Bảng gồm 3 cột _id, _ten và _lop.
+    // Bảng gồm cột
     public static final String COT_ID = "_id";
     public static final String COT_TEN_TAIKHOAN = "tenTaiKhoan";
     public static final String COT_SO_TIEN = "soTien";
@@ -26,6 +26,7 @@ public class TaiKhoanHelper extends SQLiteOpenHelper {
     public TaiKhoanHelper(Context context) {
         super(context, TEN_DATABASE, null, 1);
         SQLiteDatabase db = this.getWritableDatabase();
+        //onUpgrade(db,1,1);
     }
 
     private static final String TAO_BANG_TAIKHOAN = ""
@@ -35,7 +36,7 @@ public class TaiKhoanHelper extends SQLiteOpenHelper {
             + COT_SO_TIEN + " text not null,"
             + COT_LOAI_TAI_KHOAN + " text not null,"
             + COT_CHU_THICH + " text,"
-            + COT_HINH_ANH + " BLOB"
+            + COT_HINH_ANH + " text not null"
             + ");";
 
     @Override
@@ -46,10 +47,11 @@ public class TaiKhoanHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TEN_BANG_TAIKHOAN);
-        //onUpgrade(db,1,1);
+        onCreate(db);
     }
 
-    public boolean insertdata(String soTien, String tenTaiKhoan, String loaiTaiKhoan, String chuThich,byte[] image) {
+    public boolean insertdata(String soTien, String tenTaiKhoan,
+                              String loaiTaiKhoan, String chuThich,String image) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COT_TEN_TAIKHOAN, tenTaiKhoan);
@@ -76,7 +78,7 @@ public class TaiKhoanHelper extends SQLiteOpenHelper {
         TaiKhoan dataModel = null;
         while (cursor.moveToNext()) {
             dataModel = new TaiKhoan();
-            byte[] image = cursor.getBlob(5);
+            String image = cursor.getString(5);
             String tenTaikhoan = cursor.getString(cursor.getColumnIndexOrThrow("tenTaiKhoan"));
             String soTien = cursor.getString(cursor.getColumnIndexOrThrow("soTien"));
             dataModel.setTenTaiKhoan(tenTaikhoan);

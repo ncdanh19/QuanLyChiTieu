@@ -5,39 +5,24 @@ import android.graphics.Bitmap;
 
 public class TaiKhoan {
 
-
-    private int _id;
     String soTien;
     String tenTaiKhoan;
-    byte[] Imgage;
+    String Imgage;
     String loaiTaiKhoan;
     String chuThich;
 
-    public TaiKhoan(String soTien, String tenTaiKhoan, byte[]  imgage, String loaiTaiKhoan, String chuThich) {
+    public TaiKhoan(String soTien, String tenTaiKhoan, String imgage, String loaiTaiKhoan, String chuThich) {
         this.soTien = soTien;
         this.tenTaiKhoan = tenTaiKhoan;
         this.Imgage = imgage;
         this.loaiTaiKhoan = loaiTaiKhoan;
         this.chuThich = chuThich;
     }
-    public TaiKhoan(int id,String soTien, String tenTaiKhoan,byte[]  imgage, String loaiTaiKhoan, String chuThich) {
-        this._id=id;
-        this.soTien = soTien;
-        this.tenTaiKhoan = tenTaiKhoan;
-        this.Imgage = imgage;
-        this.loaiTaiKhoan = loaiTaiKhoan;
-        this.chuThich = chuThich;
-    }
+
+
     public TaiKhoan() {
     }
 
-    public int get_id() {
-        return _id;
-    }
-
-    public void set_id(int _id) {
-        this._id = _id;
-    }
     public String getSoTien() {
         return soTien;
     }
@@ -54,11 +39,11 @@ public class TaiKhoan {
         this.tenTaiKhoan = tenTaiKhoan;
     }
 
-    public byte[]  getImgage() {
+    public String getImgage() {
         return Imgage;
     }
 
-    public void setImgage(byte[]  imgage) {
+    public void setImgage(String imgage) {
         Imgage = imgage;
     }
 

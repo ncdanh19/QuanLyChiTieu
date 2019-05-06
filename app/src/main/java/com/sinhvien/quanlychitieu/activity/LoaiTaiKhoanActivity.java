@@ -15,7 +15,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sinhvien.quanlychitieu.Database.LoaiTaiKhoan;
 import com.sinhvien.quanlychitieu.R;
-import com.sinhvien.quanlychitieu.adapter.RecyclerViewAdapter;
+import com.sinhvien.quanlychitieu.adapter.LoaiTaiKhoanViewAdapter;
+import com.sinhvien.quanlychitieu.adapter.OnPagerItemSelected;
 
 import java.util.ArrayList;
 
@@ -63,7 +64,7 @@ public class LoaiTaiKhoanActivity extends AppCompatActivity {
 
         //gắn list vào adapter
         ArrayList<LoaiTaiKhoan> loaiTaiKhoans = prepareData();
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getApplicationContext(), loaiTaiKhoans, new RecyclerViewAdapter.OnPagerItemSelected() {
+        LoaiTaiKhoanViewAdapter adapter = new LoaiTaiKhoanViewAdapter(getApplicationContext(), loaiTaiKhoans, new OnPagerItemSelected() {
             @Override
             public void pagerItemSelected() {
                 finish();
