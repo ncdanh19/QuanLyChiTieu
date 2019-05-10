@@ -5,9 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,24 +27,29 @@ import com.sinhvien.quanlychitieu.Database.TaiKhoanHelper;
 import com.sinhvien.quanlychitieu.R;
 import com.sinhvien.quanlychitieu.adapter.ChuyenImage;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class TaoTaiKhoanActivity extends AppCompatActivity {
 
-    ImageButton mTroLai;
-    ImageView mIconItem;
-    TextView mTextItem;
-    LinearLayout btnLoaiTaiKhoan;
-    Button btnLuu;
-    EditText edtSoTien;
-    EditText edtTenTaiKhoan;
-    EditText edtChuThich;
+    private ImageView mTroLai;
+    private ImageView mIconItem;
+    private TextView mTextItem;
+    private LinearLayout btnLoaiTaiKhoan;
+    private Button btnLuu;
+    private EditText edtSoTien;
+    private EditText edtTenTaiKhoan;
+    private EditText edtChuThich;
     ArrayList<TaiKhoan> listTaiKhoan;
     ChuyenImage chuyendoi;
     private static long id = -1;
+    int pos,begin;
 
     private DatabaseReference mDatabase;
     FirebaseStorage storage;
+    private TextView textCurrency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +74,62 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
         btnLuu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                writeNewTaiKhoan();
+                //writeNewTaiKhoan();
                 //taoTaiKhoan();
                 them();
                 finish();
             }
         });
+
+        edtSoTien.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //mSoTien.setSelection(mSoTien.getText().length());
+                pos = edtSoTien.getText().length();
+                begin = edtSoTien.getSelectionStart();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = edtSoTien.getText().toString();
+
+                edtSoTien.removeTextChangedListener(this);
+                try {
+                    String originalString = s.toString();
+
+                    Long longval;
+                    if (originalString.contains(".")) {
+                        originalString = originalString.replaceAll("\\.", "");
+                    }
+                    longval = Long.parseLong(originalString);
+
+                    DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.GERMANY);
+                    formatter.applyPattern("#,###,###.###");
+                    String formattedString = formatter.format(longval);
+
+                    //setting text after format to EditText
+                    edtSoTien.setText(formattedString);
+
+                } catch (NumberFormatException nfe) {
+                    nfe.printStackTrace();
+                }
+                if (begin == pos) {
+                    edtSoTien.setSelection(edtSoTien.getText().length());
+
+                }
+                if (begin != pos) {
+                    edtSoTien.setSelection(begin);
+                }
+                edtSoTien.addTextChangedListener(this);
+
+
+            }
+        });
+
     }
 
     @Override
@@ -94,25 +152,9 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
         }
     };
 
-    private void taoTaiKhoan() {
-        Intent intent = new Intent(this, TaiKhoanActivity.class);
-        String soTien = edtSoTien.getText().toString();
-        String tenTaiKhoan = edtTenTaiKhoan.getText().toString();
-        mIconItem.buildDrawingCache();
-        Bitmap bmap = mIconItem.getDrawingCache();
-        String loaiTaiKhoan = mTextItem.getText().toString();
-        String chuThich = edtChuThich.getText().toString();
-        // bundle data.
-        intent.putExtra("bmap", bmap);
-        intent.putExtra("tentaikhoan", tenTaiKhoan);
-        intent.putExtra("sotien", soTien);
-        intent.putExtra("loaitaikhoan", loaiTaiKhoan);
-        intent.putExtra("chuthich", chuThich);
-        startActivity(intent);
-    }
 
     private void writeNewTaiKhoan() {
-        String soTien = edtSoTien.getText().toString();
+        int soTien = Integer.parseInt(edtSoTien.getText().toString());
         String tenTaiKhoan = edtTenTaiKhoan.getText().toString();
         mIconItem.buildDrawingCache();
         Bitmap bmap = mIconItem.getDrawingCache();
@@ -124,6 +166,7 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
     }
     public void them() {
         String soTien = edtSoTien.getText().toString();
+        soTien = soTien.replaceAll("\\.", "");
         String tenTaiKhoan = edtTenTaiKhoan.getText().toString();
         mIconItem.buildDrawingCache();
         Bitmap bmap = mIconItem.getDrawingCache();
@@ -139,7 +182,7 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
     private void anhXa() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         storage = FirebaseStorage.getInstance();
-        mTroLai = (ImageButton) findViewById(R.id.trolai);
+        mTroLai = (ImageView) findViewById(R.id.trolai);
         mIconItem = (ImageView) findViewById(R.id.image_vitien);
         mTextItem = (TextView) findViewById(R.id.text_vitien);
         btnLoaiTaiKhoan = (LinearLayout) findViewById(R.id.btn_loaitk);
@@ -147,6 +190,8 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
         edtTenTaiKhoan = (EditText) findViewById(R.id.edt_tentk);
         edtChuThich = (EditText) findViewById(R.id.edt_chuthich);
         btnLuu = (Button) findViewById(R.id.btn_Luu);
+        textCurrency=(TextView) findViewById(R.id.currency);
+        textCurrency.setPaintFlags(textCurrency.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 
 

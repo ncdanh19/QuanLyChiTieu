@@ -3,6 +3,7 @@ package com.sinhvien.quanlychitieu.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +28,7 @@ public class HangMucChiFragment extends Fragment {
     };
 
     private final int image[] = {
-            R.drawable.ic_anuong
+            R.mipmap.ic_anuong
 
     };
 
@@ -51,6 +52,10 @@ public class HangMucChiFragment extends Fragment {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             ArrayList<HangMuc> loaiHangMuc = prepareData();
+            DividerItemDecoration dividerHorizontal =
+                    new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+            recyclerView.addItemDecoration(dividerHorizontal);
+
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {

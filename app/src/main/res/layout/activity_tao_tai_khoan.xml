@@ -28,15 +28,15 @@
             app:contentInsetRight="0dp"
             app:contentInsetStart="0dp">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/trolai"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/ripple_effect_button"
-                android:foreground="@drawable/ic_trolai" />
+                android:layout_marginStart="16dp"
+                android:foreground="@drawable/ripple_effect_button"
+                android:background="@mipmap/ic_trolai" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -62,7 +62,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="Số dư ban đầu"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@color/colorItemText"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,22 +74,35 @@
 
             <EditText
                 android:id="@+id/edt_SoTien"
-                android:layout_width="wrap_content"
-                android:layout_height="210px"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_below="@+id/tv_soTien"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="2dp"
                 android:layout_weight="1"
+                android:background="@drawable/edittext_selector"
                 android:ems="10"
-                android:gravity="right"
-                android:inputType="number"
-                android:textSize="35dp" />
+                android:gravity="end|bottom"
+                android:inputType="numberDecimal"
+                android:paddingBottom="8dp"
+                android:selectAllOnFocus="true"
+                android:text="0"
+                android:maxLength="15"
+                android:textColor="@android:color/holo_red_light"
+                android:textCursorDrawable="@drawable/cursor_chitien"
+                android:textSize="32dp" />
+
 
             <TextView
+                android:id="@+id/currency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
+                android:layout_marginLeft="4dp"
+                android:layout_marginBottom="6dp"
                 android:text="đ"
-                android:textSize="30dp" />
+                android:textColor="@color/colorItemText"
+                android:textSize="24dp" />
         </LinearLayout>
 
     </RelativeLayout>
@@ -106,14 +120,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorItem"
-            android:paddingLeft="10dp">
+            android:paddingLeft="9dp">
 
             <ImageView
                 android:id="@+id/icon_vitien"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_vi"
-                tools:srcCompat="@drawable/ic_vi" />
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_vi" />
 
             <EditText
                 android:id="@+id/edt_tentk"
@@ -124,7 +138,10 @@
                 android:ems="10"
                 android:hint="Tên tài khoản"
                 android:inputType="text"
-                android:paddingLeft="10dp" />
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="7dp"
+                android:textColor="@color/colorItemText"
+                />
         </RelativeLayout>
 
         <View
@@ -154,25 +171,26 @@
             android:layout_below="@id/line1"
             android:foreground="@drawable/ripple_effect_button"
             android:orientation="horizontal"
-            android:paddingLeft="10dp">
+            android:paddingLeft="14dp">
 
             <ImageView
                 android:id="@+id/image_vitien"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/ic_chamhoi" />
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/ic_chamhoi" />
 
             <TextView
                 android:id="@+id/text_vitien"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:fontFamily="sans-serif-medium"
                 android:gravity="center_vertical"
+                android:layout_marginLeft="12dp"
                 android:paddingLeft="10dp"
                 android:text="LOẠI TÀI KHOẢN"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:textColor="@color/colorItemText"/>
         </LinearLayout>
 
         <View
@@ -189,14 +207,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/line2"
             android:background="@color/colorItem"
-            android:paddingLeft="10dp">
+            android:paddingLeft="14dp">
 
             <ImageView
                 android:id="@+id/icon_mota"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_mota"
-                tools:srcCompat="@drawable/ic_mota" />
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_mota" />
 
             <EditText
                 android:id="@+id/edt_chuthich"
@@ -207,7 +225,10 @@
                 android:ems="10"
                 android:hint="Chú thích"
                 android:inputType="text"
-                android:paddingLeft="10dp" />
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="12dp"
+                android:textColor="@color/colorItemText"
+                />
         </RelativeLayout>
     </RelativeLayout>
 

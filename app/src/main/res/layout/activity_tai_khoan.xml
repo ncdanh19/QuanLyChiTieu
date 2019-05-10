@@ -22,16 +22,17 @@
         <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent">
             <ImageButton
                 android:id="@+id/trolai"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="8dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginLeft="16dp"
                 android:layout_gravity="center_vertical"
                 android:layout_centerVertical="true"
-                android:background="@drawable/ripple_effect_button"
-                android:foreground="@drawable/ic_trolai" />
+                android:background="?selectableItemBackgroundBorderless"
+                android:src="@mipmap/ic_trolai" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -45,14 +46,14 @@
 
             <ImageButton
                 android:id="@+id/btn_them"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/ripple_effect_button"
-                android:foreground="@drawable/ic_them"
-                android:paddingLeft="16dp" />
+                android:src="@mipmap/ic_them"
+                android:background="?selectableItemBackgroundBorderless"
+                />
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>

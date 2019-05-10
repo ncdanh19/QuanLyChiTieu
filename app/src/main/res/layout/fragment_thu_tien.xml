@@ -20,38 +20,52 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="Số tiền"
+            android:textColor="@color/colorItemText"
             android:textSize="18sp" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_soTien"
             android:orientation="horizontal"
+            android:layout_marginBottom="8dp"
             android:weightSum="10">
 
             <EditText
                 android:id="@+id/edt_SoTien"
                 android:layout_width="match_parent"
-                android:layout_height="210px"
+                android:layout_height="80dp"
                 android:layout_below="@+id/tv_soTien"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="2dp"
                 android:layout_weight="1"
+                android:background="@drawable/edittext_selector"
                 android:ems="10"
                 android:gravity="right|bottom"
-                android:inputType="number"
-                android:textSize="35dp" />
-
+                android:inputType="numberDecimal"
+                android:paddingBottom="8dp"
+                android:selectAllOnFocus="true"
+                android:text="0"
+                android:maxLength="15"
+                android:textColor="@color/colorThuTien"
+                android:textCursorDrawable="@drawable/cursor_thutien"
+                android:textSize="32dp" />
             <TextView
+                android:id="@+id/currency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:text="đ"
-                android:textSize="30dp" />
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="4dp"
+                android:textSize="24dp"
+                android:textColor="@color/colorItemText"/>
         </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/layout_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/display"
@@ -68,11 +82,11 @@
 
             <ImageView
                 android:id="@+id/image_hangmuc"
-                android:layout_marginTop="5dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_chamhoi" />
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginLeft="4dp"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/ic_chamhoi" />
 
             <TextView
                 android:id="@+id/text_hangmuc"
@@ -81,8 +95,11 @@
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:text="Chọn mục thu"
-                android:textSize="20dp" />
+                android:layout_marginLeft="4dp"
+                android:text="Chọn mục chi"
+                android:textColor="@color/colorItemText"
+                android:textSize="18dp"
+                android:textStyle="normal" />
         </LinearLayout>
 
         <View
@@ -103,11 +120,11 @@
 
             <ImageView
                 android:id="@+id/icon_mota"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_mota"
-                app:srcCompat="@drawable/ic_mota"
-                tools:srcCompat="@drawable/ic_mota" />
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:src="@mipmap/ic_mota" />
 
             <EditText
                 android:id="@+id/edt_MoTa"
@@ -117,8 +134,11 @@
                 android:background="@null"
                 android:ems="10"
                 android:hint="Mô tả"
-                android:inputType="textPersonName"
-                android:paddingLeft="10dp" />
+                android:inputType="text"
+                android:textColor="@color/colorItemText"
+                android:paddingLeft="10dp"
+                android:layout_marginLeft="10dp"
+                />
         </RelativeLayout>
 
         <View
@@ -131,30 +151,32 @@
 
         <RelativeLayout
             android:id="@+id/line_ngaygio"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/line2"
             android:paddingLeft="10dp">
 
             <ImageView
                 android:id="@+id/icon_lich"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:gravity="center"
-                app:srcCompat="@drawable/ic_lich"
-                tools:srcCompat="@drawable/ic_lich" />
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:src="@mipmap/ic_lich" />
 
             <TextView
-                android:layout_toRightOf="@id/icon_lich"
                 android:id="@+id/btn_Ngay"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:gravity="center|left"
-                android:textSize="15dp"
-                android:textStyle="bold"
+                android:layout_toRightOf="@id/icon_lich"
                 android:background="@color/colorItem"
                 android:foreground="@drawable/ripple_effect_button"
-                android:paddingLeft="10dp"/>
+                android:gravity="center|left"
+                android:paddingLeft="10dp"
+                android:textColor="@color/colorItemText"
+                android:textSize="15dp"
+                android:layout_marginLeft="10dp"
+                />
         </RelativeLayout>
 
         <View
@@ -176,21 +198,24 @@
 
             <ImageView
                 android:id="@+id/image_vitien"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_vi" />
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginLeft="4dp"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/ic_vi" />
 
             <TextView
                 android:id="@+id/text_vitien"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:fontFamily="sans-serif-medium"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
+                android:layout_marginLeft="4dp"
                 android:text="CHỌN VÍ"
-                android:textSize="15dp" />
+                android:textColor="@color/colorItemText"
+                android:textSize="15dp"
+                android:textStyle="normal" />
         </LinearLayout>
 
     </RelativeLayout>

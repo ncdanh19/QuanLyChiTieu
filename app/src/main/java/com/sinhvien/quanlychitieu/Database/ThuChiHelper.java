@@ -23,24 +23,27 @@ public class ThuChiHelper  extends SQLiteOpenHelper {
     public static final String COT_IMAGE_VITIEN= "imageViTien";
     public static final String COT_TEN_VITIEN = "tenViTien";
     public static final String COT_TRANGTHAI = "trangthai";
+    public static final String COT_ID_VITIEN = "_idViTien";
+
 
     public ThuChiHelper(Context context) {
         super(context, TEN_DATABASE, null, 1);
         SQLiteDatabase db = this.getWritableDatabase();
-        //onCreate(db);
-        //onUpgrade(db,1,1);
+        onCreate(db);
+//        onUpgrade(db,1,1);
     }
     private static final String TAO_BANG_THUCHI = ""
-            + "create table " + TEN_BANG_THUCHI + " ( "
+            + "CREATE TABLE IF NOT EXISTS " + TEN_BANG_THUCHI + " ( "
             + COT_ID + " integer primary key autoincrement ,"
-            + COT_SOTIEN + " text not null, "
+            + COT_SOTIEN + " int not null, "
             + COT_IMAGE_HANGMUC + " text not null,"
             + COT_LOAI_HANGMUC + " text not null,"
             + COT_MOTA + " text,"
             + COT_NGAYTHANG + " text not null,"
             + COT_IMAGE_VITIEN + " text not null,"
             + COT_TEN_VITIEN + " text not null,"
-            + COT_TRANGTHAI + " int default 0"
+            + COT_TRANGTHAI + " int not null,"
+            + COT_ID_VITIEN +" int not null"
             + ");";
 
 
@@ -55,7 +58,7 @@ public class ThuChiHelper  extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertdata(String sotien, String imageHangMuc,
+    public boolean insertdata(int _idViTien,int sotien, String imageHangMuc,
                               String tenHangMuc, String mota,
                               String ngaythang, String imageViTien,
                               String tenViTien,int trangThai) {
@@ -69,6 +72,7 @@ public class ThuChiHelper  extends SQLiteOpenHelper {
         contentValues.put(COT_IMAGE_VITIEN,imageViTien);
         contentValues.put(COT_TEN_VITIEN,tenViTien);
         contentValues.put(COT_TRANGTHAI,trangThai);
+        contentValues.put(COT_ID_VITIEN,_idViTien);
         long result = db.insert(TEN_BANG_THUCHI, null, contentValues);
 
         if (result == -1) {
@@ -88,17 +92,25 @@ public class ThuChiHelper  extends SQLiteOpenHelper {
         ThuChi dataModel = null;
         while (cursor.moveToNext()) {
             dataModel = new ThuChi();
+            String soTien = cursor.getString(cursor.getColumnIndexOrThrow("sotien"));
             String imageHangMuc = cursor.getString(cursor.getColumnIndexOrThrow("imageHangMuc"));
             String tenHangMuc = cursor.getString(cursor.getColumnIndexOrThrow("tenHangMuc"));
+            String moTa = cursor.getString(cursor.getColumnIndexOrThrow("mota"));
             String ngayTao = cursor.getString(cursor.getColumnIndexOrThrow("ngaythang"));
-            String soTien = cursor.getString(cursor.getColumnIndexOrThrow("sotien"));
+            String imageViTien = cursor.getString(cursor.getColumnIndexOrThrow(COT_IMAGE_VITIEN));
             String tenViTien = cursor.getString(cursor.getColumnIndexOrThrow("tenViTien"));
+            int trangThai = cursor.getInt(cursor.getColumnIndexOrThrow(COT_TRANGTHAI));
+            int idViTien = cursor.getInt(cursor.getColumnIndexOrThrow(COT_ID_VITIEN));
 
+            dataModel.setSotien(soTien);
             dataModel.setImageHangMuc(imageHangMuc);
             dataModel.setTenHangMuc(tenHangMuc);
+            dataModel.setMota(moTa);
             dataModel.setNgaythang(ngayTao);
-            dataModel.setSotien(soTien);
+            dataModel.setImageViTien(imageViTien);
             dataModel.setTenViTien(tenViTien);
+            dataModel.setTrangThai(trangThai);
+            dataModel.set_idViTien(idViTien);
             stringBuffer.append(dataModel);
             data.add(dataModel);
         }

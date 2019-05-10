@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +34,7 @@ public class LoaiTaiKhoanActivity extends AppCompatActivity {
     };
 
     private final int image[] = {
-            R.drawable.ic_tienmat, R.drawable.ic_nganhang
+            R.mipmap.ic_tienmat, R.mipmap.ic_nganhang
 
     };
 

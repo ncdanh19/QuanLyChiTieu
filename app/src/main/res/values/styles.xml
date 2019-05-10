@@ -14,4 +14,7 @@
         <item name="displayOptions">showCustom</item>
         <item name="android:displayOptions">showCustom</item>
     </style>
+    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">#ffffff</item>
+    </style>
 </resources>

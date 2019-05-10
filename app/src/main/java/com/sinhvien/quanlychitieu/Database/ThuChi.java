@@ -13,12 +13,14 @@ public class ThuChi {
     public String imageViTien;
     public String tenViTien;
     public int trangThai; //0 = chi, 1 = thu
+    public int _idViTien;
 
     public ThuChi() {
         // Default constructor required for calls to DataSnapshot.getValue(ChiTien.class)
     }
 
-    public ThuChi(String sotien, String imageHangMuc, String tenHangMuc, String mota, String ngaythang, String imageViTien, String tenViTien,int trangThai) {
+    public ThuChi(int _idViTien,String sotien, String imageHangMuc, String tenHangMuc, String mota, String ngaythang, String imageViTien, String tenViTien,int trangThai) {
+        this._idViTien=_idViTien;
         this.sotien = sotien;
         this.imageHangMuc = imageHangMuc;
         this.tenHangMuc = tenHangMuc;
@@ -92,4 +94,13 @@ public class ThuChi {
     public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
     }
+
+    public int get_idViTien() {
+        return _idViTien;
+    }
+
+    public void set_idViTien(int _idViTien) {
+        this._idViTien = _idViTien;
+    }
+
 }

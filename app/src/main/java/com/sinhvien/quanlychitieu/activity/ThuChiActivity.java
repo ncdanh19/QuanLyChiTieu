@@ -1,5 +1,6 @@
 package com.sinhvien.quanlychitieu.activity;
 
+import android.media.Image;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -7,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.sinhvien.quanlychitieu.fragment.ChiTienFragment;
 import com.sinhvien.quanlychitieu.R;
@@ -19,6 +23,7 @@ public class ThuChiActivity extends AppCompatActivity {
     private ViewPagerAdapter adapter;
     Toolbar toolbar;
     ActionBar actionBar;
+    ImageButton mTroLai;
 
 
     @Override
@@ -26,27 +31,30 @@ public class ThuChiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thu_chi);
         anhXa();
+
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
-        if(actionBar!=null){
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_trolai);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        }
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ChiTienFragment(), "Chi");
         adapter.addFragment(new ThuTienFragment(), "Thu");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+
+        mTroLai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void anhXa() {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         viewPager = (ViewPager) findViewById(R.id.viewpaper);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
+        mTroLai=(ImageButton)findViewById(R.id.trolai);
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.sinhvien.quanlychitieu.R;
 import com.sinhvien.quanlychitieu.adapter.ViewPagerAdapter;
@@ -19,7 +20,7 @@ import com.sinhvien.quanlychitieu.fragment.HangMucThuFragment;
 import com.sinhvien.quanlychitieu.fragment.ThuTienFragment;
 public class HangMucActivity extends AppCompatActivity {
 
-    ImageButton mTrolai;
+    ImageView mTrolai;
     private ViewPagerAdapter adapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -41,7 +42,7 @@ public class HangMucActivity extends AppCompatActivity {
         mTrolai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finish();
             }
         });
 
@@ -65,7 +66,7 @@ public class HangMucActivity extends AppCompatActivity {
     }
 
     private void anhXa(){
-        mTrolai=(ImageButton) findViewById(R.id.trolai);
+        mTrolai=(ImageView) findViewById(R.id.trolai);
         viewPager = (ViewPager) findViewById(R.id.viewpaper);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
     }

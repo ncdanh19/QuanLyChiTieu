@@ -29,15 +29,15 @@
             app:contentInsetRight="0dp"
             app:contentInsetEnd="0dp"
             >
-            <ImageButton
+            <ImageView
                 android:id="@+id/trolai"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/ripple_effect_button"
-                android:foreground="@drawable/ic_trolai" />
+                android:foreground="@drawable/ripple_effect_button"
+                android:background="@mipmap/ic_trolai" />
 
             <TextView
                 android:layout_width="wrap_content"

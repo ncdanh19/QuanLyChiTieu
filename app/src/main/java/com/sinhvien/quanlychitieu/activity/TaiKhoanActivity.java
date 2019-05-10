@@ -8,9 +8,12 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.sinhvien.quanlychitieu.Database.TaiKhoan;
 import com.sinhvien.quanlychitieu.Database.TaiKhoanHelper;
@@ -31,13 +34,18 @@ public class TaiKhoanActivity extends AppCompatActivity {
     TaiKhoanHelper database;
     private LinearLayoutManager linearLayoutManager;
     List<TaiKhoan> listTaiKhoan ;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initViews();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tai_khoan);
         anhXa();
-        initViews();
-        //taoTaiKhoan();
         listTaiKhoan =new ArrayList<TaiKhoan>();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,9 +66,11 @@ public class TaiKhoanActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(TaiKhoanActivity.this, TaoTaiKhoanActivity.class);
                 startActivity(i);
+                finish();
             }
         });
     }
+
 
 
     @Override
@@ -73,19 +83,6 @@ public class TaiKhoanActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    private void taoTaiKhoan() {
-//        Bundle bundle = getIntent().getExtras();
-//        if (bundle != null) {
-//            String soTien = bundle.getString("sotien");
-//            String tenTaiKhoan = bundle.getString("tentaikhoan");
-//            Bitmap bmap = (Bitmap) bundle.getParcelable("bmap");
-//            String loaiTaiKhoan = bundle.getString("loaitaikhoan");
-//            String chuThich = bundle.getString("chuthich");
-//            TaiKhoan dataToAdd = new TaiKhoan(soTien, tenTaiKhoan, bmap, loaiTaiKhoan, chuThich,bmap);
-//            // Update adapter.
-//            adapter.taoTaiKhoan(adapter.getItemCount(), dataToAdd);
-//        }
-//    }
 
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);

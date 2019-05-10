@@ -6,6 +6,8 @@
     <color name="colorItem">#FFFFFF</color>
     <color name="colorText">#B39DDB</color>
     <color name="colorIcon">#FF9C9999</color>
+    <color name="colorItemText">#000000</color>
+    <color name="colorThuTien">#33cc33</color>
 
     <!--Navigation color-->
     <color name="tablayout">#9575CD</color>
