@@ -33,7 +33,6 @@
                 android:layout_height="56dp"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp"
                 android:src="@mipmap/ic_trolai"
                 android:background="?android:attr/selectableItemBackgroundBorderless" />
 

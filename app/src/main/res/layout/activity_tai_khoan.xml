@@ -28,7 +28,6 @@
                 android:id="@+id/trolai"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:layout_marginLeft="16dp"
                 android:layout_gravity="center_vertical"
                 android:layout_centerVertical="true"
                 android:background="?selectableItemBackgroundBorderless"

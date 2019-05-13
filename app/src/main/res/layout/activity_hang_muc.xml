@@ -34,7 +34,6 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="16dp"
                 android:layout_gravity="center_vertical"
                 android:foreground="@drawable/ripple_effect_button"
                 android:background="@mipmap/ic_trolai" />

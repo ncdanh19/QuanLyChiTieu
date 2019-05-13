@@ -17,8 +17,11 @@ import android.widget.Toast;
 import com.sinhvien.quanlychitieu.Database.TaiKhoan;
 import com.sinhvien.quanlychitieu.R;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class TaiKhoanAdapter extends RecyclerView.Adapter<TaiKhoanAdapter.ViewHolder> {
     private List<TaiKhoan> listTaiKhoan = new ArrayList<TaiKhoan>();
@@ -54,7 +57,7 @@ public class TaiKhoanAdapter extends RecyclerView.Adapter<TaiKhoanAdapter.ViewHo
         final TaiKhoan taikhoan = listTaiKhoan.get(i);
         holder.imageicon.setImageBitmap(chuyendoi.getStringtoImage(taikhoan.getImgage()));
         holder.tv_tenTaiKhoan.setText(taikhoan.getTenTaiKhoan());
-        holder.tv_SoTien.setText(String.valueOf(taikhoan.getSoTien()));
+        holder.tv_SoTien.setText(formatCurrency(String.valueOf(taikhoan.getSoTien())));
 
         holder.buttonTuyChon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +86,17 @@ public class TaiKhoanAdapter extends RecyclerView.Adapter<TaiKhoanAdapter.ViewHo
 
     }
 
+    public String formatCurrency(String string){
+        String originalString = string;
+        Long longval = Long.parseLong(originalString);
 
+        DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.GERMANY);
+        formatter.applyPattern("#,###,###.###");
+        String formattedString = formatter.format(longval);
+
+        //setting text after format to EditText
+        return formattedString;
+    }
     @Override
     public int getItemCount() {
         return listTaiKhoan == null ? 0 : listTaiKhoan.size();
