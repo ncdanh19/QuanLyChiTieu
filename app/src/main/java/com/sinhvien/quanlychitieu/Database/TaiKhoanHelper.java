@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.sinhvien.quanlychitieu.adapter.TaiKhoanAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,5 +133,11 @@ public class TaiKhoanHelper extends SQLiteOpenHelper {
             }
         }
         return false;
+    }
+
+    public boolean deleteTaiKhoan(int idTaiKhoan) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long longId = (long) idTaiKhoan;
+        return db.delete(TEN_BANG_TAIKHOAN, COT_ID + " = " + longId, null) > 0;
     }
 }

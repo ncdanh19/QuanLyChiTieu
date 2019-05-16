@@ -13,15 +13,13 @@ public class ChuyenImage {
         //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.yourDrawableImage);
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
-        String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return imageString;
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 
     //Chuyển String thành bitmap
     public static Bitmap getStringtoImage(String imageString) {
         byte[] imageBytes = Base64.decode(imageString, Base64.DEFAULT);
-        Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-        return decodedImage;
+        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
     }
 
     //chuyển bitmap thành byte

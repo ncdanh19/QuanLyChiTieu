@@ -5,6 +5,8 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class ThuChi {
 
+
+    public int _id;
     public String sotien;
     public String imageHangMuc;
     public String tenHangMuc;
@@ -31,6 +33,14 @@ public class ThuChi {
         this.trangThai=trangThai;
     }
 
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
+    }
     public String getSotien() {
         return sotien;
     }

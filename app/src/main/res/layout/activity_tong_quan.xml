@@ -92,9 +92,9 @@
 
             <RelativeLayout
                 android:id="@+id/layout_Ghichep"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_below="@+id/layout_tongtien"
+                android:layout_width="match_parent"
+                android:layout_height="325dp"
                 android:layout_marginTop="12dp"
                 android:background="@color/colorItem">
 

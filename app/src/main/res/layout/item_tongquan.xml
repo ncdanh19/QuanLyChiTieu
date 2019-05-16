@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:background="?android:attr/selectableItemBackgroundBorderless">
+        android:background="?attr/selectableItemBackground">
 
         <ImageView
             android:id="@+id/image_hangmuc"

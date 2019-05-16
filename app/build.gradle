@@ -19,6 +19,9 @@ android {
     }
     buildToolsVersion '28.0.3'
 }
+repositories {
+    maven { url "https://jitpack.io" }
+}
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -36,6 +39,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:16.1.0'
     implementation 'com.google.firebase:firebase-storage:16.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 }
 

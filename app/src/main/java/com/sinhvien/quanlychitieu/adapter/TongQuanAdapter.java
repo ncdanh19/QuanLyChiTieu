@@ -1,18 +1,23 @@
 package com.sinhvien.quanlychitieu.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sinhvien.quanlychitieu.Database.ThuChi;
 import com.sinhvien.quanlychitieu.R;
+import com.sinhvien.quanlychitieu.activity.CustomThuChi;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -27,7 +32,7 @@ public class TongQuanAdapter extends RecyclerView.Adapter<TongQuanAdapter.ViewHo
     ChuyenImage chuyendoi;
 
 
-    public TongQuanAdapter(Context context,List<ThuChi> listThuChi) {
+    public TongQuanAdapter(Context context, List<ThuChi> listThuChi) {
         this.listThuChi = listThuChi;
         this.context = context;
     }
@@ -49,16 +54,40 @@ public class TongQuanAdapter extends RecyclerView.Adapter<TongQuanAdapter.ViewHo
         holder.textSoTien.setText(formatCurrency(thuChi.getSotien()));
         holder.textViTien.setText(thuChi.getTenViTien());
         int id = thuChi.getTrangThai();
-        if(id ==0){
+        if (id == 0) {
             holder.textSoTien.setTextColor(Color.RED);
             holder.textCurrency.setTextColor(Color.RED);
         }
-        if(id==1){
+        if (id == 1) {
             holder.textSoTien.setTextColor(Color.parseColor("#33cc33"));
             holder.textCurrency.setTextColor(Color.parseColor("#33cc33"));
         }
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int position, boolean isLongClick) {
+                if (isLongClick)
+                    Toast.makeText(context, "Long Click: " , Toast.LENGTH_SHORT).show();
+                else {
+                    Intent intent = new Intent(context,CustomThuChi.class);
+                    intent.putExtra("idThuChi",thuChi.get_id());
+                    intent.putExtra("soTien", thuChi.getSotien());
+                    intent.putExtra("tenHangMuc", thuChi.getTenHangMuc());
+                    intent.putExtra("imageHangMuc", thuChi.getImageHangMuc());
+                    intent.putExtra("moTa", thuChi.getMota());
+                    intent.putExtra("ngayThang", thuChi.getNgaythang());
+                    intent.putExtra("tenViTien",thuChi.getTenViTien());
+                    intent.putExtra("imageViTien",thuChi.getImageViTien());
+                    intent.putExtra("trangThai",thuChi.getTrangThai());
+                    intent.putExtra("idViTien",thuChi.get_idViTien());
+                    context.startActivity(intent);
+                }
+
+            }
+        });
+
     }
-    public String formatCurrency(String string){
+
+    public String formatCurrency(String string) {
         String originalString = string;
         Long longval = Long.parseLong(originalString);
 
@@ -69,18 +98,21 @@ public class TongQuanAdapter extends RecyclerView.Adapter<TongQuanAdapter.ViewHo
         //setting text after format to EditText
         return formattedString;
     }
+
     @Override
     public int getItemCount() {
         return listThuChi == null ? 0 : listThuChi.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private final TextView textCurrency;
         public ImageView imageHangMuc;
         public TextView textHangMuc;
         public TextView textNgay;
         public TextView textSoTien;
         public TextView textViTien;
+        private ItemClickListener itemClickListener;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -89,9 +121,25 @@ public class TongQuanAdapter extends RecyclerView.Adapter<TongQuanAdapter.ViewHo
             textNgay = (TextView) itemView.findViewById(R.id.tv_ngay);
             textSoTien = (TextView) itemView.findViewById(R.id.tv_soTien);
             textViTien = (TextView) itemView.findViewById(R.id.tv_vitien);
-            textCurrency=(TextView) itemView.findViewById(R.id.currency);
+            textCurrency = (TextView) itemView.findViewById(R.id.currency);
             textCurrency.setPaintFlags(textCurrency.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+        }
 
+        @Override
+        public void onClick(View v) {
+            itemClickListener.onClick(v, getLayoutPosition(), false);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            itemClickListener.onClick(v, getLayoutPosition(), true);
+            return true;
+        }
+
+        public void setItemClickListener(ItemClickListener itemClickListener) {
+            this.itemClickListener = itemClickListener;
         }
     }
 }

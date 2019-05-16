@@ -11,9 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".activity.LoaiTaiKhoanActivity"></activity>
+        <activity android:name=".activity.CustomTaiKhoan"></activity>
+        <activity android:name=".activity.CustomThuChi" />
+        <activity android:name=".activity.ThongKeActivity" />
+        <activity android:name=".activity.LoaiTaiKhoanActivity" />
         <activity android:name=".activity.TaoTaiKhoanActivity" />
-
         <activity
             android:name=".activity.TaiKhoanActivity"
             android:theme="@style/AppTheme" />

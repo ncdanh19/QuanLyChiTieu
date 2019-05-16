@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/menu_1"
+        android:checkableBehavior="none">
         <item
             android:id="@+id/tong_quan"
             android:title="Tổng quan" />
@@ -10,5 +12,11 @@
         <item
             android:id="@+id/tai_khoan"
             android:title="Tài khoản" />
+    </group>
+    <group android:id="@+id/menu_2"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/thong_ke"
+            android:title="Thống kê" />
     </group>
 </menu>

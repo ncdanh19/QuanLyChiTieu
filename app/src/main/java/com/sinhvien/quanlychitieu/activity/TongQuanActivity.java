@@ -78,9 +78,9 @@ public class TongQuanActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
                 // set item as selected to persist highlight
-                menuItem.setChecked(true);
+                menuItem.setChecked(false);
                 // close drawer when item is tapped
                 mDrawerLayout.closeDrawers();
                 Fragment fragment = null;
@@ -95,6 +95,10 @@ public class TongQuanActivity extends AppCompatActivity {
                     case R.id.tai_khoan:
                         Intent i_taikhoan = new Intent(TongQuanActivity.this, TaiKhoanActivity.class);
                         startActivity(i_taikhoan);
+                        return true;
+                    case R.id.thong_ke:
+                        Intent i_thongke = new Intent(TongQuanActivity.this, ThongKeActivity.class);
+                        startActivity(i_thongke);
                         return true;
                     default:
                         Toast.makeText(getApplication(),
@@ -137,7 +141,7 @@ public class TongQuanActivity extends AppCompatActivity {
         initViews();
     }
 
-    public String formatCurrency(String string){
+    public String formatCurrency(String string) {
         String originalString = string;
         Long longval = Long.parseLong(originalString);
 
@@ -148,6 +152,7 @@ public class TongQuanActivity extends AppCompatActivity {
         //setting text after format to EditText
         return formattedString;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
