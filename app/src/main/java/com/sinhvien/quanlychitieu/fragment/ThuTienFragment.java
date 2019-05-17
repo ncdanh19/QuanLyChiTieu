@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -35,7 +36,6 @@ import com.sinhvien.quanlychitieu.Database.ThuChi;
 import com.sinhvien.quanlychitieu.Database.ThuChiHelper;
 import com.sinhvien.quanlychitieu.R;
 import com.sinhvien.quanlychitieu.activity.HangMucActivity;
-import com.sinhvien.quanlychitieu.activity.TaiKhoanActivity;
 import com.sinhvien.quanlychitieu.activity.TongQuanActivity;
 import com.sinhvien.quanlychitieu.adapter.AlertDialogAdapter;
 import com.sinhvien.quanlychitieu.adapter.ChuyenImage;
@@ -192,7 +192,7 @@ public class ThuTienFragment extends Fragment {
                     final String img = i.getString("img");
                     _idViTien = i.getInt("_id");
                     textViTien.setText(text);
-                    imageViTien.setImageBitmap(chuyendoi.getStringtoImage(img));
+                    imageViTien.setImageBitmap(ChuyenImage.getStringtoImage(img));
                     imageViTien.setDrawingCacheEnabled(true);
 
                 }
@@ -265,10 +265,10 @@ public class ThuTienFragment extends Fragment {
         String soTien= mSoTien.getText().toString();
         imageViTien.getDrawingCache();
         imageHangMuc.getDrawingCache();
-        Bitmap bmapViTien = imageViTien.getDrawingCache();
-        Bitmap bmapHangMuc = imageHangMuc.getDrawingCache();
-        String imageViTien = chuyendoi.getString(bmapViTien);
-        String imageHangMuc = chuyendoi.getString(bmapHangMuc);
+        Bitmap bmapViTien = ((BitmapDrawable) imageViTien.getDrawable()).getBitmap();
+        Bitmap bmapHangMuc =((BitmapDrawable) imageHangMuc.getDrawable()).getBitmap();
+        String imageViTien = ChuyenImage.getString(bmapViTien);
+        String imageHangMuc = ChuyenImage.getString(bmapHangMuc);
         String tenHangMuc = textHangMuc.getText().toString();
         String moTa = mMoTa.getText().toString();
         String ngayThang = mNgay.getText().toString();
@@ -283,17 +283,17 @@ public class ThuTienFragment extends Fragment {
         int soTien = Integer.parseInt(formatSoTien);
         imageViTien.getDrawingCache();
         imageHangMuc.getDrawingCache();
-        Bitmap bmapViTien = imageViTien.getDrawingCache();
-        Bitmap bmapHangMuc = imageHangMuc.getDrawingCache();
-        String imageViTien = chuyendoi.getString(bmapViTien);
-        String imageHangMuc = chuyendoi.getString(bmapHangMuc);
+        Bitmap bmapViTien = ((BitmapDrawable) imageViTien.getDrawable()).getBitmap();
+        Bitmap bmapHangMuc =((BitmapDrawable) imageHangMuc.getDrawable()).getBitmap();
+        String imageViTien = ChuyenImage.getString(bmapViTien);
+        String imageHangMuc = ChuyenImage.getString(bmapHangMuc);
         String tenHangMuc = textHangMuc.getText().toString();
         String moTa = mMoTa.getText().toString();
         String ngayThang = mNgay.getText().toString();
         String tenViTien = textViTien.getText().toString();
 
         ThuChiHelper tc_database = new ThuChiHelper(getContext());
-        boolean trt = tc_database.insertdata(_idViTien, soTien, imageHangMuc,
+        boolean trt = tc_database.insertThuChi(_idViTien, soTien, imageHangMuc,
                 tenHangMuc, moTa,
                 ngayThang, imageViTien,
                 tenViTien, 1);

@@ -1,6 +1,7 @@
 package com.sinhvien.quanlychitieu.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 
 import com.sinhvien.quanlychitieu.Database.HangMuc;
 import com.sinhvien.quanlychitieu.R;
+import com.sinhvien.quanlychitieu.activity.HangMucActivity;
+import com.sinhvien.quanlychitieu.activity.ThuChiActivity;
 import com.sinhvien.quanlychitieu.adapter.MyHangMucChiRecyclerViewAdapter;
 import com.sinhvien.quanlychitieu.adapter.OnPagerItemSelected;
 
@@ -24,11 +27,13 @@ public class HangMucChiFragment extends Fragment {
     private int mColumnCount = 1;
 
     private final String tenloai[] = {
-            "Ăn uống"
+            "Ăn uống","Mua sắm","Điện thoại","Internet","Điện","Nước","Đi lại","Gửi xe","Bảo dưỡng","Xăng xe"
     };
 
     private final int image[] = {
-            R.mipmap.ic_anuong
+            R.mipmap.ic_anuong,R.mipmap.ic_shopping,R.mipmap.ic_dienthoai,
+            R.mipmap.ic_internet,R.mipmap.ic_electric,R.mipmap.ic_water ,
+            R.mipmap.ic_car,R.mipmap.ic_ticket,R.mipmap.ic_tool,R.mipmap.ic_fuel
 
     };
 

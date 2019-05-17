@@ -59,32 +59,7 @@ public class ThuChiHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertdata(int _idViTien, int sotien, String imageHangMuc,
-                              String tenHangMuc, String mota,
-                              String ngaythang, String imageViTien,
-                              String tenViTien, int trangThai) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COT_SOTIEN, sotien);
-        contentValues.put(COT_IMAGE_HANGMUC, imageHangMuc);
-        contentValues.put(COT_LOAI_HANGMUC, tenHangMuc);
-        contentValues.put(COT_MOTA, mota);
-        contentValues.put(COT_NGAYTHANG, ngaythang);
-        contentValues.put(COT_IMAGE_VITIEN, imageViTien);
-        contentValues.put(COT_TEN_VITIEN, tenViTien);
-        contentValues.put(COT_TRANGTHAI, trangThai);
-        contentValues.put(COT_ID_VITIEN, _idViTien);
-        long result = db.insert(TEN_BANG_THUCHI, null, contentValues);
-
-        if (result == -1) {
-            return false;
-        } else {
-
-            return true;
-        }
-
-    }
-
+    //lấy dữ liệu
     public List<ThuChi> getdata() {
         // DataModel dataModel = new DataModel();
         List<ThuChi> data = new ArrayList<>();
@@ -121,6 +96,7 @@ public class ThuChiHelper extends SQLiteOpenHelper {
         return data;
     }
 
+    //tính tổng tiền của mỗi mục thu chi
     public List<ThuChi> getTongTien(int flagtrangThai) {
         // DataModel dataModel = new DataModel();
         List<ThuChi> data = new ArrayList<>();
@@ -158,6 +134,58 @@ public class ThuChiHelper extends SQLiteOpenHelper {
             data.add(dataModel);
         }
         return data;
+    }
+
+    //thêm mục thu chi
+    public boolean insertThuChi(int _idViTien, int sotien, String imageHangMuc,
+                                String tenHangMuc, String mota,
+                                String ngaythang, String imageViTien,
+                                String tenViTien, int trangThai) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COT_SOTIEN, sotien);
+        contentValues.put(COT_IMAGE_HANGMUC, imageHangMuc);
+        contentValues.put(COT_LOAI_HANGMUC, tenHangMuc);
+        contentValues.put(COT_MOTA, mota);
+        contentValues.put(COT_NGAYTHANG, ngaythang);
+        contentValues.put(COT_IMAGE_VITIEN, imageViTien);
+        contentValues.put(COT_TEN_VITIEN, tenViTien);
+        contentValues.put(COT_TRANGTHAI, trangThai);
+        contentValues.put(COT_ID_VITIEN, _idViTien);
+        long result = db.insert(TEN_BANG_THUCHI, null, contentValues);
+
+        if (result == -1) {
+            return false;
+        } else {
+
+            return true;
+        }
+    }
+
+    //update thu chi
+    public boolean updateThuChi(int idThuChi, int _idViTien, int sotien, String imageHangMuc,
+                                String tenHangMuc, String mota,
+                                String ngaythang, String imageViTien,
+                                String tenViTien, int trangThai) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COT_SOTIEN, sotien);
+        contentValues.put(COT_IMAGE_HANGMUC, imageHangMuc);
+        contentValues.put(COT_LOAI_HANGMUC, tenHangMuc);
+        contentValues.put(COT_MOTA, mota);
+        contentValues.put(COT_NGAYTHANG, ngaythang);
+        contentValues.put(COT_IMAGE_VITIEN, imageViTien);
+        contentValues.put(COT_TEN_VITIEN, tenViTien);
+        contentValues.put(COT_TRANGTHAI, trangThai);
+        contentValues.put(COT_ID_VITIEN, _idViTien);
+        long result = db.update(TEN_BANG_THUCHI, contentValues,COT_ID+"="+idThuChi ,null);
+
+        if (result == -1) {
+            return false;
+        } else {
+
+            return true;
+        }
     }
 
     //xóa item trong bảng thu chi

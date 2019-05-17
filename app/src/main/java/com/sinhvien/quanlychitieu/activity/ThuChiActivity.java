@@ -1,7 +1,12 @@
 package com.sinhvien.quanlychitieu.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.Image;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,8 +29,30 @@ public class ThuChiActivity extends AppCompatActivity {
     Toolbar toolbar;
     ActionBar actionBar;
     ImageButton mTroLai;
+    int page;
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter("hangmucchi"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter("hangmucthu"));
+        viewPager.setCurrentItem(page);
+    }
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle i = intent.getExtras();
+            String action = intent.getAction();
+            if (i != null) {
+                if (action.equals("hangmucchi")) { //nếu chọn hạng mục chi sẽ trả về trang chi tiền
+                    page = i.getInt("page");
+                }
+                if (action.equals("hangmucthu")) {
+                    page = i.getInt("page");
+                }
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +68,7 @@ public class ThuChiActivity extends AppCompatActivity {
         adapter.addFragment(new ThuTienFragment(), "Thu");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-
+        //int defaultValue = 0;
         mTroLai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

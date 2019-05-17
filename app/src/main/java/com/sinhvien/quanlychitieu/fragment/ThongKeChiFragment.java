@@ -13,20 +13,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.sinhvien.quanlychitieu.Database.ThuChi;
 import com.sinhvien.quanlychitieu.Database.ThuChiHelper;
 import com.sinhvien.quanlychitieu.R;
 import com.sinhvien.quanlychitieu.adapter.ChuyenImage;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +87,7 @@ public class ThongKeChiFragment extends Fragment implements OnChartValueSelected
             Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 80, 80, true));
 // Set your new, scaled drawable "d"
             float tyLe= (float) (Integer.parseInt(thuChi.getSotien())/ (float)TongTien());
-            yvalues.add(new PieEntry(tyLe, "", d));
+                yvalues.add(new PieEntry(tyLe, "", d));
         }
 
         // IMPORTANT: In a PieChart, no values (Entry) should have the same
@@ -89,10 +95,8 @@ public class ThongKeChiFragment extends Fragment implements OnChartValueSelected
         // drawn above each other.
 
         PieDataSet dataSet = new PieDataSet(yvalues, "");
-
         PieData data = new PieData(dataSet);
-        // In Percentage term
-        //data.setValueFormatter(new PercentFormatter());
+
         // Default value
         pieChart.setData(data);
 
@@ -104,7 +108,8 @@ public class ThongKeChiFragment extends Fragment implements OnChartValueSelected
 
         data.setValueTextSize(10f);
         data.setValueTextColor(Color.BLACK);
-        data.setValueFormatter(new PercentFormatter(pieChart));
+        //data.setValueFormatter(new PercentFormatter(pieChart));
+        data.setValueFormatter(new MyPercentFormatter(pieChart));
         ArrayList<Integer> colors = new ArrayList<>();
 
         for (int c : ColorTemplate.VORDIPLOM_COLORS)
@@ -153,5 +158,47 @@ public class ThongKeChiFragment extends Fragment implements OnChartValueSelected
 
     }
 
+    public class MyPercentFormatter extends ValueFormatter
+    {
 
+        public DecimalFormat mFormat;
+        private PieChart pieChart;
+        private boolean percentSignSeparated;
+
+        public MyPercentFormatter() {
+            mFormat = new DecimalFormat("###,###,##0.0");
+            percentSignSeparated = true;
+        }
+
+        // Can be used to remove percent signs if the chart isn't in percent mode
+        public MyPercentFormatter(PieChart pieChart) {
+            this();
+            this.pieChart = pieChart;
+        }
+
+        // Can be used to remove percent signs if the chart isn't in percent mode
+        public MyPercentFormatter(PieChart pieChart, boolean percentSignSeparated) {
+            this(pieChart);
+            this.percentSignSeparated = percentSignSeparated;
+        }
+
+        @Override
+        public String getFormattedValue(float value) {
+            if(value<10)
+                return "";
+            return mFormat.format(value) + (percentSignSeparated ? " %" : "%");
+        }
+
+        @Override
+        public String getPieLabel(float value, PieEntry pieEntry) {
+            if (pieChart != null && pieChart.isUsePercentValuesEnabled()) {
+                // Converted to percent
+                return getFormattedValue(value);
+            } else {
+                // raw value, skip percent sign
+                return mFormat.format(value);
+            }
+        }
+
+    }
 }

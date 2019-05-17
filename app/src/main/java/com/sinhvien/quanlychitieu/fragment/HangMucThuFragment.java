@@ -1,6 +1,7 @@
 package com.sinhvien.quanlychitieu.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 
 import com.sinhvien.quanlychitieu.Database.HangMuc;
 import com.sinhvien.quanlychitieu.R;
+import com.sinhvien.quanlychitieu.activity.HangMucActivity;
+import com.sinhvien.quanlychitieu.activity.ThuChiActivity;
 import com.sinhvien.quanlychitieu.adapter.MyHangMucThuRecyclerViewAdapter;
 import com.sinhvien.quanlychitieu.adapter.OnPagerItemSelected;
 
@@ -24,11 +27,12 @@ public class HangMucThuFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private final String tenloai[] = {
-            "Lương","Tiền lãi"
+            "Quà tặng", "Lương", "Tiền lãi", "Thưởng","Tiết kiệm","Khác"
     };
 
     private final int image[] = {
-            R.mipmap.ic_luong,R.mipmap.ic_tienlai
+            R.mipmap.ic_present, R.mipmap.ic_luong, R.mipmap.ic_tienlai,
+            R.mipmap.ic_thuong,R.mipmap.ic_percent,R.mipmap.ic_other
 
     };
 
@@ -60,7 +64,7 @@ public class HangMucThuFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyHangMucThuRecyclerViewAdapter(getContext(),loaiHangMuc, new OnPagerItemSelected() {
+            recyclerView.setAdapter(new MyHangMucThuRecyclerViewAdapter(getContext(), loaiHangMuc, new OnPagerItemSelected() {
                 @Override
                 public void pagerItemSelected() {
                     getActivity().finish();

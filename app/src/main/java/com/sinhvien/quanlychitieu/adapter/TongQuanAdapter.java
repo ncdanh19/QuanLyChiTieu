@@ -29,7 +29,6 @@ public class TongQuanAdapter extends RecyclerView.Adapter<TongQuanAdapter.ViewHo
 
     private List<ThuChi> listThuChi = new ArrayList<ThuChi>();
     private Context context;
-    ChuyenImage chuyendoi;
 
 
     public TongQuanAdapter(Context context, List<ThuChi> listThuChi) {
@@ -48,7 +47,7 @@ public class TongQuanAdapter extends RecyclerView.Adapter<TongQuanAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int i) {
         final ThuChi thuChi = listThuChi.get(i);
-        holder.imageHangMuc.setImageBitmap(chuyendoi.getStringtoImage(thuChi.getImageHangMuc()));
+        holder.imageHangMuc.setImageBitmap(ChuyenImage.getStringtoImage(thuChi.getImageHangMuc()));
         holder.textHangMuc.setText(thuChi.getTenHangMuc());
         holder.textNgay.setText(thuChi.getNgaythang());
         holder.textSoTien.setText(formatCurrency(thuChi.getSotien()));
@@ -87,7 +86,7 @@ public class TongQuanAdapter extends RecyclerView.Adapter<TongQuanAdapter.ViewHo
 
     }
 
-    public String formatCurrency(String string) {
+    private String formatCurrency(String string) {
         String originalString = string;
         Long longval = Long.parseLong(originalString);
 
@@ -106,15 +105,15 @@ public class TongQuanAdapter extends RecyclerView.Adapter<TongQuanAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private final TextView textCurrency;
-        public ImageView imageHangMuc;
-        public TextView textHangMuc;
-        public TextView textNgay;
-        public TextView textSoTien;
-        public TextView textViTien;
+        ImageView imageHangMuc;
+        TextView textHangMuc;
+        TextView textNgay;
+        TextView textSoTien;
+        TextView textViTien;
         private ItemClickListener itemClickListener;
 
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             imageHangMuc = (ImageView) itemView.findViewById(R.id.image_hangmuc);
             textHangMuc = (TextView) itemView.findViewById(R.id.tv_hangmuc);
@@ -138,7 +137,7 @@ public class TongQuanAdapter extends RecyclerView.Adapter<TongQuanAdapter.ViewHo
             return true;
         }
 
-        public void setItemClickListener(ItemClickListener itemClickListener) {
+        void setItemClickListener(ItemClickListener itemClickListener) {
             this.itemClickListener = itemClickListener;
         }
     }

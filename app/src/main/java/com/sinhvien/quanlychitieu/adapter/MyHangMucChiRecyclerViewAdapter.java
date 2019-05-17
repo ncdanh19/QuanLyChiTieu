@@ -55,9 +55,11 @@ public class MyHangMucChiRecyclerViewAdapter extends RecyclerView.Adapter<MyHang
                     Intent intent = new Intent("hangmucchi");
                     bundle.putString("text", hangMuc.getTenHangMuc());
                     bundle.putInt("img", hangMuc.getImage());
+                    bundle.putInt("page",0); //chuyển về mục chi khi chọn hạng mục của chi tiền
                     intent.putExtras(bundle);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                     listener.pagerItemSelected();
+
                 }
             }
         });

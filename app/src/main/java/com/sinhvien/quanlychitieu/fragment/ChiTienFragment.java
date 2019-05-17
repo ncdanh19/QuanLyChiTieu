@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -15,8 +16,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.text.Selection;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,13 +35,11 @@ import com.sinhvien.quanlychitieu.Database.ThuChi;
 import com.sinhvien.quanlychitieu.Database.ThuChiHelper;
 import com.sinhvien.quanlychitieu.R;
 import com.sinhvien.quanlychitieu.activity.HangMucActivity;
-import com.sinhvien.quanlychitieu.activity.TongQuanActivity;
 import com.sinhvien.quanlychitieu.adapter.AlertDialogAdapter;
 import com.sinhvien.quanlychitieu.adapter.ChuyenImage;
 import com.sinhvien.quanlychitieu.adapter.OnPagerItemSelected;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -86,6 +83,7 @@ public class ChiTienFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_chi_tien, container, false);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         anhXa();
+
         //Button Ngày
         mNgay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,7 +189,7 @@ public class ChiTienFragment extends Fragment {
                     final String img = i.getString("img");
                     _idViTien = i.getInt("_id");
                     textViTien.setText(text);
-                    imageViTien.setImageBitmap(chuyendoi.getStringtoImage(img));
+                    imageViTien.setImageBitmap(ChuyenImage.getStringtoImage(img));
                     imageViTien.setDrawingCacheEnabled(true);
 
                 }
@@ -264,10 +262,10 @@ public class ChiTienFragment extends Fragment {
         String soTien = mSoTien.getText().toString();
         imageViTien.getDrawingCache();
         imageHangMuc.getDrawingCache();
-        Bitmap bmapViTien = imageViTien.getDrawingCache();
-        Bitmap bmapHangMuc = imageHangMuc.getDrawingCache();
-        String imageViTien = chuyendoi.getString(bmapViTien);
-        String imageHangMuc = chuyendoi.getString(bmapHangMuc);
+        Bitmap bmapViTien = ((BitmapDrawable) imageViTien.getDrawable()).getBitmap();
+        Bitmap bmapHangMuc =((BitmapDrawable) imageHangMuc.getDrawable()).getBitmap();
+        String imageViTien = ChuyenImage.getString(bmapViTien);
+        String imageHangMuc = ChuyenImage.getString(bmapHangMuc);
         String tenHangMuc = textHangMuc.getText().toString();
         String moTa = mMoTa.getText().toString();
         String ngayThang = mNgay.getText().toString();
@@ -282,17 +280,17 @@ public class ChiTienFragment extends Fragment {
         int soTien = Integer.parseInt(formatSoTien);
         imageViTien.getDrawingCache();
         imageHangMuc.getDrawingCache();
-        Bitmap bmapViTien = imageViTien.getDrawingCache();
-        Bitmap bmapHangMuc = imageHangMuc.getDrawingCache();
-        String imageViTien = chuyendoi.getString(bmapViTien);
-        String imageHangMuc = chuyendoi.getString(bmapHangMuc);
+        Bitmap bmapViTien = ((BitmapDrawable) imageViTien.getDrawable()).getBitmap();
+        Bitmap bmapHangMuc =((BitmapDrawable) imageHangMuc.getDrawable()).getBitmap();
+        String imageViTien = ChuyenImage.getString(bmapViTien);
+        String imageHangMuc = ChuyenImage.getString(bmapHangMuc);
         String tenHangMuc = textHangMuc.getText().toString();
         String moTa = mMoTa.getText().toString();
         String ngayThang = mNgay.getText().toString();
         String tenViTien = textViTien.getText().toString();
 
         ThuChiHelper tc_database = new ThuChiHelper(getContext());
-        boolean trt = tc_database.insertdata(_idViTien, soTien, imageHangMuc, tenHangMuc,
+        boolean trt = tc_database.insertThuChi(_idViTien, soTien, imageHangMuc, tenHangMuc,
                 moTa, ngayThang, imageViTien, tenViTien, 0);
 
         TaiKhoanHelper tk_database = new TaiKhoanHelper(getContext());
