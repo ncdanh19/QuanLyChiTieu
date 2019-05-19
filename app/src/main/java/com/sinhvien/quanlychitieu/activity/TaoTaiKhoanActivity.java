@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -56,6 +57,7 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tao_tai_khoan);
         anhXa();
+        formatSoTien();
         btnLoaiTaiKhoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +83,10 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
             }
         });
 
+
+
+    }
+    private void formatSoTien() {
         edtSoTien.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -101,7 +107,7 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
                 try {
                     String originalString = s.toString();
 
-                    Long longval;
+                    long longval;
                     if (originalString.contains(".")) {
                         originalString = originalString.replaceAll("\\.", "");
                     }
@@ -125,11 +131,8 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
                     edtSoTien.setSelection(begin);
                 }
                 edtSoTien.addTextChangedListener(this);
-
-
             }
         });
-
     }
 
     @Override
@@ -158,7 +161,7 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
         String tenTaiKhoan = edtTenTaiKhoan.getText().toString();
         mIconItem.buildDrawingCache();
         Bitmap bmap = mIconItem.getDrawingCache();
-        String bmapViTien= chuyendoi.getString(bmap);
+        String bmapViTien= ChuyenImage.getString(bmap);
         String loaiTaiKhoan = mTextItem.getText().toString();
         String chuThich = edtChuThich.getText().toString();
         TaiKhoan taiKhoan = new TaiKhoan(soTien, tenTaiKhoan, bmapViTien, loaiTaiKhoan, chuThich);
@@ -169,8 +172,8 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
         soTien = soTien.replaceAll("\\.", "");
         String tenTaiKhoan = edtTenTaiKhoan.getText().toString();
         mIconItem.buildDrawingCache();
-        Bitmap bmap = mIconItem.getDrawingCache();
-        String Stringbmap = chuyendoi.getString(bmap);
+        Bitmap bmap = ((BitmapDrawable) mIconItem.getDrawable()).getBitmap();
+        String Stringbmap = ChuyenImage.getString(bmap);
         String loaiTaiKhoan = mTextItem.getText().toString();
         String chuThich = edtChuThich.getText().toString();
 

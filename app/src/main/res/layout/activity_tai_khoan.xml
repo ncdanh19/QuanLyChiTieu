@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundCol"
     tools:context=".activity.TaiKhoanActivity">
 
     <android.support.v7.widget.Toolbar
@@ -56,6 +57,14 @@
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
+    <TextView
+        android:id="@+id/noItem"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="Bạn chưa có tài khoản nào"
+        android:textSize="16dp"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_below="@+id/toolbar"

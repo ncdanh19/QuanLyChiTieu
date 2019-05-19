@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -116,7 +118,6 @@ public class ThuTienFragment extends Fragment {
             public void onClick(View v) {
                 //writeNewData();
                 them();
-                getActivity().finish();
             }
         });
 
@@ -194,7 +195,7 @@ public class ThuTienFragment extends Fragment {
                     textViTien.setText(text);
                     imageViTien.setImageBitmap(ChuyenImage.getStringtoImage(img));
                     imageViTien.setDrawingCacheEnabled(true);
-
+                    textViTien.setTextColor(Color.BLACK);
                 }
                 if(action.equals("hangmucthu")) {
                     final String text = i.getString("text");
@@ -202,6 +203,7 @@ public class ThuTienFragment extends Fragment {
                     textHangMuc.setText(text);
                     imageHangMuc.setImageResource(img);
                     imageHangMuc.setDrawingCacheEnabled(true);
+                    textHangMuc.setTextColor(Color.BLACK);
                 }
             }
         }
@@ -280,28 +282,51 @@ public class ThuTienFragment extends Fragment {
 
     public void them() {
         String formatSoTien = mSoTien.getText().toString().replaceAll("\\.", "");
-        int soTien = Integer.parseInt(formatSoTien);
         imageViTien.getDrawingCache();
         imageHangMuc.getDrawingCache();
         Bitmap bmapViTien = ((BitmapDrawable) imageViTien.getDrawable()).getBitmap();
         Bitmap bmapHangMuc =((BitmapDrawable) imageHangMuc.getDrawable()).getBitmap();
-        String imageViTien = ChuyenImage.getString(bmapViTien);
-        String imageHangMuc = ChuyenImage.getString(bmapHangMuc);
+        String imgViTien = ChuyenImage.getString(bmapViTien);
+        String imgHangMuc = ChuyenImage.getString(bmapHangMuc);
         String tenHangMuc = textHangMuc.getText().toString();
         String moTa = mMoTa.getText().toString();
         String ngayThang = mNgay.getText().toString();
         String tenViTien = textViTien.getText().toString();
 
-        ThuChiHelper tc_database = new ThuChiHelper(getContext());
-        boolean trt = tc_database.insertThuChi(_idViTien, soTien, imageHangMuc,
-                tenHangMuc, moTa,
-                ngayThang, imageViTien,
-                tenViTien, 1);
 
-        TaiKhoanHelper tk_database = new TaiKhoanHelper(getContext());
-        Boolean xuly = tk_database.xuLy(_idViTien, 1,soTien);
-        Intent intent = new Intent(getContext(), TongQuanActivity.class);
-        startActivity(intent);
+        boolean flag=true;
+        if (formatSoTien.equals("")) {
+            Toast.makeText(getContext(), "Bạn chưa nhập số tiền", Toast.LENGTH_SHORT).show();
+            flag=false;
+        }
+        if(tenViTien.equals("CHỌN VÍ"))
+        {
+            textViTien.setTextColor(Color.RED);
+            flag =  false;
+        }
+        if(tenHangMuc.equals("Chọn mục thu"))
+        {
+            textHangMuc.setTextColor(Color.RED);
+            flag= false;
+        }
+        if(flag) {
+            int soTien = Integer.parseInt(formatSoTien);
+            ThuChiHelper tc_database = new ThuChiHelper(getContext());
+            boolean trt = tc_database.insertThuChi(_idViTien, soTien, imgHangMuc,
+                    tenHangMuc, moTa, ngayThang, imgViTien, tenViTien, 1);
+            TaiKhoanHelper tk_database = new TaiKhoanHelper(getContext());
+            Boolean xuly = tk_database.xuLy(_idViTien, 1,soTien);
+            if (trt) {
+                Toast.makeText(getContext(), "Thêm giao dịch thành công", Toast.LENGTH_SHORT).show();
+                mSoTien.setText(0);
+                textViTien.setText("CHỌN VÍ");
+                imageViTien.setImageResource(R.mipmap.ic_chamhoi);
+                textHangMuc.setText("Chọn mục thu");
+                imageHangMuc.setImageResource(R.mipmap.ic_vi);
+                mMoTa.setText("");
+            }
+        }
+
     }
     public void anhXa(){
         mNgay = (TextView) view.findViewById(R.id.btn_Ngay);

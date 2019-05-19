@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,16 +58,17 @@ public class CustomThuChi extends AppCompatActivity {
     private TextView textCurrency;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     final Calendar calendar = Calendar.getInstance();
-    int idThuChi, idViTien, trangThai;
-    String soTien;
+    int idThuChi, idViTienMoi, trangThaiCu ,trangThaiMoi;
+    int idViTienCu, soTienCu,soTienMoi;
+    String ngayCu,ngayMoi;
+    String hangMucCu;
     ThuChiHelper tc_database;
     TaiKhoanHelper tk_database;
     private Button btnXoa;
     int pos, begin;
-    private ImageView btnTroLai;
+    private ImageButton btnTroLai;
     List<TaiKhoan> listTaiKhoan;
     AlertDialogAdapter adapter;
-    int _idViTien = -1;
     Context thisContext;
 
     @Override
@@ -81,13 +83,13 @@ public class CustomThuChi extends AppCompatActivity {
         LocalBroadcastManager.getInstance(thisContext).registerReceiver(mReceiver, new IntentFilter("taikhoan"));
         LocalBroadcastManager.getInstance(thisContext).registerReceiver(mReceiver, new IntentFilter("hangmucchi"));
         LocalBroadcastManager.getInstance(thisContext).registerReceiver(mReceiver, new IntentFilter("hangmucthu"));
-        if (trangThai == 0) {
+        if (trangThaiMoi == 0) {
             mSoTien.setTextColor(Color.RED);
-            textCurrency.setTextColor(Color.RED);
+            //textCurrency.setTextColor(Color.RED);
         }
-        if (trangThai == 1) {
+        if (trangThaiMoi == 1) {
             mSoTien.setTextColor(Color.parseColor("#33cc33"));
-            textCurrency.setTextColor(Color.parseColor("#33cc33"));
+            //textCurrency.setTextColor(Color.parseColor("#33cc33"));
         }
     }
 
@@ -193,13 +195,20 @@ public class CustomThuChi extends AppCompatActivity {
     }
 
     private void xoaDuLieu() {
-        boolean result = tc_database.deleteThuChi(idThuChi);
-        if (result) {
-            tk_database.xuLy(idViTien, trangThai, Integer.parseInt(soTien));
-            finish();
-            Toast.makeText(getBaseContext(), "Xóa giao dịch thành công", Toast.LENGTH_SHORT).show();
-        } else
-            Toast.makeText(this, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+        try {
+            boolean result = tc_database.deleteThuChi(idThuChi);
+            if (result) {
+                if (trangThaiCu == 0) // nếu là chi thì xóa sẽ + tiền trở lại cho tài khoản
+                    tk_database.xuLy(idViTienCu, 1, soTienCu); //xóa dữ liệu cũ vì chưa thay đổi
+                else
+                    tk_database.xuLy(idViTienCu, 0, soTienCu);
+                finish();
+                Toast.makeText(getBaseContext(), "Xóa giao dịch thành công", Toast.LENGTH_SHORT).show();
+            } else
+                Toast.makeText(this, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+
+        }
     }
 
     private void formatSoTien() {
@@ -254,29 +263,53 @@ public class CustomThuChi extends AppCompatActivity {
     private void luuDuLieu() {
         //update theo idThuChi
         String formatSoTien = mSoTien.getText().toString().replaceAll("\\.", "");
-        int soTien = Integer.parseInt(formatSoTien);
         imageViTien.getDrawingCache();
         imageHangMuc.getDrawingCache();
         Bitmap bmapViTien = ((BitmapDrawable) imageViTien.getDrawable()).getBitmap();
         Bitmap bmapHangMuc = ((BitmapDrawable) imageHangMuc.getDrawable()).getBitmap();
-        String imageViTien = ChuyenImage.getString(bmapViTien);
-        String imageHangMuc = ChuyenImage.getString(bmapHangMuc);
+        String imgViTien = ChuyenImage.getString(bmapViTien);
+        String imgHangMuc = ChuyenImage.getString(bmapHangMuc);
         String tenHangMuc = textHangMuc.getText().toString();
         String moTa = mMoTa.getText().toString();
-        String ngayThang = mNgay.getText().toString();
+        ngayMoi = mNgay.getText().toString();
         String tenViTien = textViTien.getText().toString();
-        tc_database.updateThuChi(idThuChi, idViTien, soTien, imageHangMuc, tenHangMuc,
-                moTa, ngayThang, imageViTien, tenViTien, trangThai);
-        boolean result = tk_database.xuLy(idViTien, trangThai, soTien);
-        if (result) {
-            finish();
-            Toast.makeText(getBaseContext(), "Sửa thành công", Toast.LENGTH_SHORT).show();
+        boolean flag = true;
+        if (formatSoTien.equals("")) {
+            Toast.makeText(thisContext, "Bạn chưa nhập số tiền", Toast.LENGTH_SHORT).show();
+            flag = false;
+        }
+        if (flag) {
+            soTienMoi = Integer.parseInt(formatSoTien);
+            if (soTienCu == soTienMoi) {
+                if (idViTienMoi == idViTienCu && hangMucCu.equals(tenHangMuc) && trangThaiCu==trangThaiMoi&&ngayCu.equals(ngayMoi)) {
+                    Toast.makeText(getBaseContext(), "Không có thay đổi", Toast.LENGTH_SHORT).show();
+                }else {
+                    ThuChiHelper tc_database = new ThuChiHelper(thisContext);
+                    boolean trt = tc_database.updateThuChi(idThuChi, idViTienMoi, soTienMoi, imgHangMuc, tenHangMuc,
+                            moTa, ngayMoi, imgViTien, tenViTien, trangThaiMoi);
+                    Boolean xuly= tk_database.xuLyUpdate(idViTienMoi,  soTienMoi, idViTienCu, soTienCu,trangThaiCu,trangThaiMoi);
+                     if (trt) {
+                        Toast.makeText(getBaseContext(), "Sửa thành công", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+            } else {
+                ThuChiHelper tc_database = new ThuChiHelper(thisContext);
+                boolean trt = tc_database.updateThuChi(idThuChi, idViTienMoi, soTienMoi, imgHangMuc, tenHangMuc,
+                        moTa, ngayMoi, imgViTien, tenViTien, trangThaiMoi);
+                Boolean xuly = tk_database.xuLyUpdate(idViTienMoi,  soTienMoi, idViTienCu, soTienCu,trangThaiCu,trangThaiMoi);
+
+                if (trt) {
+                    Toast.makeText(getBaseContext(), "Sửa thành công", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
         }
     }
 
     public void goToHangMuc(View v) {
         Intent intent = new Intent(getBaseContext(), HangMucActivity.class);
-        intent.putExtra("page", trangThai);
+        intent.putExtra("page", trangThaiCu);
         startActivity(intent);
     }
 
@@ -289,27 +322,31 @@ public class CustomThuChi extends AppCompatActivity {
                 if (action.equals("taikhoan")) {
                     final String text = i.getString("text");
                     final String img = i.getString("img");
-                    _idViTien = i.getInt("_id");
+                    idViTienMoi = i.getInt("_id");
                     textViTien.setText(text);
                     imageViTien.setImageBitmap(ChuyenImage.getStringtoImage(img));
                     imageViTien.setDrawingCacheEnabled(true);
+                    textViTien.setTextColor(Color.BLACK);
 
                 }
                 if (action.equals("hangmucchi")) {
-                    final String text = i.getString("text");
+                    hangMucCu = i.getString("text");
                     final int img = i.getInt("img");
-                    trangThai=i.getInt("page");
-                    textHangMuc.setText(text);
+                    trangThaiMoi = i.getInt("page");
+                    textHangMuc.setText(hangMucCu);
                     imageHangMuc.setImageResource(img);
                     imageHangMuc.setDrawingCacheEnabled(true);
+                    textHangMuc.setTextColor(Color.BLACK);
                 }
-                if(action.equals("hangmucthu")) {
-                    final String text = i.getString("text");
+                if (action.equals("hangmucthu")) {
+                    hangMucCu = i.getString("text");
                     final int img = i.getInt("img");
-                    trangThai=i.getInt("page");
-                    textHangMuc.setText(text);
+                    trangThaiMoi = i.getInt("page");
+                    textHangMuc.setText(hangMucCu);
                     imageHangMuc.setImageResource(img);
                     imageHangMuc.setDrawingCacheEnabled(true);
+                    textHangMuc.setTextColor(Color.BLACK);
+
                 }
             }
         }
@@ -318,21 +355,24 @@ public class CustomThuChi extends AppCompatActivity {
     public void truyenDuLieu() {
         Intent extras = getIntent();
         idThuChi = extras.getIntExtra("idThuChi", -1);
-        soTien = extras.getStringExtra("soTien");
-        String tenHangMuc = extras.getStringExtra("tenHangMuc");
+        soTienCu = Integer.parseInt(extras.getStringExtra("soTien"));
+        hangMucCu = extras.getStringExtra("tenHangMuc");
         String imageHangMuc = extras.getStringExtra("imageHangMuc");
         String moTa = extras.getStringExtra("moTa");
-        String ngayThang = extras.getStringExtra("ngayThang");
+        ngayCu = extras.getStringExtra("ngayThang");
+        ngayMoi=ngayCu;
         String tenViTien = extras.getStringExtra("tenViTien");
         String imageViTien = extras.getStringExtra("imageViTien");
-        idViTien = extras.getIntExtra("idViTien", -1);
-        trangThai = extras.getIntExtra("trangThai", -1);
-        setDuLieu(soTien, tenHangMuc, imageHangMuc, moTa, ngayThang, tenViTien, imageViTien, trangThai);
+        idViTienCu = extras.getIntExtra("idViTien", -1);
+        idViTienMoi = idViTienCu;
+        trangThaiCu = extras.getIntExtra("trangThai", -1);
+        trangThaiMoi=trangThaiCu;
+        setDuLieu(soTienCu, hangMucCu, imageHangMuc, moTa, ngayCu, tenViTien, imageViTien, trangThaiCu);
     }
 
-    public void setDuLieu(String soTien, String tenHangMuc, String imgHangMuc, String moTa,
+    public void setDuLieu(int soTien, String tenHangMuc, String imgHangMuc, String moTa,
                           String ngayThang, String tenViTien, String imgViTien, int trangThai) {
-        mSoTien.setText(soTien);
+        mSoTien.setText(String.valueOf(soTien));
         textHangMuc.setText(tenHangMuc);
         imageHangMuc.setImageBitmap(ChuyenImage.getStringtoImage(imgHangMuc));
         mMoTa.setText(moTa);
@@ -341,11 +381,11 @@ public class CustomThuChi extends AppCompatActivity {
         imageViTien.setImageBitmap(ChuyenImage.getStringtoImage(imgViTien));
         if (trangThai == 0) {
             mSoTien.setTextColor(Color.RED);
-            textCurrency.setTextColor(Color.RED);
+            //textCurrency.setTextColor(Color.RED);
         }
         if (trangThai == 1) {
             mSoTien.setTextColor(Color.parseColor("#33cc33"));
-            textCurrency.setTextColor(Color.parseColor("#33cc33"));
+            //textCurrency.setTextColor(Color.parseColor("#33cc33"));
         }
     }
 
@@ -356,7 +396,7 @@ public class CustomThuChi extends AppCompatActivity {
         mMoTa = (EditText) findViewById(R.id.edt_MoTa);
         btnLuu = (Button) findViewById(R.id.btn_Luu);
         btnXoa = (Button) findViewById(R.id.btn_Xoa);
-        btnTroLai = (ImageView) findViewById(R.id.trolai);
+        btnTroLai = (ImageButton) findViewById(R.id.trolai);
         imageViTien = (ImageView) findViewById(R.id.image_vitien);
         textViTien = (TextView) findViewById(R.id.text_vitien);
         btnLoaiTaiKhoan = (LinearLayout) findViewById(R.id.btn_chonvi);

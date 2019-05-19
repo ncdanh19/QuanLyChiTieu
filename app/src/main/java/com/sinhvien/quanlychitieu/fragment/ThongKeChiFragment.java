@@ -11,6 +11,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -42,32 +44,56 @@ public class ThongKeChiFragment extends Fragment implements OnChartValueSelected
     ThuChiHelper tc_database;
     List<ThuChi> listThuChi;
     View view;
+    private TextView noItem;
+    private LinearLayout haveItem;
+
     public ThongKeChiFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view= inflater.inflate(R.layout.fragment_thong_ke_chi, container, false);
-        createPieChart();
-        return view;
-    }
-    public int TongTien(){
+        view = inflater.inflate(R.layout.fragment_thong_ke_chi, container, false);
+
+        noItem = (TextView) view.findViewById(R.id.noItem);
+        haveItem = (LinearLayout) view.findViewById(R.id.haveItem);
+        pieChart = (PieChart) view.findViewById(R.id.piechart);
+
+
         tc_database = new ThuChiHelper(getActivity());
         listThuChi = tc_database.getTongTien(0);
-        int tong=0;
+
+        if (listThuChi.size() < 1) {
+            noItem.setVisibility(View.VISIBLE);
+            haveItem.setVisibility(View.GONE);
+        } else {
+            noItem.setVisibility(View.GONE);
+            haveItem.setVisibility(View.VISIBLE);
+            createPieChart();
+        }
+        return view;
+    }
+
+    public int TongTien() {
+        int tong = 0;
         for (int i = 0; i < listThuChi.size(); i++) {
             ThuChi thuChi = listThuChi.get(i);
-            tong+=Integer.parseInt(thuChi.getSotien());
+            tong += Integer.parseInt(thuChi.getSotien());
         }
         return tong;
     }
+
+    public boolean checkZeroList() {
+        for (int i = 0; i < listThuChi.size(); i++)
+            if (Integer.parseInt(listThuChi.get(i).getSotien()) != 0)
+                return false;
+        return true;
+    }
+
     private void createPieChart() {
-        pieChart = (PieChart) view.findViewById(R.id.piechart);
         pieChart.setUsePercentValues(true);
         pieChart.setRotationEnabled(true);
         pieChart.getDescription().setEnabled(false);
@@ -75,20 +101,27 @@ public class ThongKeChiFragment extends Fragment implements OnChartValueSelected
         pieChart.setExtraOffsets(42f, 42f, 42f, 42f);
 
 
-        tc_database = new ThuChiHelper(getActivity());
-        listThuChi = tc_database.getTongTien(0);
         ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
 
-        for (int i = 0; i < listThuChi.size(); i++) {
-            final ThuChi thuChi = listThuChi.get(i);
-            //Drawable user_icon = getResources().getDrawable(R.mipmap.ic_anuong);
-            Bitmap bitmap = ChuyenImage.getStringtoImage(thuChi.getImageHangMuc());
-// Scale it to 50 x 50
+        if (checkZeroList()) { // nếu tất cả phần tử trong list đều là 0
+            Bitmap bitmap = ChuyenImage.getStringtoImage(listThuChi.get(0).getImageHangMuc());
+            // Scale it to 50 x 50
             Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 80, 80, true));
-// Set your new, scaled drawable "d"
-            float tyLe= (float) (Integer.parseInt(thuChi.getSotien())/ (float)TongTien());
+            // Set your new, scaled drawable "d"
+            yvalues.add(new PieEntry(1, "", d)); //thêm phần tử cuối vào chart
+        } else {
+            for (int i = 0; i < listThuChi.size(); i++) {
+                final ThuChi thuChi = listThuChi.get(i);
+                //Drawable user_icon = getResources().getDrawable(R.mipmap.ic_anuong);
+                Bitmap bitmap = ChuyenImage.getStringtoImage(thuChi.getImageHangMuc());
+                // Scale it to 50 x 50
+                Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 80, 80, true));
+                // Set your new, scaled drawable "d"
+                float tyLe = (float) (Integer.parseInt(thuChi.getSotien()) / (float) TongTien());
                 yvalues.add(new PieEntry(tyLe, "", d));
+            }
         }
+
 
         // IMPORTANT: In a PieChart, no values (Entry) should have the same
         // xIndex (even if from different DataSets), since no values can be
@@ -158,8 +191,7 @@ public class ThongKeChiFragment extends Fragment implements OnChartValueSelected
 
     }
 
-    public class MyPercentFormatter extends ValueFormatter
-    {
+    public class MyPercentFormatter extends ValueFormatter {
 
         public DecimalFormat mFormat;
         private PieChart pieChart;
@@ -184,7 +216,9 @@ public class ThongKeChiFragment extends Fragment implements OnChartValueSelected
 
         @Override
         public String getFormattedValue(float value) {
-            if(value<10)
+            if (value < 10)
+                return "";
+            if(checkZeroList())
                 return "";
             return mFormat.format(value) + (percentSignSeparated ? " %" : "%");
         }

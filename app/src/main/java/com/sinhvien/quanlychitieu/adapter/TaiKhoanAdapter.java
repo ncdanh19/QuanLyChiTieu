@@ -20,6 +20,8 @@ import com.sinhvien.quanlychitieu.Database.TaiKhoan;
 import com.sinhvien.quanlychitieu.Database.TaiKhoanHelper;
 import com.sinhvien.quanlychitieu.Database.ThuChiHelper;
 import com.sinhvien.quanlychitieu.R;
+import com.sinhvien.quanlychitieu.activity.CustomTaiKhoan;
+import com.sinhvien.quanlychitieu.activity.CustomThuChi;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -81,14 +83,22 @@ public class TaiKhoanAdapter extends RecyclerView.Adapter<TaiKhoanAdapter.ViewHo
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.chinh_sua:
-
+                                Intent intent = new Intent(context, CustomTaiKhoan.class);
+                                intent.putExtra("_id", taikhoan.get_id());
+                                intent.putExtra("soTien",taikhoan.getSoTien());
+                                intent.putExtra("tenTaiKhoan", taikhoan.getTenTaiKhoan());
+                                intent.putExtra("tenLoaiTaiKhoan",taikhoan.getLoaiTaiKhoan());
+                                intent.putExtra("imgLoaiTaiKhoan", taikhoan.getImgage());
+                                intent.putExtra("chuThich",taikhoan.getChuThich());
+                                context.startActivity(intent);
                                 return true;
+
                             case R.id.xoa:
                                 boolean xoa_giaodich = tc_database.deleteByViTienID(taikhoan.get_id());
                                 boolean xoa_taikhoan = tk_database.deleteTaiKhoan(taikhoan.get_id());
                                 if (xoa_taikhoan) {
                                     Toast.makeText(context,
-                                            "Your Xóa tài khoản thành công", Toast.LENGTH_LONG).show();
+                                            "Xóa tài khoản thành công", Toast.LENGTH_LONG).show();
                                 }
                                 listTaiKhoan.remove(i);
                                 adapter.notifyItemRemoved(i);
@@ -109,15 +119,14 @@ public class TaiKhoanAdapter extends RecyclerView.Adapter<TaiKhoanAdapter.ViewHo
                 if (isLongClick)
                     Toast.makeText(context, "Long Click: " + listTaiKhoan.get(position), Toast.LENGTH_SHORT).show();
                 else {
-                    Bundle bundle = new Bundle();
+                  /*  Bundle bundle = new Bundle();
                     Intent intent = new Intent("taikhoan");
                     bundle.putInt("_id", taikhoan.get_id());
                     bundle.putString("text", taikhoan.getTenTaiKhoan());
                     bundle.putString("img", taikhoan.getImgage());
                     intent.putExtras(bundle);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-                    listener.pagerItemSelected();
-                    Toast.makeText(context, "" + taikhoan.get_id(), Toast.LENGTH_SHORT).show();
+                    listener.pagerItemSelected();*/
                 }
             }
         }); //close item

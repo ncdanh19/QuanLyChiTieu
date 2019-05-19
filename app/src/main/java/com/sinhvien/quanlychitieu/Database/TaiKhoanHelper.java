@@ -83,14 +83,18 @@ public class TaiKhoanHelper extends SQLiteOpenHelper {
         TaiKhoan dataModel = null;
         while (cursor.moveToNext()) {
             dataModel = new TaiKhoan();
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
-            String image = cursor.getString(5);
-            String tenTaikhoan = cursor.getString(cursor.getColumnIndexOrThrow("tenTaiKhoan"));
-            int soTien = cursor.getInt(cursor.getColumnIndexOrThrow("soTien"));
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(COT_ID));
+            int soTien = cursor.getInt(cursor.getColumnIndexOrThrow(COT_SO_TIEN));
+            String tenTaikhoan = cursor.getString(cursor.getColumnIndexOrThrow(COT_TEN_TAIKHOAN));
+            String loaiTaiKhoan = cursor.getString(cursor.getColumnIndexOrThrow(COT_LOAI_TAI_KHOAN));
+            String image = cursor.getString(cursor.getColumnIndexOrThrow(COT_HINH_ANH));
+            String chuThich = cursor.getString(cursor.getColumnIndexOrThrow(COT_CHU_THICH));
             dataModel.set_id(id);
-            dataModel.setTenTaiKhoan(tenTaikhoan);
             dataModel.setSoTien(soTien);
+            dataModel.setTenTaiKhoan(tenTaikhoan);
+            dataModel.setLoaiTaiKhoan(loaiTaiKhoan);
             dataModel.setImgage(image);
+            dataModel.setChuThich(chuThich);
             stringBuffer.append(dataModel);
             data.add(dataModel);
         }
@@ -135,9 +139,118 @@ public class TaiKhoanHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public boolean deleteTaiKhoan(int idTaiKhoan) {
+    public boolean xuLyUpdate(int idViTienMoi, int soTienMoi, int idViTienCu, int soTienCu, int trangThaiCu, int trangThaiMoi) {
+        List<TaiKhoan> data = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv1 = new ContentValues();
+        ContentValues cv2 = new ContentValues();
+
+        Cursor cursor = db.rawQuery("select * from " + TEN_BANG_TAIKHOAN + " ;", null);
+        long result1 = -1, result2 = -1;
+        while (cursor.moveToNext()) {
+            if (idViTienCu == idViTienMoi) {
+                if (trangThaiCu == trangThaiMoi) {
+                    if (idViTienCu == cursor.getInt(cursor.getColumnIndexOrThrow(COT_ID))) {
+                        int afterViCu = -1;
+                        if (trangThaiCu == 0)
+                            afterViCu = cursor.getInt(cursor.getColumnIndexOrThrow(COT_SO_TIEN)) + soTienCu - soTienMoi;
+                        if (trangThaiCu == 1)
+                            afterViCu = cursor.getInt(cursor.getColumnIndexOrThrow(COT_SO_TIEN)) - soTienCu + soTienMoi;
+                        cv1.put(COT_SO_TIEN, afterViCu);
+                        result1 = db.update(TEN_BANG_TAIKHOAN, cv1, "_id=" + idViTienCu, null);
+                    }
+                }
+
+                if (trangThaiCu != trangThaiMoi) {
+                    if (idViTienCu == cursor.getInt(cursor.getColumnIndexOrThrow(COT_ID))) {
+                        int afterViCu = -1;
+                        if (trangThaiMoi == 0)
+                            afterViCu = cursor.getInt(cursor.getColumnIndexOrThrow(COT_SO_TIEN)) - soTienCu - soTienMoi;
+                        if (trangThaiMoi == 1)
+                            afterViCu = cursor.getInt(cursor.getColumnIndexOrThrow(COT_SO_TIEN)) + soTienCu + soTienMoi;
+                        cv1.put(COT_SO_TIEN, afterViCu);
+                        result1 = db.update(TEN_BANG_TAIKHOAN, cv1, "_id=" + idViTienCu, null);
+                    }
+                }
+            }
+            if (idViTienCu != idViTienMoi) {
+                if (trangThaiCu == trangThaiMoi) {
+                    if (idViTienCu == cursor.getInt(cursor.getColumnIndexOrThrow(COT_ID))) {
+                        int afterViCu = -1;
+                        if (trangThaiMoi == 0)
+                            afterViCu = cursor.getInt(cursor.getColumnIndexOrThrow(COT_SO_TIEN)) + soTienCu;
+                        if (trangThaiMoi == 1)
+                            afterViCu = cursor.getInt(cursor.getColumnIndexOrThrow(COT_SO_TIEN)) - soTienCu;
+                        cv1.put(COT_SO_TIEN, afterViCu);
+                        result1 = db.update(TEN_BANG_TAIKHOAN, cv1, "_id=" + idViTienCu, null);
+                    }
+                    if (idViTienMoi == cursor.getInt(cursor.getColumnIndexOrThrow(COT_ID))) {
+                        int afterViMoi = -1;
+                        if (trangThaiMoi == 0)
+                            afterViMoi = cursor.getInt(cursor.getColumnIndexOrThrow(COT_SO_TIEN)) - soTienMoi;
+                        if (trangThaiMoi == 1)
+                            afterViMoi = cursor.getInt(cursor.getColumnIndexOrThrow(COT_SO_TIEN)) + soTienMoi;
+                        cv2.put(COT_SO_TIEN, afterViMoi);
+                        result2 = db.update(TEN_BANG_TAIKHOAN, cv2, "_id=" + idViTienMoi, null);
+                    }
+                }
+
+                if (trangThaiCu != trangThaiMoi) {
+                    {
+                        if (idViTienCu == cursor.getInt(cursor.getColumnIndexOrThrow(COT_ID))) {
+                            int afterViCu = -1;
+                            if (trangThaiCu == 0)
+                                afterViCu = cursor.getInt(cursor.getColumnIndexOrThrow(COT_SO_TIEN)) + soTienCu;
+                            if (trangThaiCu == 1)
+                                afterViCu = cursor.getInt(cursor.getColumnIndexOrThrow(COT_SO_TIEN)) + soTienCu;
+                            cv1.put(COT_SO_TIEN, afterViCu);
+                            result1 = db.update(TEN_BANG_TAIKHOAN, cv1, "_id=" + idViTienCu, null);
+                        }
+                        if (idViTienMoi == cursor.getInt(cursor.getColumnIndexOrThrow(COT_ID))) {
+                            int afterViMoi = -1;
+                            if (trangThaiMoi == 0)
+                                afterViMoi = cursor.getInt(cursor.getColumnIndexOrThrow(COT_SO_TIEN)) - soTienMoi;
+                            if (trangThaiMoi == 1)
+                                afterViMoi = cursor.getInt(cursor.getColumnIndexOrThrow(COT_SO_TIEN)) + soTienMoi;
+                            cv2.put(COT_SO_TIEN, afterViMoi);
+                            result2 = db.update(TEN_BANG_TAIKHOAN, cv2, "_id=" + idViTienMoi, null);
+                        }
+                    }
+                }
+            }
+        }
+        if (result1 == -1 && result2 == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+    public boolean updateTaiKhoan(int idTaiKhoan, int soTien, String tenTaiKhoan, String tenLoaiTaiKhoan, String imgLoaiTaiKhoan, String chuThich) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COT_TEN_TAIKHOAN, tenTaiKhoan);
+        contentValues.put(COT_LOAI_TAI_KHOAN, tenLoaiTaiKhoan);
+        contentValues.put(COT_SO_TIEN, soTien);
+        contentValues.put(COT_CHU_THICH, chuThich);
+        contentValues.put(COT_HINH_ANH, imgLoaiTaiKhoan);
+
+        long result = db.update(TEN_BANG_TAIKHOAN, contentValues, COT_ID + "=" + idTaiKhoan, null);
+
+        if (result == -1) {
+            return false;
+        } else {
+
+            return true;
+        }
+    }
+
+    public boolean deleteTaiKhoan(long idTaiKhoan) {
         SQLiteDatabase db = this.getWritableDatabase();
         long longId = (long) idTaiKhoan;
         return db.delete(TEN_BANG_TAIKHOAN, COT_ID + " = " + longId, null) > 0;
     }
+
+
 }

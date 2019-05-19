@@ -27,14 +27,14 @@
             app:contentInsetRight="0dp"
             app:contentInsetEnd="0dp"
             >
-            <ImageView
+            <ImageButton
                 android:id="@+id/trolai"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_centerVertical="true"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_gravity="center_vertical"
-                android:foreground="@drawable/ripple_effect_button"
-                android:background="@mipmap/ic_trolai" />
+                android:layout_centerVertical="true"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@mipmap/ic_trolai"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -56,7 +56,7 @@
 
         <TextView
             android:id="@+id/tv_soTien"
-            android:layout_width="70dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="Số tiền"
@@ -156,29 +156,29 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/line1"
             android:background="@color/colorItem"
-            android:paddingLeft="10dp">
+            android:paddingStart="10dp">
 
             <ImageView
                 android:id="@+id/icon_mota"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:src="@mipmap/ic_mota" />
 
             <EditText
                 android:id="@+id/edt_MoTa"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_toRightOf="@id/icon_mota"
+                android:layout_toEndOf="@id/icon_mota"
                 android:background="@null"
                 android:ems="10"
                 android:hint="Mô tả"
                 android:inputType="text"
                 android:textColor="@color/colorItemText"
-                android:paddingLeft="10dp"
-                android:layout_marginLeft="10dp"
-                />
+                android:paddingStart="10dp"
+                android:layout_marginStart="10dp"
+                android:autofillHints="" />
         </RelativeLayout>
 
         <View
@@ -186,7 +186,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/line_mota"
-            android:layout_marginLeft="65dp"
+            android:layout_marginStart="65dp"
             android:background="@android:color/darker_gray" />
 
         <RelativeLayout
@@ -194,28 +194,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/line2"
-            android:paddingLeft="10dp">
+            android:paddingStart="10dp">
 
             <ImageView
                 android:id="@+id/icon_lich"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:src="@mipmap/ic_lich" />
 
             <TextView
                 android:id="@+id/btn_Ngay"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_toRightOf="@id/icon_lich"
+                android:layout_toEndOf="@id/icon_lich"
                 android:background="@color/colorItem"
                 android:foreground="@drawable/ripple_effect_button"
                 android:gravity="center|left"
-                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
                 android:textColor="@color/colorItemText"
                 android:textSize="15dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 />
         </RelativeLayout>
 
@@ -224,23 +224,23 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/line_ngaygio"
-            android:layout_marginLeft="65dp"
+            android:layout_marginStart="65dp"
             android:background="@android:color/darker_gray" />
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:id="@+id/btn_chonvi"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@id/line3"
             android:foreground="@drawable/ripple_effect_button"
             android:orientation="horizontal"
-            android:paddingLeft="10dp">
+            android:paddingStart="10dp">
 
             <ImageView
                 android:id="@+id/image_vitien"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_gravity="center_vertical"
                 android:src="@mipmap/ic_vi" />
 
@@ -250,8 +250,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:layout_marginLeft="4dp"
+                android:paddingStart="10dp"
+                android:layout_marginStart="4dp"
                 android:text="CHỌN VÍ"
                 android:textColor="@color/colorItemText"
                 android:textSize="15dp"
@@ -260,15 +260,16 @@
 
     </RelativeLayout>
 
+
     <Button
         android:id="@+id/btn_Luu"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/layout_body"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:layout_marginRight="35dp"
+        android:layout_marginEnd="35dp"
         android:background="@drawable/button_corner_shape"
         android:foreground="@drawable/ripple_effect"
         android:text="Lưu"
@@ -276,16 +277,15 @@
 
     <Button
         android:id="@+id/btn_Xoa"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/layout_body"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:layout_marginLeft="35dp"
+        android:layout_marginStart="35dp"
         android:background="@drawable/button_xoa"
-        android:foreground="@drawable/ripple_effect"
+        android:foreground="?android:attr/selectableItemBackground"
         android:text="Xóa"
         android:textColor="@android:color/holo_red_light"/>
-
 </RelativeLayout>

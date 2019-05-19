@@ -48,6 +48,7 @@ public class TongQuanActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
 
     private DatabaseReference mDatabase;
+    private TextView text_no_item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +140,7 @@ public class TongQuanActivity extends AppCompatActivity {
         tk_database = new TaiKhoanHelper(getApplication());
         textSoTien.setText(formatCurrency(tk_database.tongTien()));
         initViews();
+        checkNoItem();
     }
 
     public String formatCurrency(String string) {
@@ -183,6 +185,13 @@ public class TongQuanActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    private void checkNoItem(){
+        if(listThuChi.size()<1)
+            text_no_item.setVisibility(View.VISIBLE);
+        else
+            text_no_item.setVisibility(View.GONE);
+    }
+
     private void anhXa() {
         btnThuChi = (FloatingActionButton) findViewById(R.id.btn_ThuChi);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -190,6 +199,7 @@ public class TongQuanActivity extends AppCompatActivity {
         textCurrency = (TextView) findViewById(R.id.currency);
         textCurrency.setPaintFlags(textCurrency.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        text_no_item = (TextView)findViewById(R.id.tv_no_item);
 
     }
 

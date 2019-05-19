@@ -3,15 +3,27 @@
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
+    android:background="@color/backgroundCol"
 tools:context=".fragment.ThongKeThuFragment">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="350dp"
-    android:layout_centerHorizontal="true">
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/piechart"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
-</LinearLayout>
+    <TextView
+        android:id="@+id/noItem"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Không có dữ liệu"
+        android:textSize="16dp"
+        android:visibility="visible" />
+    <LinearLayout
+        android:id="@+id/haveItem"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_centerHorizontal="true">
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/piechart"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="visible" />
+    </LinearLayout>
 </RelativeLayout>

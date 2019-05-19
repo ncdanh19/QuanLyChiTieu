@@ -33,12 +33,20 @@ public class TaiKhoanActivity extends AppCompatActivity {
     TaiKhoanAdapter adapter;
     TaiKhoanHelper database;
     private LinearLayoutManager linearLayoutManager;
-    List<TaiKhoan> listTaiKhoan ;
+    List<TaiKhoan> listTaiKhoan;
+    private TextView noItem;
 
     @Override
     protected void onResume() {
         super.onResume();
-        initViews();
+        database = new TaiKhoanHelper(getApplicationContext());
+        listTaiKhoan = database.getdata();
+        if (listTaiKhoan.size() < 1)
+            noItem.setVisibility(View.VISIBLE);
+        else {
+            noItem.setVisibility(View.GONE);
+            initViews();
+        }
     }
 
     @Override
@@ -46,14 +54,12 @@ public class TaiKhoanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tai_khoan);
         anhXa();
-        listTaiKhoan =new ArrayList<TaiKhoan>();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-
         mTroLai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +78,6 @@ public class TaiKhoanActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -85,6 +90,7 @@ public class TaiKhoanActivity extends AppCompatActivity {
 
 
     private void initViews() {
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
 
@@ -97,8 +103,6 @@ public class TaiKhoanActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         //gắn list vào adapter
-        database = new TaiKhoanHelper(getApplicationContext());
-        listTaiKhoan = database.getdata();
         adapter = new TaiKhoanAdapter(getApplicationContext(), listTaiKhoan, new OnPagerItemSelected() {
             @Override
             public void pagerItemSelected() {
@@ -113,5 +117,6 @@ public class TaiKhoanActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mTroLai = (ImageButton) findViewById(R.id.trolai);
         mTaoVi = (ImageButton) findViewById(R.id.btn_them);
+        noItem = (TextView) findViewById(R.id.noItem);
     }
 }
