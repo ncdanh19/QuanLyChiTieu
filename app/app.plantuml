@@ -1,0 +1,353 @@
+@startuml
+
+title __APP's Class Diagram__\n
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class AlertDialogAdapter {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    class BuildConfig {
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class ChiTienFragment {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class ChuyenImage {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class CustomTaiKhoan {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class CustomThuChi {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class DatePickerFragment {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.Database {
+      class HangMuc {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class HangMucActivity {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class HangMucChiFragment {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class HangMucThuFragment {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      interface ItemClickListener {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.Database {
+      class LoaiTaiKhoan {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class LoaiTaiKhoanActivity {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class LoaiTaiKhoanViewAdapter {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class MyHangMucChiRecyclerViewAdapter {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class MyHangMucThuRecyclerViewAdapter {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      interface OnPagerItemSelected {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.Database {
+      class TaiKhoan {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class TaiKhoanActivity {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class TaiKhoanAdapter {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.Database {
+      class TaiKhoanHelper {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class TaoTaiKhoanActivity {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class ThongKeActivity {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class ThongKeAdapter {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class ThongKeChiFragment {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class ThongKeThuFragment {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.Database {
+      class ThuChi {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class ThuChiActivity {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.Database {
+      class ThuChiHelper {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class ThuTienFragment {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class TimePickerFragment {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class TongQuanActivity {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class TongQuanAdapter {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class ViewPagerAdapter {
+      }
+    }
+  }
+  
+
+  AlertDialogAdapter -up-|> Adapter
+  AlertDialogAdapter o-- OnPagerItemSelected : listener
+  ChiTienFragment -up-|> Fragment
+  ChiTienFragment o-- ChuyenImage : chuyendoi
+  ChiTienFragment o-- TaiKhoanHelper : database
+  ChiTienFragment o-- AlertDialogAdapter : adapter
+  CustomTaiKhoan -up-|> AppCompatActivity
+  CustomTaiKhoan o-- TaiKhoanHelper : tk_database
+  CustomTaiKhoan o-- ThuChiHelper : tc_database
+  CustomTaiKhoan o-- ChuyenImage : chuyendoi
+  CustomThuChi -up-|> AppCompatActivity
+  CustomThuChi o-- ThuChiHelper : tc_database
+  CustomThuChi o-- TaiKhoanHelper : tk_database
+  CustomThuChi o-- AlertDialogAdapter : adapter
+  DatePickerFragment -up-|> OnDateSetListener
+  DatePickerFragment -up-|> DialogFragment
+  HangMucActivity -up-|> AppCompatActivity
+  HangMucActivity o-- ViewPagerAdapter : adapter
+  HangMucChiFragment -up-|> Fragment
+  HangMucThuFragment -up-|> Fragment
+  LoaiTaiKhoan -up-|> Serializable
+  LoaiTaiKhoanActivity -up-|> AppCompatActivity
+  LoaiTaiKhoanViewAdapter -up-|> Adapter
+  LoaiTaiKhoanViewAdapter o-- OnPagerItemSelected : listener
+  MyHangMucChiRecyclerViewAdapter -up-|> Adapter
+  MyHangMucChiRecyclerViewAdapter o-- OnPagerItemSelected : listener
+  MyHangMucThuRecyclerViewAdapter -up-|> Adapter
+  MyHangMucThuRecyclerViewAdapter o-- OnPagerItemSelected : listener
+  TaiKhoanActivity -up-|> AppCompatActivity
+  TaiKhoanActivity o-- TaiKhoanAdapter : adapter
+  TaiKhoanActivity o-- TaiKhoanHelper : database
+  TaiKhoanAdapter -up-|> Adapter
+  TaiKhoanAdapter o-- OnPagerItemSelected : listener
+  TaiKhoanAdapter o-- TaiKhoanHelper : tk_database
+  TaiKhoanAdapter o-- ThuChiHelper : tc_database
+  TaiKhoanAdapter o-- TaiKhoanAdapter : adapter
+  TaiKhoanHelper -up-|> SQLiteOpenHelper
+  TaoTaiKhoanActivity -up-|> AppCompatActivity
+  ThongKeActivity -up-|> AppCompatActivity
+  ThongKeAdapter -up-|> Adapter
+  ThongKeChiFragment -up-|> OnChartValueSelectedListener
+  ThongKeChiFragment -up-|> Fragment
+  ThongKeChiFragment o-- ThuChiHelper : tc_database
+  ThongKeChiFragment o-- ThongKeAdapter : adapter
+  ThongKeThuFragment -up-|> OnChartValueSelectedListener
+  ThongKeThuFragment -up-|> Fragment
+  ThongKeThuFragment o-- ThuChiHelper : tc_database
+  ThuChiActivity -up-|> AppCompatActivity
+  ThuChiHelper -up-|> SQLiteOpenHelper
+  ThuTienFragment -up-|> Fragment
+  ThuTienFragment o-- ChuyenImage : chuyendoi
+  ThuTienFragment o-- TaiKhoanHelper : database
+  ThuTienFragment o-- AlertDialogAdapter : adapter
+  TimePickerFragment -up-|> OnTimeSetListener
+  TimePickerFragment -up-|> DialogFragment
+  TongQuanActivity -up-|> AppCompatActivity
+  TongQuanActivity o-- TongQuanAdapter : adapter
+  TongQuanActivity o-- ThuChiHelper : tc_database
+  TongQuanActivity o-- TaiKhoanHelper : tk_database
+  TongQuanAdapter -up-|> Adapter
+  ViewPagerAdapter -up-|> FragmentPagerAdapter
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

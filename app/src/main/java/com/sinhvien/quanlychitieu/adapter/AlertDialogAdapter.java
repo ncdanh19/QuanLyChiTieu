@@ -19,12 +19,10 @@ import com.sinhvien.quanlychitieu.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlertDialogAdapter extends RecyclerView.Adapter<AlertDialogAdapter.ViewHolder> {
-    private List<TaiKhoan> listTaiKhoan = new ArrayList<TaiKhoan>();
+public class AlertDialogAdapter extends RecyclerView.Adapter<AlertDialogAdapter.AlertDialogViewHolder> {
+    private List<TaiKhoan> listTaiKhoan = new ArrayList<>();
     private Context context;
     private OnPagerItemSelected listener;
-    ChuyenImage chuyendoi;
-
 
 
     public AlertDialogAdapter(Context context, List<TaiKhoan> listTaiKhoan, OnPagerItemSelected listener) {
@@ -32,6 +30,7 @@ public class AlertDialogAdapter extends RecyclerView.Adapter<AlertDialogAdapter.
         this.listTaiKhoan = listTaiKhoan;
         this.listener = listener;
     }
+
     public AlertDialogAdapter(Context context, List<TaiKhoan> listTaiKhoan) {
         this.context = context;
         this.listTaiKhoan = listTaiKhoan;
@@ -42,33 +41,33 @@ public class AlertDialogAdapter extends RecyclerView.Adapter<AlertDialogAdapter.
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public AlertDialogViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.item_alertdialog, viewGroup, false);
-        return new ViewHolder(view);
+        return new AlertDialogViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int i) {
+    public void onBindViewHolder(AlertDialogViewHolder holder, int i) {
         final TaiKhoan taikhoan = listTaiKhoan.get(i);
-        holder.imageicon.setImageBitmap(chuyendoi.getStringtoImage(taikhoan.getImgage()));
+        holder.imageicon.setImageBitmap(ChuyenImage.getStringtoImage(taikhoan.getImgage()));
         holder.tv_tenTaiKhoan.setText(taikhoan.getTenTaiKhoan());
 
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                if (isLongClick)
-                    Toast.makeText(context, "Long Click: " + listTaiKhoan.get(position), Toast.LENGTH_SHORT).show();
-                else {
+                if (isLongClick) {
+//                    Toast.makeText(context, "Long Click: " + listTaiKhoan.get(position), Toast.LENGTH_SHORT).show();
+                } else {
                     Bundle bundle = new Bundle();
                     Intent intent = new Intent("taikhoan");
-                    bundle.putInt("_id",taikhoan.get_id());
+                    bundle.putInt("_id", taikhoan.get_id());
                     bundle.putString("text", taikhoan.getTenTaiKhoan());
                     bundle.putString("img", taikhoan.getImgage());
                     intent.putExtras(bundle);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                     listener.pagerItemSelected();
-                    Toast.makeText(context, ""+taikhoan.get_id(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "" + taikhoan.get_id(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -81,18 +80,14 @@ public class AlertDialogAdapter extends RecyclerView.Adapter<AlertDialogAdapter.
         return listTaiKhoan == null ? 0 : listTaiKhoan.size();
     }
 
-    public void taoTaiKhoan(int position, TaiKhoan data) {
-        listTaiKhoan.add(position, data);
-        notifyItemInserted(position);
-    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        public ImageView imageicon;
-        public TextView tv_tenTaiKhoan;
+    public class AlertDialogViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+        ImageView imageicon;
+        TextView tv_tenTaiKhoan;
 
         private ItemClickListener itemClickListener;
 
-        public ViewHolder(View itemView) {
+        AlertDialogViewHolder(View itemView) {
             super(itemView);
             imageicon = (ImageView) itemView.findViewById(R.id.image_vitien);
             tv_tenTaiKhoan = (TextView) itemView.findViewById(R.id.tv_tentaikhoan);
@@ -112,7 +107,7 @@ public class AlertDialogAdapter extends RecyclerView.Adapter<AlertDialogAdapter.
             return true;
         }
 
-        public void setItemClickListener(ItemClickListener itemClickListener) {
+        void setItemClickListener(ItemClickListener itemClickListener) {
             this.itemClickListener = itemClickListener;
         }
     }

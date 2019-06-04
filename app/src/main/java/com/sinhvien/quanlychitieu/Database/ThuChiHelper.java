@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class ThuChiHelper extends SQLiteOpenHelper {
@@ -69,14 +72,14 @@ public class ThuChiHelper extends SQLiteOpenHelper {
         ThuChi dataModel = null;
         while (cursor.moveToNext()) {
             dataModel = new ThuChi();
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
-            String soTien = cursor.getString(cursor.getColumnIndexOrThrow("sotien"));
-            String imageHangMuc = cursor.getString(cursor.getColumnIndexOrThrow("imageHangMuc"));
-            String tenHangMuc = cursor.getString(cursor.getColumnIndexOrThrow("tenHangMuc"));
-            String moTa = cursor.getString(cursor.getColumnIndexOrThrow("mota"));
-            String ngayTao = cursor.getString(cursor.getColumnIndexOrThrow("ngaythang"));
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(COT_ID));
+            String soTien = cursor.getString(cursor.getColumnIndexOrThrow(COT_SOTIEN));
+            String imageHangMuc = cursor.getString(cursor.getColumnIndexOrThrow(COT_IMAGE_HANGMUC));
+            String tenHangMuc = cursor.getString(cursor.getColumnIndexOrThrow(COT_LOAI_HANGMUC));
+            String moTa = cursor.getString(cursor.getColumnIndexOrThrow(COT_MOTA));
+            String ngayTao = cursor.getString(cursor.getColumnIndexOrThrow(COT_NGAYTHANG));
             String imageViTien = cursor.getString(cursor.getColumnIndexOrThrow(COT_IMAGE_VITIEN));
-            String tenViTien = cursor.getString(cursor.getColumnIndexOrThrow("tenViTien"));
+            String tenViTien = cursor.getString(cursor.getColumnIndexOrThrow(COT_TEN_VITIEN));
             int trangThai = cursor.getInt(cursor.getColumnIndexOrThrow(COT_TRANGTHAI));
             int idViTien = cursor.getInt(cursor.getColumnIndexOrThrow(COT_ID_VITIEN));
 
@@ -154,12 +157,7 @@ public class ThuChiHelper extends SQLiteOpenHelper {
         contentValues.put(COT_ID_VITIEN, _idViTien);
         long result = db.insert(TEN_BANG_THUCHI, null, contentValues);
 
-        if (result == -1) {
-            return false;
-        } else {
-
-            return true;
-        }
+        return result != -1;
     }
 
     //update thu chi
@@ -178,14 +176,9 @@ public class ThuChiHelper extends SQLiteOpenHelper {
         contentValues.put(COT_TEN_VITIEN, tenViTien);
         contentValues.put(COT_TRANGTHAI, trangThai);
         contentValues.put(COT_ID_VITIEN, _idViTien);
-        long result = db.update(TEN_BANG_THUCHI, contentValues,COT_ID+"="+idThuChi ,null);
+        long result = db.update(TEN_BANG_THUCHI, contentValues, COT_ID + "=" + idThuChi, null);
 
-        if (result == -1) {
-            return false;
-        } else {
-
-            return true;
-        }
+        return result != -1;
     }
 
     //xóa item trong bảng thu chi
@@ -196,9 +189,32 @@ public class ThuChiHelper extends SQLiteOpenHelper {
     }
 
     //xóa item trong ví
-    public boolean deleteByViTienID(int idViTien){
+    public boolean deleteByViTienID(int idViTien) {
         SQLiteDatabase db = this.getWritableDatabase();
         long longId = (long) idViTien;
         return db.delete(TEN_BANG_THUCHI, COT_ID_VITIEN + " = " + longId, null) > 0;
+    }
+
+    public int getTienHanMuc(String loaiHangMuc, int idViTien, Calendar ngayBD, Calendar ngayKT) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * "
+                + " from " + TEN_BANG_THUCHI
+                + " where " + COT_ID_VITIEN + " = " + idViTien
+                + " and " + COT_LOAI_HANGMUC + " = '" + loaiHangMuc + "'" + " ;", null);
+        //  + " group by " + COT_ID_VITIEN + "," + COT_ID_VITIEN + " ;", null);
+        int tongTien = 0;
+        while (cursor.moveToNext()) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String ngayThang = cursor.getString(cursor.getColumnIndexOrThrow(COT_NGAYTHANG));
+            Calendar date = Calendar.getInstance();
+            try {
+                date.setTime(simpleDateFormat.parse(ngayThang));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if (ngayBD.getTimeInMillis() <= date.getTimeInMillis() && date.getTimeInMillis() <= ngayKT.getTimeInMillis())
+                tongTien += cursor.getInt(cursor.getColumnIndexOrThrow(COT_SOTIEN));
+        }
+        return tongTien;
     }
 }

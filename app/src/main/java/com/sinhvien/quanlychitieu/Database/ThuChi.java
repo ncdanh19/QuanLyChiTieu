@@ -8,21 +8,21 @@ public class ThuChi {
 
     public int _id;
     public String sotien;
-    public String imageHangMuc;
-    public String tenHangMuc;
-    public String mota;
-    public String ngaythang;
-    public String imageViTien;
-    public String tenViTien;
-    public int trangThai; //0 = chi, 1 = thu
-    public int _idViTien;
+    private String imageHangMuc;
+    private String tenHangMuc;
+    private String mota;
+    private String ngaythang;
+    private String imageViTien;
+    private String tenViTien;
+    private int trangThai; //0 = chi, 1 = thu
+    private int _idViTien;
 
     public ThuChi() {
         // Default constructor required for calls to DataSnapshot.getValue(ChiTien.class)
     }
 
-    public ThuChi(int _idViTien,String sotien, String imageHangMuc, String tenHangMuc, String mota, String ngaythang, String imageViTien, String tenViTien,int trangThai) {
-        this._idViTien=_idViTien;
+    public ThuChi(int _idViTien, String sotien, String imageHangMuc, String tenHangMuc, String mota, String ngaythang, String imageViTien, String tenViTien, int trangThai) {
+        this._idViTien = _idViTien;
         this.sotien = sotien;
         this.imageHangMuc = imageHangMuc;
         this.tenHangMuc = tenHangMuc;
@@ -30,7 +30,7 @@ public class ThuChi {
         this.ngaythang = ngaythang;
         this.imageViTien = imageViTien;
         this.tenViTien = tenViTien;
-        this.trangThai=trangThai;
+        this.trangThai = trangThai;
     }
 
 
@@ -41,6 +41,7 @@ public class ThuChi {
     public void set_id(int _id) {
         this._id = _id;
     }
+
     public String getSotien() {
         return sotien;
     }
@@ -53,7 +54,7 @@ public class ThuChi {
         return imageHangMuc;
     }
 
-    public void setImageHangMuc(String imageHangMuc) {
+    void setImageHangMuc(String imageHangMuc) {
         this.imageHangMuc = imageHangMuc;
     }
 
@@ -61,7 +62,7 @@ public class ThuChi {
         return tenHangMuc;
     }
 
-    public void setTenHangMuc(String tenHangMuc) {
+    void setTenHangMuc(String tenHangMuc) {
         this.tenHangMuc = tenHangMuc;
     }
 
@@ -69,7 +70,7 @@ public class ThuChi {
         return mota;
     }
 
-    public void setMota(String mota) {
+    void setMota(String mota) {
         this.mota = mota;
     }
 
@@ -77,7 +78,7 @@ public class ThuChi {
         return ngaythang;
     }
 
-    public void setNgaythang(String ngaythang) {
+    void setNgaythang(String ngaythang) {
         this.ngaythang = ngaythang;
     }
 
@@ -85,7 +86,7 @@ public class ThuChi {
         return imageViTien;
     }
 
-    public void setImageViTien(String imageViTien) {
+    void setImageViTien(String imageViTien) {
         this.imageViTien = imageViTien;
     }
 
@@ -93,7 +94,7 @@ public class ThuChi {
         return tenViTien;
     }
 
-    public void setTenViTien(String tenViTien) {
+    void setTenViTien(String tenViTien) {
         this.tenViTien = tenViTien;
     }
 
@@ -101,7 +102,7 @@ public class ThuChi {
         return trangThai;
     }
 
-    public void setTrangThai(int trangThai) {
+    void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
     }
 
@@ -109,7 +110,7 @@ public class ThuChi {
         return _idViTien;
     }
 
-    public void set_idViTien(int _idViTien) {
+    void set_idViTien(int _idViTien) {
         this._idViTien = _idViTien;
     }
 

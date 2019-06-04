@@ -32,7 +32,6 @@ public class TaiKhoanActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     TaiKhoanAdapter adapter;
     TaiKhoanHelper database;
-    private LinearLayoutManager linearLayoutManager;
     List<TaiKhoan> listTaiKhoan;
     private TextView noItem;
 
@@ -41,11 +40,16 @@ public class TaiKhoanActivity extends AppCompatActivity {
         super.onResume();
         database = new TaiKhoanHelper(getApplicationContext());
         listTaiKhoan = database.getdata();
-        if (listTaiKhoan.size() < 1)
+        initViews();
+
+    }
+
+    public void checkNull() {
+        if (listTaiKhoan.size() < 1) {
+            recyclerView.setVisibility(View.GONE);
             noItem.setVisibility(View.VISIBLE);
-        else {
+        } else {
             noItem.setVisibility(View.GONE);
-            initViews();
         }
     }
 
@@ -80,10 +84,9 @@ public class TaiKhoanActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -99,16 +102,19 @@ public class TaiKhoanActivity extends AppCompatActivity {
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerHorizontal);
 
-        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-
+        database = new TaiKhoanHelper(getApplicationContext());
+        listTaiKhoan = database.getdata();
         //gắn list vào adapter
         adapter = new TaiKhoanAdapter(getApplicationContext(), listTaiKhoan, new OnPagerItemSelected() {
             @Override
             public void pagerItemSelected() {
-                finish();
+                //finish();
+                checkNull();
             }
         });
+        checkNull();
         recyclerView.setAdapter(adapter);
     }
 

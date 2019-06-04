@@ -55,19 +55,17 @@ public class ThongKeThuFragment extends Fragment implements OnChartValueSelected
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_thong_ke_thu, container, false);
 
-        noItem=(TextView) view.findViewById(R.id.noItem);
-        haveItem=(LinearLayout) view.findViewById(R.id.haveItem);
+        noItem = (TextView) view.findViewById(R.id.noItem);
+        haveItem = (LinearLayout) view.findViewById(R.id.haveItem);
         pieChart = (PieChart) view.findViewById(R.id.piechart);
 
         tc_database = new ThuChiHelper(getActivity());
         listThuChi = tc_database.getTongTien(1);
 
-        if(listThuChi.size()<1)
-        {
+        if (listThuChi.size() < 1) {
             noItem.setVisibility(View.VISIBLE);
             haveItem.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             noItem.setVisibility(View.GONE);
             haveItem.setVisibility(View.VISIBLE);
             createPieChart();
@@ -75,11 +73,11 @@ public class ThongKeThuFragment extends Fragment implements OnChartValueSelected
         return view;
     }
 
-    public int TongTien(){
-        int tong=0;
+    public int TongTien() {
+        int tong = 0;
         for (int i = 0; i < listThuChi.size(); i++) {
             ThuChi thuChi = listThuChi.get(i);
-            tong+=Integer.parseInt(thuChi.getSotien());
+            tong += Integer.parseInt(thuChi.getSotien());
         }
         return tong;
     }
@@ -142,22 +140,21 @@ public class ThongKeThuFragment extends Fragment implements OnChartValueSelected
         data.setValueFormatter(new ThongKeThuFragment.MyPercentFormatter(pieChart));
         ArrayList<Integer> colors = new ArrayList<>();
 
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+        final int[] My_COLORS = {
+                Color.parseColor("#bcaaa4"),
+                Color.parseColor("#7c4dff"),
+                Color.parseColor("#ffea00"),
+                Color.parseColor("#b39ddb"),
+                Color.parseColor("#90caf9"),
+                Color.parseColor("#fff59d"),
+                Color.parseColor("#c6ff00"),
+                Color.parseColor("#ffab91"),
+                Color.parseColor("#ff5252"),
+                Color.parseColor("#c5e1a5"),
+                Color.parseColor("#e0e0e0"),
+        };
+        for (int c : My_COLORS)
             colors.add(c);
-
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-
-        colors.add(ColorTemplate.getHoloBlue());
 
         dataSet.setColors(colors);
         dataSet.setDrawIcons(true);
@@ -188,20 +185,19 @@ public class ThongKeThuFragment extends Fragment implements OnChartValueSelected
 
     }
 
-    public class MyPercentFormatter extends ValueFormatter
-    {
+    public class MyPercentFormatter extends ValueFormatter {
 
-        public DecimalFormat mFormat;
+        DecimalFormat mFormat;
         private PieChart pieChart;
         private boolean percentSignSeparated;
 
-        public MyPercentFormatter() {
+        MyPercentFormatter() {
             mFormat = new DecimalFormat("###,###,##0.0");
             percentSignSeparated = true;
         }
 
         // Can be used to remove percent signs if the chart isn't in percent mode
-        public MyPercentFormatter(PieChart pieChart) {
+        MyPercentFormatter(PieChart pieChart) {
             this();
             this.pieChart = pieChart;
         }
@@ -214,9 +210,9 @@ public class ThongKeThuFragment extends Fragment implements OnChartValueSelected
 
         @Override
         public String getFormattedValue(float value) {
-            if(value<10)
+            if (value < 10)
                 return "";
-            if(checkZeroList())
+            if (checkZeroList())
                 return "";
             return mFormat.format(value) + (percentSignSeparated ? " %" : "%");
         }

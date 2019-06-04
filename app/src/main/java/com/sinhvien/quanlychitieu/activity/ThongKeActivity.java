@@ -41,10 +41,9 @@ import com.sinhvien.quanlychitieu.fragment.ThongKeThuFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ThongKeActivity extends AppCompatActivity  {
+public class ThongKeActivity extends AppCompatActivity {
 
     ImageView mTrolai;
-    private ViewPagerAdapter adapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -57,7 +56,7 @@ public class ThongKeActivity extends AppCompatActivity  {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar!=null) {
+        if (actionBar != null) {
             //actionBar.setHomeAsUpIndicator(R.drawable.ic_trolai);
             //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -70,7 +69,7 @@ public class ThongKeActivity extends AppCompatActivity  {
             }
         });
 
-        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ThongKeChiFragment(), "Chi");
         adapter.addFragment(new ThongKeThuFragment(), "Thu");
         viewPager.setAdapter(adapter);
@@ -83,16 +82,15 @@ public class ThongKeActivity extends AppCompatActivity  {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void anhXa(){
-        mTrolai=(ImageView) findViewById(R.id.trolai);
+    private void anhXa() {
+        mTrolai = (ImageView) findViewById(R.id.trolai);
         viewPager = (ViewPager) findViewById(R.id.viewpaper);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
     }

@@ -1,11 +1,20 @@
 package com.sinhvien.quanlychitieu.activity;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -23,14 +32,20 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.sinhvien.quanlychitieu.Database.HanMuc;
+import com.sinhvien.quanlychitieu.Database.HanMucHelper;
 import com.sinhvien.quanlychitieu.Database.TaiKhoanHelper;
 import com.sinhvien.quanlychitieu.Database.ThuChi;
 import com.sinhvien.quanlychitieu.Database.ThuChiHelper;
 import com.sinhvien.quanlychitieu.R;
+import com.sinhvien.quanlychitieu.adapter.ChuyenImage;
+import com.sinhvien.quanlychitieu.adapter.HanMucAdapter;
 import com.sinhvien.quanlychitieu.adapter.TongQuanAdapter;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -44,8 +59,9 @@ public class TongQuanActivity extends AppCompatActivity {
     TongQuanAdapter adapter;
     ThuChiHelper tc_database;
     TaiKhoanHelper tk_database;
+    HanMucHelper hm_database;
     List<ThuChi> listThuChi;
-    private LinearLayoutManager linearLayoutManager;
+    List<HanMuc> listHanMuc;
 
     private DatabaseReference mDatabase;
     private TextView text_no_item;
@@ -84,7 +100,6 @@ public class TongQuanActivity extends AppCompatActivity {
                 menuItem.setChecked(false);
                 // close drawer when item is tapped
                 mDrawerLayout.closeDrawers();
-                Fragment fragment = null;
                 // Add code here to update the UI based on the item selected
                 switch (menuItem.getItemId()) {
                     case R.id.tong_quan:
@@ -100,6 +115,10 @@ public class TongQuanActivity extends AppCompatActivity {
                     case R.id.thong_ke:
                         Intent i_thongke = new Intent(TongQuanActivity.this, ThongKeActivity.class);
                         startActivity(i_thongke);
+                        return true;
+                    case R.id.han_muc:
+                        Intent i_hanmuc = new Intent(TongQuanActivity.this, HanMucChiActivity.class);
+                        startActivity(i_hanmuc);
                         return true;
                     default:
                         Toast.makeText(getApplication(),
@@ -141,6 +160,7 @@ public class TongQuanActivity extends AppCompatActivity {
         textSoTien.setText(formatCurrency(tk_database.tongTien()));
         initViews();
         checkNoItem();
+        checkHanMuc();
     }
 
     public String formatCurrency(String string) {
@@ -149,22 +169,21 @@ public class TongQuanActivity extends AppCompatActivity {
 
         DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.GERMANY);
         formatter.applyPattern("#,###,###.###");
-        String formattedString = formatter.format(longval);
 
         //setting text after format to EditText
-        return formattedString;
+        return formatter.format(longval);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            mDrawerLayout.openDrawer(GravityCompat.START);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    //Recycler view
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -174,22 +193,82 @@ public class TongQuanActivity extends AppCompatActivity {
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerHorizontal);
 
-        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
         //gắn list vào adapter
         tc_database = new ThuChiHelper(getApplicationContext());
 
         listThuChi = tc_database.getdata();
-        adapter = new TongQuanAdapter(getApplicationContext(), listThuChi);
+        adapter = new TongQuanAdapter(this, listThuChi);
         recyclerView.setAdapter(adapter);
     }
 
-    private void checkNoItem(){
-        if(listThuChi.size()<1)
+    private void checkNoItem() {
+        if (listThuChi.size() < 1)
             text_no_item.setVisibility(View.VISIBLE);
         else
             text_no_item.setVisibility(View.GONE);
+    }
+
+    private void checkHanMuc() {
+        hm_database = new HanMucHelper(getApplication());
+        listHanMuc = hm_database.getdata();
+        HanMucAdapter adapter = new HanMucAdapter(getApplicationContext(), listHanMuc);
+        adapter.updateData(listHanMuc);
+        for (int i = 0; i < listHanMuc.size(); i++) {
+            HanMuc hanMuc = listHanMuc.get(i);
+            if (hanMuc.getTrangThai() == 1) {
+                displayNotification(hanMuc);
+                return;
+            }
+        }
+    }
+
+    private int notificationID = createID();
+
+    protected void displayNotification(HanMuc item) {
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        String channelId = "channel-id";
+        String channelName = "Channel Name";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(
+                    channelId, channelName, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, channelId)
+                .setContentTitle("Cảnh báo")
+                .setContentText("Số tiền của bạn đã vượt quá hạn mức cho phép")
+                .setSmallIcon(R.drawable.ic_warning)
+                //.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_stat_name))
+                .setLargeIcon(ChuyenImage.getStringtoImage(item.getImageHangMuc()))
+                .setVibrate(new long[]{100, 250})
+                .setLights(Color.RED, 500, 5000)
+                .setAutoCancel(true)
+                .setColor(ContextCompat.getColor(this, R.color.colorPrimary));
+
+
+        Intent resultIntent = new Intent(this, HanMucChiActivity.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+//        stackBuilder.addParentStack(TongQuanActivity.class);
+        //stackBuilder.addNextIntent(resultIntent);
+        stackBuilder.addNextIntentWithParentStack(resultIntent);
+        //PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(this,0,resultIntent,PendingIntent.FLAG_CANCEL_CURRENT);
+        mBuilder.setContentIntent(resultPendingIntent);
+
+        notificationManager.notify(0, mBuilder.build());
+    }
+
+    public int createID() {
+        Date now = new Date();
+        int id = Integer.parseInt(new SimpleDateFormat("ddHHmmss", Locale.ENGLISH).format(now));
+        return id;
     }
 
     private void anhXa() {
@@ -199,7 +278,7 @@ public class TongQuanActivity extends AppCompatActivity {
         textCurrency = (TextView) findViewById(R.id.currency);
         textCurrency.setPaintFlags(textCurrency.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        text_no_item = (TextView)findViewById(R.id.tv_no_item);
+        text_no_item = (TextView) findViewById(R.id.tv_no_item);
 
     }
 

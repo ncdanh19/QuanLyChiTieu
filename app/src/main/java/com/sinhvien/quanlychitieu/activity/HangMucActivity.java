@@ -18,6 +18,7 @@ import com.sinhvien.quanlychitieu.fragment.ChiTienFragment;
 import com.sinhvien.quanlychitieu.fragment.HangMucChiFragment;
 import com.sinhvien.quanlychitieu.fragment.HangMucThuFragment;
 import com.sinhvien.quanlychitieu.fragment.ThuTienFragment;
+
 public class HangMucActivity extends AppCompatActivity {
 
     ImageView mTrolai;
@@ -33,7 +34,7 @@ public class HangMucActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar!=null) {
+        if (actionBar != null) {
             //actionBar.setHomeAsUpIndicator(R.drawable.ic_trolai);
             //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -55,18 +56,18 @@ public class HangMucActivity extends AppCompatActivity {
         int page = getIntent().getIntExtra("page", defaultValue);
         viewPager.setCurrentItem(page);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void anhXa(){
-        mTrolai=(ImageView) findViewById(R.id.trolai);
+    private void anhXa() {
+        mTrolai = (ImageView) findViewById(R.id.trolai);
         viewPager = (ViewPager) findViewById(R.id.viewpaper);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
     }

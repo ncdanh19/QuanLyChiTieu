@@ -1,0 +1,257 @@
+@startuml
+
+title __ACTIVITY's Class Diagram__\n
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class CustomTaiKhoan {
+          - mTroLai : ImageButton
+          - mIconItem : ImageView
+          - mTextItem : TextView
+          - btnLoaiTaiKhoan : LinearLayout
+          - btnLuu : Button
+          - edtSoTien : EditText
+          - edtTenTaiKhoan : EditText
+          - edtChuThich : EditText
+          ~ idTaiKhoan : int
+          ~ pos : int
+          ~ begin : int
+          - mDatabase : DatabaseReference
+          ~ storage : FirebaseStorage
+          - textCurrency : TextView
+          ~ thisContext : Context
+          - btnXoa : Button
+          - mReceiver : BroadcastReceiver
+          # onCreate()
+          # onResume()
+          - xoaDuLieu()
+          - luuDuLieu()
+          + truyenDuLieu()
+          + setDuLieu()
+          - formatSoTien()
+          - anhXa()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class CustomThuChi {
+          ~ mNgay : TextView
+          ~ mChonHangMuc : LinearLayout
+          ~ mSoTien : EditText
+          ~ mMoTa : EditText
+          ~ btnLuu : Button
+          ~ btnXoa : Button
+          ~ btnTroLai : ImageButton
+          ~ imageViTien : ImageView
+          ~ textViTien : TextView
+          ~ btnLoaiTaiKhoan : LinearLayout
+          ~ imageHangMuc : ImageView
+          ~ textHangMuc : TextView
+          ~ textCurrency : TextView
+          ~ simpleDateFormat : SimpleDateFormat
+          ~ calendar : Calendar
+          ~ idThuChi : int
+          ~ idViTienMoi : int
+          ~ trangThaiCu : int
+          ~ trangThaiMoi : int
+          ~ idViTienCu : int
+          ~ soTienCu : int
+          ~ soTienMoi : int
+          ~ ngayCu : String
+          ~ ngayMoi : String
+          ~ hangMucCu : String
+          ~ pos : int
+          ~ begin : int
+          ~ listTaiKhoan : List<TaiKhoan>
+          ~ thisContext : Context
+          - mReceiver : BroadcastReceiver
+          + onBackPressed()
+          # onResume()
+          # onCreate()
+          + popUpDialog()
+          - chonNgay()
+          - xoaDuLieu()
+          - formatSoTien()
+          - luuDuLieu()
+          + goToHangMuc()
+          + truyenDuLieu()
+          + setDuLieu()
+          - anhXa()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class HangMucActivity {
+          ~ mTrolai : ImageView
+          - tabLayout : TabLayout
+          - viewPager : ViewPager
+          # onCreate()
+          + onOptionsItemSelected()
+          - anhXa()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class LoaiTaiKhoanActivity {
+          ~ mTroLai : ImageButton
+          - tenloai : String[]
+          - image : int[]
+          # onCreate()
+          - initViews()
+          - prepareData()
+          - anhXa()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class TaiKhoanActivity {
+          ~ mTaoVi : ImageButton
+          ~ mTroLai : ImageButton
+          ~ recyclerView : RecyclerView
+          ~ listTaiKhoan : List<TaiKhoan>
+          - noItem : TextView
+          # onResume()
+          # onCreate()
+          + onOptionsItemSelected()
+          - initViews()
+          - anhXa()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class TaoTaiKhoanActivity {
+          - mTroLai : ImageView
+          - mIconItem : ImageView
+          - mTextItem : TextView
+          - btnLoaiTaiKhoan : LinearLayout
+          - btnLuu : Button
+          - edtSoTien : EditText
+          - edtTenTaiKhoan : EditText
+          - edtChuThich : EditText
+          ~ pos : int
+          ~ begin : int
+          - mDatabase : DatabaseReference
+          ~ storage : FirebaseStorage
+          - mReceiver : BroadcastReceiver
+          # onCreate()
+          - formatSoTien()
+          # onResume()
+          - writeNewTaiKhoan()
+          + them()
+          - anhXa()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class ThongKeActivity {
+          ~ mTrolai : ImageView
+          - tabLayout : TabLayout
+          - viewPager : ViewPager
+          # onCreate()
+          + onOptionsItemSelected()
+          - anhXa()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class ThuChiActivity {
+          - tabLayout : TabLayout
+          - viewPager : ViewPager
+          ~ toolbar : Toolbar
+          ~ actionBar : ActionBar
+          ~ mTroLai : ImageButton
+          ~ page : int
+          - mReceiver : BroadcastReceiver
+          # onResume()
+          # onCreate()
+          - anhXa()
+          + onOptionsItemSelected()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class TongQuanActivity {
+          ~ mDrawerLayout : DrawerLayout
+          ~ btnThuChi : FloatingActionButton
+          ~ textSoTien : TextView
+          ~ textCurrency : TextView
+          ~ recyclerView : RecyclerView
+          ~ listThuChi : List<ThuChi>
+          - mDatabase : DatabaseReference
+          - text_no_item : TextView
+          # onCreate()
+          # onResume()
+          + formatCurrency()
+          + onOptionsItemSelected()
+          - initViews()
+          - checkNoItem()
+          - anhXa()
+      }
+    }
+  }
+  
+
+  CustomTaiKhoan -up-|> AppCompatActivity
+  CustomTaiKhoan o-- TaiKhoanHelper : tk_database
+  CustomTaiKhoan o-- ThuChiHelper : tc_database
+  CustomTaiKhoan o-- ChuyenImage : chuyendoi
+  HostCallbacks -up-|> FragmentHostCallback
+  CustomThuChi -up-|> AppCompatActivity
+  CustomThuChi o-- ThuChiHelper : tc_database
+  CustomThuChi o-- TaiKhoanHelper : tk_database
+  CustomThuChi o-- AlertDialogAdapter : adapter
+  HostCallbacks -up-|> FragmentHostCallback
+  HangMucActivity -up-|> AppCompatActivity
+  HangMucActivity o-- ViewPagerAdapter : adapter
+  HostCallbacks -up-|> FragmentHostCallback
+  LoaiTaiKhoanActivity -up-|> AppCompatActivity
+  HostCallbacks -up-|> FragmentHostCallback
+  TaiKhoanActivity -up-|> AppCompatActivity
+  TaiKhoanActivity o-- TaiKhoanAdapter : adapter
+  TaiKhoanActivity o-- TaiKhoanHelper : database
+  HostCallbacks -up-|> FragmentHostCallback
+  TaoTaiKhoanActivity -up-|> AppCompatActivity
+  HostCallbacks -up-|> FragmentHostCallback
+  ThongKeActivity -up-|> AppCompatActivity
+  HostCallbacks -up-|> FragmentHostCallback
+  ThuChiActivity -up-|> AppCompatActivity
+  HostCallbacks -up-|> FragmentHostCallback
+  TongQuanActivity -up-|> AppCompatActivity
+  TongQuanActivity o-- TongQuanAdapter : adapter
+  TongQuanActivity o-- ThuChiHelper : tc_database
+  TongQuanActivity o-- TaiKhoanHelper : tk_database
+  HostCallbacks -up-|> FragmentHostCallback
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

@@ -1,6 +1,7 @@
 package com.sinhvien.quanlychitieu.fragment;
 
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -71,8 +72,9 @@ public class ThuTienFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private DatabaseReference mDatabase;
     final Calendar calendar = Calendar.getInstance();
-    int pos,begin;
+    int pos, begin;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
     public ThuTienFragment() {
         // Required empty public constructor
     }
@@ -122,7 +124,6 @@ public class ThuTienFragment extends Fragment {
         });
 
 
-
         mSoTien.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -130,20 +131,17 @@ public class ThuTienFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //mSoTien.setSelection(mSoTien.getText().length());
                 pos = mSoTien.getText().length();
                 begin = mSoTien.getSelectionStart();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                String text = mSoTien.getText().toString();
-
                 mSoTien.removeTextChangedListener(this);
                 try {
                     String originalString = s.toString();
 
-                    Long longval;
+                    long longval;
                     if (originalString.contains(".")) {
                         originalString = originalString.replaceAll("\\.", "");
                     }
@@ -197,7 +195,7 @@ public class ThuTienFragment extends Fragment {
                     imageViTien.setDrawingCacheEnabled(true);
                     textViTien.setTextColor(Color.BLACK);
                 }
-                if(action.equals("hangmucthu")) {
+                if (action.equals("hangmucthu")) {
                     final String text = i.getString("text");
                     final int img = i.getInt("img");
                     textHangMuc.setText(text);
@@ -211,8 +209,7 @@ public class ThuTienFragment extends Fragment {
 
 
     //Intent chuyển sang hạng mục
-    public void goToHangMuc(View v)
-    {
+    public void goToHangMuc(View v) {
         Intent intent = new Intent(getContext(), HangMucActivity.class);
         intent.putExtra("page", 1);
         startActivity(intent);
@@ -226,7 +223,7 @@ public class ThuTienFragment extends Fragment {
 
         database = new TaiKhoanHelper(getActivity());
         listTaiKhoan = database.getdata();
-        adapter =new AlertDialogAdapter(getActivity(), listTaiKhoan, new OnPagerItemSelected() {
+        adapter = new AlertDialogAdapter(getActivity(), listTaiKhoan, new OnPagerItemSelected() {
             @Override
             public void pagerItemSelected() {
                 dialog.dismiss();
@@ -249,26 +246,27 @@ public class ThuTienFragment extends Fragment {
     }
 
     //Popup dialog chọn ngày
-    private void chonNgay(){
+    private void chonNgay() {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                calendar.set(year,month,dayOfMonth);
+                calendar.set(year, month, dayOfMonth);
                 mNgay.setText(simpleDateFormat.format(calendar.getTime()));
             }
-        },year,month,day);
+        }, year, month, day);
         datePickerDialog.show();
     }
+
     //Lưu dữ liệu
     public void writeNewData() {
-        String soTien= mSoTien.getText().toString();
+        String soTien = mSoTien.getText().toString();
         imageViTien.getDrawingCache();
         imageHangMuc.getDrawingCache();
         Bitmap bmapViTien = ((BitmapDrawable) imageViTien.getDrawable()).getBitmap();
-        Bitmap bmapHangMuc =((BitmapDrawable) imageHangMuc.getDrawable()).getBitmap();
+        Bitmap bmapHangMuc = ((BitmapDrawable) imageHangMuc.getDrawable()).getBitmap();
         String imageViTien = ChuyenImage.getString(bmapViTien);
         String imageHangMuc = ChuyenImage.getString(bmapHangMuc);
         String tenHangMuc = textHangMuc.getText().toString();
@@ -285,7 +283,7 @@ public class ThuTienFragment extends Fragment {
         imageViTien.getDrawingCache();
         imageHangMuc.getDrawingCache();
         Bitmap bmapViTien = ((BitmapDrawable) imageViTien.getDrawable()).getBitmap();
-        Bitmap bmapHangMuc =((BitmapDrawable) imageHangMuc.getDrawable()).getBitmap();
+        Bitmap bmapHangMuc = ((BitmapDrawable) imageHangMuc.getDrawable()).getBitmap();
         String imgViTien = ChuyenImage.getString(bmapViTien);
         String imgHangMuc = ChuyenImage.getString(bmapHangMuc);
         String tenHangMuc = textHangMuc.getText().toString();
@@ -294,28 +292,26 @@ public class ThuTienFragment extends Fragment {
         String tenViTien = textViTien.getText().toString();
 
 
-        boolean flag=true;
+        boolean flag = true;
         if (formatSoTien.equals("")) {
             Toast.makeText(getContext(), "Bạn chưa nhập số tiền", Toast.LENGTH_SHORT).show();
-            flag=false;
+            flag = false;
         }
-        if(tenViTien.equals("CHỌN VÍ"))
-        {
+        if (tenViTien.equals("CHỌN VÍ")) {
             textViTien.setTextColor(Color.RED);
-            flag =  false;
+            flag = false;
         }
-        if(tenHangMuc.equals("Chọn mục thu"))
-        {
+        if (tenHangMuc.equals("Chọn mục thu")) {
             textHangMuc.setTextColor(Color.RED);
-            flag= false;
+            flag = false;
         }
-        if(flag) {
+        if (flag) {
             int soTien = Integer.parseInt(formatSoTien);
             ThuChiHelper tc_database = new ThuChiHelper(getContext());
             boolean trt = tc_database.insertThuChi(_idViTien, soTien, imgHangMuc,
                     tenHangMuc, moTa, ngayThang, imgViTien, tenViTien, 1);
             TaiKhoanHelper tk_database = new TaiKhoanHelper(getContext());
-            Boolean xuly = tk_database.xuLy(_idViTien, 1,soTien);
+            Boolean xuly = tk_database.xuLy(_idViTien, 1, soTien);
             if (trt) {
                 Toast.makeText(getContext(), "Thêm giao dịch thành công", Toast.LENGTH_SHORT).show();
                 mSoTien.setText(0);
@@ -328,7 +324,8 @@ public class ThuTienFragment extends Fragment {
         }
 
     }
-    public void anhXa(){
+
+    public void anhXa() {
         mNgay = (TextView) view.findViewById(R.id.btn_Ngay);
         mChonHangMuc = (LinearLayout) view.findViewById(R.id.btn_HangMuc);
         mSoTien = (EditText) view.findViewById(R.id.edt_SoTien);

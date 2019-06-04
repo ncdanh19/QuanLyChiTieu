@@ -23,6 +23,7 @@ public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
     Button mNgay;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 // Use the current date as the default date in the picker

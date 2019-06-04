@@ -31,6 +31,9 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.sinhvien.quanlychitieu.Database.HanMuc;
+import com.sinhvien.quanlychitieu.Database.HanMucHelper;
+import com.sinhvien.quanlychitieu.Database.HangMuc;
 import com.sinhvien.quanlychitieu.Database.TaiKhoan;
 import com.sinhvien.quanlychitieu.Database.TaiKhoanHelper;
 import com.sinhvien.quanlychitieu.Database.ThuChi;
@@ -39,6 +42,7 @@ import com.sinhvien.quanlychitieu.R;
 import com.sinhvien.quanlychitieu.activity.HangMucActivity;
 import com.sinhvien.quanlychitieu.adapter.AlertDialogAdapter;
 import com.sinhvien.quanlychitieu.adapter.ChuyenImage;
+import com.sinhvien.quanlychitieu.adapter.HanMucAdapter;
 import com.sinhvien.quanlychitieu.adapter.OnPagerItemSelected;
 
 import java.text.DecimalFormat;
@@ -70,7 +74,7 @@ public class ChiTienFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private DatabaseReference mDatabase;
     final Calendar calendar = Calendar.getInstance();
-    int pos,begin;
+    int pos, begin;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public ChiTienFragment() {
@@ -263,7 +267,7 @@ public class ChiTienFragment extends Fragment {
         imageViTien.getDrawingCache();
         imageHangMuc.getDrawingCache();
         Bitmap bmapViTien = ((BitmapDrawable) imageViTien.getDrawable()).getBitmap();
-        Bitmap bmapHangMuc =((BitmapDrawable) imageHangMuc.getDrawable()).getBitmap();
+        Bitmap bmapHangMuc = ((BitmapDrawable) imageHangMuc.getDrawable()).getBitmap();
         String imageViTien = ChuyenImage.getString(bmapViTien);
         String imageHangMuc = ChuyenImage.getString(bmapHangMuc);
         String tenHangMuc = textHangMuc.getText().toString();
@@ -281,7 +285,7 @@ public class ChiTienFragment extends Fragment {
         imageViTien.getDrawingCache();
         imageHangMuc.getDrawingCache();
         Bitmap bmapViTien = ((BitmapDrawable) imageViTien.getDrawable()).getBitmap();
-        Bitmap bmapHangMuc =((BitmapDrawable) imageHangMuc.getDrawable()).getBitmap();
+        Bitmap bmapHangMuc = ((BitmapDrawable) imageHangMuc.getDrawable()).getBitmap();
         String imgViTien = ChuyenImage.getString(bmapViTien);
         String imgHangMuc = ChuyenImage.getString(bmapHangMuc);
         String moTa = mMoTa.getText().toString();
@@ -289,22 +293,20 @@ public class ChiTienFragment extends Fragment {
         String tenHangMuc = textHangMuc.getText().toString();
         String tenViTien = textViTien.getText().toString();
 
-        boolean flag=true;
+        boolean flag = true;
         if (formatSoTien.equals("")) {
             Toast.makeText(getContext(), "Bạn chưa nhập số tiền", Toast.LENGTH_SHORT).show();
-            flag=false;
+            flag = false;
         }
-        if(tenViTien.equals("CHỌN VÍ"))
-        {
+        if (tenViTien.equals("CHỌN VÍ")) {
             textViTien.setTextColor(Color.RED);
-            flag =  false;
+            flag = false;
         }
-        if(tenHangMuc.equals("Chọn mục chi"))
-        {
+        if (tenHangMuc.equals("Chọn mục chi")) {
             textHangMuc.setTextColor(Color.RED);
-            flag= false;
+            flag = false;
         }
-        if(flag) {
+        if (flag) {
             int soTien = Integer.parseInt(formatSoTien);
             ThuChiHelper tc_database = new ThuChiHelper(getContext());
             boolean trt = tc_database.insertThuChi(_idViTien, soTien, imgHangMuc, tenHangMuc,
@@ -320,6 +322,12 @@ public class ChiTienFragment extends Fragment {
                 textHangMuc.setText("Chọn mục chi");
                 imageHangMuc.setImageResource(R.mipmap.ic_vi);
                 mMoTa.setText("");
+
+                HanMucHelper hm_database = new HanMucHelper(getContext());
+                List<HanMuc> listHanMuc = hm_database.getdata();
+                //gắn list vào adapter
+                HanMucAdapter adapter = new HanMucAdapter(getContext(), listHanMuc);
+                adapter.updateData(listHanMuc);
             }
         }
     }

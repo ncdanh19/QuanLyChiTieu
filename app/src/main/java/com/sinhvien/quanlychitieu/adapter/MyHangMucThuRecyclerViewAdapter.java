@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MyHangMucThuRecyclerViewAdapter extends RecyclerView.Adapter<MyHangMucThuRecyclerViewAdapter.ViewHolder> {
+public class MyHangMucThuRecyclerViewAdapter extends RecyclerView.Adapter<MyHangMucThuRecyclerViewAdapter.HangMucThuViewHolder> {
 
     private Context context;
     private final List<HangMuc> listHangMuc;
@@ -32,22 +32,23 @@ public class MyHangMucThuRecyclerViewAdapter extends RecyclerView.Adapter<MyHang
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public HangMucThuViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_hangmucthu, parent, false);
-        return new ViewHolder(view);
+        return new HangMucThuViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final HangMucThuViewHolder holder, int position) {
         final HangMuc hangMuc = listHangMuc.get(position);
         holder.imageItem.setImageResource(hangMuc.getImage());
         holder.textItem.setText(hangMuc.getTenHangMuc());
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                if(isLongClick)
-                    Toast.makeText(context, "hihi", Toast.LENGTH_SHORT).show();
+                if(isLongClick) {
+//                    Toast.makeText(context, "hihi", Toast.LENGTH_SHORT).show();
+                }
                 else {
                     Bundle bundle = new Bundle();
                     Intent intent = new Intent("hangmucthu");
@@ -69,12 +70,12 @@ public class MyHangMucThuRecyclerViewAdapter extends RecyclerView.Adapter<MyHang
         return listHangMuc.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
+    public class HangMucThuViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
         TextView textItem;
         ImageView imageItem;
         private ItemClickListener itemClickListener;
 
-        public ViewHolder(View view) {
+        HangMucThuViewHolder(View view) {
             super(view);
             imageItem = (ImageView) view.findViewById(R.id.image_vitien);
             textItem = (TextView) view.findViewById(R.id.text_vitien);
@@ -93,7 +94,7 @@ public class MyHangMucThuRecyclerViewAdapter extends RecyclerView.Adapter<MyHang
             return true;
         }
 
-        public void setItemClickListener(ItemClickListener itemClickListener){
+        void setItemClickListener(ItemClickListener itemClickListener){
             this.itemClickListener=itemClickListener;
         }
     }

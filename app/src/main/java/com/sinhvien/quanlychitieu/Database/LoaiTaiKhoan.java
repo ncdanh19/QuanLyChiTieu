@@ -6,22 +6,23 @@ public class LoaiTaiKhoan implements Serializable {
     private String tenLoai;
     private int img_URL;
 
-    public void  LoaiTaiKhoan(){}
+    public void LoaiTaiKhoan() {
+    }
 
-    public String getTenLoai(){
+    public String getTenLoai() {
         return tenLoai;
     }
 
-    public int getImg(){
-        return  img_URL;
+    public int getImg() {
+        return img_URL;
     }
 
-    public void setTenLoai(String tenLoai){
-        this.tenLoai=tenLoai;
+    public void setTenLoai(String tenLoai) {
+        this.tenLoai = tenLoai;
     }
 
-    public void setImg(int img_URL){
-        this.img_URL=img_URL;
+    public void setImg(int img_URL) {
+        this.img_URL = img_URL;
     }
 
 }

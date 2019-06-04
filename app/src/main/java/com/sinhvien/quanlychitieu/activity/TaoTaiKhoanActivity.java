@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -19,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -43,14 +45,10 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
     private EditText edtSoTien;
     private EditText edtTenTaiKhoan;
     private EditText edtChuThich;
-    ArrayList<TaiKhoan> listTaiKhoan;
-    ChuyenImage chuyendoi;
-    private static long id = -1;
-    int pos,begin;
+    int pos, begin;
 
     private DatabaseReference mDatabase;
     FirebaseStorage storage;
-    private TextView textCurrency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,15 +75,12 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //writeNewTaiKhoan();
-                //taoTaiKhoan();
                 them();
-                finish();
             }
         });
 
-
-
     }
+
     private void formatSoTien() {
         edtSoTien.addTextChangedListener(new TextWatcher() {
             @Override
@@ -101,7 +96,6 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String text = edtSoTien.getText().toString();
 
                 edtSoTien.removeTextChangedListener(this);
                 try {
@@ -161,15 +155,16 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
         String tenTaiKhoan = edtTenTaiKhoan.getText().toString();
         mIconItem.buildDrawingCache();
         Bitmap bmap = mIconItem.getDrawingCache();
-        String bmapViTien= ChuyenImage.getString(bmap);
+        String bmapViTien = ChuyenImage.getString(bmap);
         String loaiTaiKhoan = mTextItem.getText().toString();
         String chuThich = edtChuThich.getText().toString();
         TaiKhoan taiKhoan = new TaiKhoan(soTien, tenTaiKhoan, bmapViTien, loaiTaiKhoan, chuThich);
         mDatabase.child("TaiKhoan").push().setValue(taiKhoan);
     }
+
     public void them() {
-        String soTien = edtSoTien.getText().toString();
-        soTien = soTien.replaceAll("\\.", "");
+        String formatSoTien = edtSoTien.getText().toString().replaceAll("\\.", "");
+
         String tenTaiKhoan = edtTenTaiKhoan.getText().toString();
         mIconItem.buildDrawingCache();
         Bitmap bmap = ((BitmapDrawable) mIconItem.getDrawable()).getBitmap();
@@ -177,10 +172,27 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
         String loaiTaiKhoan = mTextItem.getText().toString();
         String chuThich = edtChuThich.getText().toString();
 
-        TaiKhoanHelper database = new TaiKhoanHelper(getApplicationContext());
-        boolean trt = database.insertdata(soTien, tenTaiKhoan, loaiTaiKhoan, chuThich, Stringbmap);
-        Intent intent = new Intent(this, TaiKhoanActivity.class);
-        startActivity(intent);
+        boolean flag = true;
+        if (formatSoTien.equals("")) {
+            Toast.makeText(getApplicationContext(), "Bạn chưa nhập số tiền", Toast.LENGTH_SHORT).show();
+            flag = false;
+        }
+        if (tenTaiKhoan.equals("")) {
+            edtTenTaiKhoan.setTextColor(Color.RED);
+            flag = false;
+        }
+        if (loaiTaiKhoan.equals("LOẠI TÀI KHOẢN")) {
+            mTextItem.setTextColor(Color.RED);
+            flag = false;
+        }
+        if (flag) {
+            TaiKhoanHelper database = new TaiKhoanHelper(getApplicationContext());
+            boolean trt = database.insertdata(formatSoTien, tenTaiKhoan, loaiTaiKhoan, chuThich, Stringbmap);
+            Toast.makeText(getBaseContext(), "Thêm giao dịch thành công", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, TaiKhoanActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
     private void anhXa() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -193,7 +205,7 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
         edtTenTaiKhoan = (EditText) findViewById(R.id.edt_tentk);
         edtChuThich = (EditText) findViewById(R.id.edt_chuthich);
         btnLuu = (Button) findViewById(R.id.btn_Luu);
-        textCurrency=(TextView) findViewById(R.id.currency);
+        TextView textCurrency = (TextView) findViewById(R.id.currency);
         textCurrency.setPaintFlags(textCurrency.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 

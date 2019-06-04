@@ -25,15 +25,19 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.sinhvien.quanlychitieu.Database.HanMuc;
+import com.sinhvien.quanlychitieu.Database.HanMucHelper;
 import com.sinhvien.quanlychitieu.Database.TaiKhoan;
 import com.sinhvien.quanlychitieu.Database.TaiKhoanHelper;
 import com.sinhvien.quanlychitieu.Database.ThuChiHelper;
 import com.sinhvien.quanlychitieu.R;
 import com.sinhvien.quanlychitieu.adapter.ChuyenImage;
+import com.sinhvien.quanlychitieu.adapter.HanMucAdapter;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class CustomTaiKhoan extends AppCompatActivity {
@@ -46,7 +50,6 @@ public class CustomTaiKhoan extends AppCompatActivity {
     private EditText edtSoTien;
     private EditText edtTenTaiKhoan;
     private EditText edtChuThich;
-    ArrayList<TaiKhoan> listTaiKhoan;
     TaiKhoanHelper tk_database;
     ThuChiHelper tc_database;
     ChuyenImage chuyendoi;
@@ -118,10 +121,13 @@ public class CustomTaiKhoan extends AppCompatActivity {
             }
         }
     };
+
     private void xoaDuLieu() {
         boolean xoa_giaodich = tc_database.deleteByViTienID(idTaiKhoan);
         boolean xoa_taikhoan = tk_database.deleteTaiKhoan(idTaiKhoan);
         if (xoa_taikhoan) {
+            HanMucHelper hm_database = new HanMucHelper(thisContext);
+            hm_database.deleteHanMucByIDViTien(idTaiKhoan);
             finish();
             Toast.makeText(getBaseContext(),
                     "Xóa tài khoản thành công", Toast.LENGTH_LONG).show();
@@ -139,28 +145,27 @@ public class CustomTaiKhoan extends AppCompatActivity {
         String loaiTaiKhoan = mTextItem.getText().toString();
         String chuThich = edtChuThich.getText().toString();
 
-        boolean result = tk_database.updateTaiKhoan(idTaiKhoan,soTien,tenTaiKhoan,loaiTaiKhoan,imgLoaiTaiKhoan,chuThich);
-        if(result) {
+        boolean result = tk_database.updateTaiKhoan(idTaiKhoan, soTien, tenTaiKhoan, loaiTaiKhoan, imgLoaiTaiKhoan, chuThich);
+        if (result) {
             finish();
             Toast.makeText(getBaseContext(), "Sửa tài khoản thành công", Toast.LENGTH_SHORT).show();
-        }
-        else
+        } else
             Toast.makeText(thisContext, "Sửa tài khoản thất bại", Toast.LENGTH_SHORT).show();
     }
 
 
     public void truyenDuLieu() {
         Intent extras = getIntent();
-        idTaiKhoan =  extras.getIntExtra("_id",-1);
-        int soTien = extras.getIntExtra("soTien",-1);
+        idTaiKhoan = extras.getIntExtra("_id", -1);
+        int soTien = extras.getIntExtra("soTien", -1);
         String tenTaiKhoan = extras.getStringExtra("tenTaiKhoan");
         String imgLoaiTaiKhoan = extras.getStringExtra("imgLoaiTaiKhoan");
         String tenLoaiTaiKhoan = extras.getStringExtra("tenLoaiTaiKhoan");
-        String chuThich= extras.getStringExtra("chuThich");
-        setDuLieu(soTien, tenTaiKhoan,tenLoaiTaiKhoan, imgLoaiTaiKhoan, chuThich);
+        String chuThich = extras.getStringExtra("chuThich");
+        setDuLieu(soTien, tenTaiKhoan, tenLoaiTaiKhoan, imgLoaiTaiKhoan, chuThich);
     }
 
-    public void setDuLieu(int soTien, String tenTaiKhoan, String tenLoaiTaiKhoan,String imgLoaiTaiKhoan, String chuThich) {
+    public void setDuLieu(int soTien, String tenTaiKhoan, String tenLoaiTaiKhoan, String imgLoaiTaiKhoan, String chuThich) {
         edtSoTien.setText(String.valueOf(soTien));
         edtTenTaiKhoan.setText(tenTaiKhoan);
         mTextItem.setText(tenLoaiTaiKhoan);
@@ -184,7 +189,6 @@ public class CustomTaiKhoan extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String text = edtSoTien.getText().toString();
 
                 edtSoTien.removeTextChangedListener(this);
                 try {

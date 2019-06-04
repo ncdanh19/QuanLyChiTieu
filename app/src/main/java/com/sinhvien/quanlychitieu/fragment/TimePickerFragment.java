@@ -34,7 +34,7 @@ public class TimePickerFragment extends DialogFragment
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // Do something with the time chosen by the user
         Calendar c = Calendar.getInstance();
-        c.set(hourOfDay,minute);
+        c.set(hourOfDay, minute);
 
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
         String formattedDate = sdf.format(c.getTime());

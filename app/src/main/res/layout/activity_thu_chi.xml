@@ -42,7 +42,7 @@
                 android:layout_gravity="center"
                 android:text="Chọn mục"
                 android:textColor="@color/colorItem"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </android.support.v7.widget.Toolbar>
     </LinearLayout>

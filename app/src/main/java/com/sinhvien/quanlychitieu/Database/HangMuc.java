@@ -1,13 +1,14 @@
 package com.sinhvien.quanlychitieu.Database;
 
 public class HangMuc {
-    public int image;
-    public String tenHangMuc;
+    private int image;
+    private String tenHangMuc;
 
-    public HangMuc( String tenHangMuc, int image) {
+    public HangMuc(String tenHangMuc, int image) {
         this.image = image;
         this.tenHangMuc = tenHangMuc;
     }
+
     public HangMuc() {
     }
 

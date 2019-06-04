@@ -15,18 +15,18 @@
             android:id="@+id/image_hangmuc"
             android:layout_width="42dp"
             android:layout_height="42dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:layout_centerVertical="true"
             app:srcCompat="@mipmap/ic_launcher_round"
             />
 
         <LinearLayout
             android:id="@+id/left_item"
-            android:layout_toRightOf="@id/image_hangmuc"
+            android:layout_toEndOf="@id/image_hangmuc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:orientation="vertical">
 
             <TextView
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:text="Tên hạng mục"
                 android:textColor="@android:color/black"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_ngay"
@@ -43,14 +43,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="ngày thêm"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="8dp"
             android:gravity="right"
             android:layout_centerVertical="true"
@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Số tiền"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:gravity="right"
                     android:textColor="@android:color/black" />
                 <TextView
@@ -72,17 +72,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
                     android:text="đ"
                     android:textColor="@color/colorItemText"
-                    android:textSize="16dp" />
+                    android:textSize="16sp" />
             </LinearLayout>
             <TextView
                 android:id="@+id/tv_vitien"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ví tiền"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:gravity="right"/>
         </LinearLayout>
     </RelativeLayout>

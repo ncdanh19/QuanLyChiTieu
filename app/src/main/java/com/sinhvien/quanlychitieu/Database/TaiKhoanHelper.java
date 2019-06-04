@@ -67,11 +67,7 @@ public class TaiKhoanHelper extends SQLiteOpenHelper {
         contentValues.put(COT_HINH_ANH, image);
         long result = db.insert(TEN_BANG_TAIKHOAN, null, contentValues);
 
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
 
     public List<TaiKhoan> getdata() {
@@ -129,11 +125,7 @@ public class TaiKhoanHelper extends SQLiteOpenHelper {
                 contentValues.put(COT_SO_TIEN, after);
                 long result = db.update(TEN_BANG_TAIKHOAN, contentValues, "_id=" + idViTien, null);
 
-                if (result == -1) {
-                    return false;
-                } else {
-                    return true;
-                }
+                return result != -1;
             }
         }
         return false;
@@ -248,8 +240,7 @@ public class TaiKhoanHelper extends SQLiteOpenHelper {
 
     public boolean deleteTaiKhoan(long idTaiKhoan) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long longId = (long) idTaiKhoan;
-        return db.delete(TEN_BANG_TAIKHOAN, COT_ID + " = " + longId, null) > 0;
+        return db.delete(TEN_BANG_TAIKHOAN, COT_ID + " = " + (long) idTaiKhoan, null) > 0;
     }
 
 

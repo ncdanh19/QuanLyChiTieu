@@ -26,13 +26,13 @@ public class HangMucThuFragment extends Fragment {
 
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private final String tenloai[] = {
-            "Quà tặng", "Lương", "Tiền lãi", "Thưởng","Tiết kiệm","Khác"
+    private final String[] tenloai = {
+            "Quà tặng", "Lương", "Tiền lãi", "Thưởng", "Tiết kiệm", "Khác"
     };
 
-    private final int image[] = {
+    private final int[] image = {
             R.mipmap.ic_present, R.mipmap.ic_luong, R.mipmap.ic_tienlai,
-            R.mipmap.ic_thuong,R.mipmap.ic_percent,R.mipmap.ic_other
+            R.mipmap.ic_thuong, R.mipmap.ic_percent, R.mipmap.ic_other
 
     };
 

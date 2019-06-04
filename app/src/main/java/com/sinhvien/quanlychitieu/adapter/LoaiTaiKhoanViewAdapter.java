@@ -17,15 +17,15 @@ import com.sinhvien.quanlychitieu.R;
 
 import java.util.ArrayList;
 
-public class LoaiTaiKhoanViewAdapter extends RecyclerView.Adapter<LoaiTaiKhoanViewAdapter.RecyclerViewHolder>{
+public class LoaiTaiKhoanViewAdapter extends RecyclerView.Adapter<LoaiTaiKhoanViewAdapter.RecyclerViewHolder> {
     private ArrayList<LoaiTaiKhoan> loaiTaiKhoans;
     private Context context;
     private OnPagerItemSelected listener;
 
-    public LoaiTaiKhoanViewAdapter(Context context, ArrayList<LoaiTaiKhoan> loaiTaiKhoans,OnPagerItemSelected listener) {
+    public LoaiTaiKhoanViewAdapter(Context context, ArrayList<LoaiTaiKhoan> loaiTaiKhoans, OnPagerItemSelected listener) {
         this.loaiTaiKhoans = loaiTaiKhoans;
         this.context = context;
-        this.listener=listener;
+        this.listener = listener;
     }
 
     @Override
@@ -43,13 +43,13 @@ public class LoaiTaiKhoanViewAdapter extends RecyclerView.Adapter<LoaiTaiKhoanVi
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                if(isLongClick)
-                    Toast.makeText(context, "hihi", Toast.LENGTH_SHORT).show();
-                else {
+                if (isLongClick) {
+//                    Toast.makeText(context, "hihi", Toast.LENGTH_SHORT).show();
+                } else {
                     Bundle bundle = new Bundle();
                     Intent intent = new Intent("data");
-                    bundle.putString("text",loaiTaiKhoans.get(position).getTenLoai());
-                    bundle.putInt("img",loaiTaiKhoans.get(position).getImg());
+                    bundle.putString("text", loaiTaiKhoans.get(position).getTenLoai());
+                    bundle.putInt("img", loaiTaiKhoans.get(position).getImg());
                     intent.putExtras(bundle);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                     listener.pagerItemSelected();
@@ -65,12 +65,12 @@ public class LoaiTaiKhoanViewAdapter extends RecyclerView.Adapter<LoaiTaiKhoanVi
     }
 
 
-    public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
+    public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView textItem;
         ImageView imageItem;
         private ItemClickListener itemClickListener;
 
-        public RecyclerViewHolder(View itemView) {
+        RecyclerViewHolder(View itemView) {
             super(itemView);
             imageItem = (ImageView) itemView.findViewById(R.id.image_item);
             textItem = (TextView) itemView.findViewById(R.id.text_item);
@@ -80,17 +80,17 @@ public class LoaiTaiKhoanViewAdapter extends RecyclerView.Adapter<LoaiTaiKhoanVi
 
         @Override
         public void onClick(View v) {
-            itemClickListener.onClick(v,getAdapterPosition(),false);
+            itemClickListener.onClick(v, getAdapterPosition(), false);
         }
 
         @Override
         public boolean onLongClick(View v) {
-            itemClickListener.onClick(v,getAdapterPosition(),true);
+            itemClickListener.onClick(v, getAdapterPosition(), true);
             return true;
         }
 
-        public void setItemClickListener(ItemClickListener itemClickListener){
-            this.itemClickListener=itemClickListener;
+        void setItemClickListener(ItemClickListener itemClickListener) {
+            this.itemClickListener = itemClickListener;
         }
     }
 

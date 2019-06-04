@@ -25,7 +25,6 @@ import com.sinhvien.quanlychitieu.fragment.ThuTienFragment;
 public class ThuChiActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private ViewPagerAdapter adapter;
     Toolbar toolbar;
     ActionBar actionBar;
     ImageButton mTroLai;
@@ -38,6 +37,7 @@ public class ThuChiActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter("hangmucthu"));
         viewPager.setCurrentItem(page);
     }
+
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -53,6 +53,7 @@ public class ThuChiActivity extends AppCompatActivity {
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +64,7 @@ public class ThuChiActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ChiTienFragment(), "Chi");
         adapter.addFragment(new ThuTienFragment(), "Thu");
         viewPager.setAdapter(adapter);
@@ -78,18 +79,18 @@ public class ThuChiActivity extends AppCompatActivity {
     }
 
     private void anhXa() {
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         viewPager = (ViewPager) findViewById(R.id.viewpaper);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
-        mTroLai=(ImageButton)findViewById(R.id.trolai);
+        mTroLai = (ImageButton) findViewById(R.id.trolai);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) { switch (item.getItemId()) {
-        case android.R.id.home:
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
-    }
+        }
         return super.onOptionsItemSelected(item);
     }
 

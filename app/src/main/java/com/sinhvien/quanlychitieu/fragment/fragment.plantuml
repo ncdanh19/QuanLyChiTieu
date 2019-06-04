@@ -1,0 +1,249 @@
+@startuml
+
+title __FRAGMENT's Class Diagram__\n
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class ChiTienFragment {
+          ~ view : View
+          ~ mNgay : TextView
+          ~ textCurrency : TextView
+          ~ mChonHangMuc : LinearLayout
+          ~ mLuu : Button
+          ~ mSoTien : EditText
+          ~ mMoTa : EditText
+          ~ imageViTien : ImageView
+          ~ imageHangMuc : ImageView
+          ~ textHangMuc : TextView
+          ~ textViTien : TextView
+          ~ btnLoaiTaiKhoan : LinearLayout
+          ~ _idViTien : int
+          ~ listTaiKhoan : List<TaiKhoan>
+          - linearLayoutManager : LinearLayoutManager
+          - mDatabase : DatabaseReference
+          ~ calendar : Calendar
+          ~ pos : int
+          ~ begin : int
+          ~ simpleDateFormat : SimpleDateFormat
+          - mReceiver : BroadcastReceiver
+          + ChiTienFragment()
+          + onCreateView()
+          + onResume()
+          + goToHangMuc()
+          + popUpDialog()
+          - chonNgay()
+          + writeNewData()
+          + them()
+          + anhXa()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class DatePickerFragment {
+          ~ mNgay : Button
+          + onCreateDialog()
+          + onDateSet()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class HangMucChiFragment {
+          - mColumnCount : int
+          - tenloai : String[]
+          - image : int[]
+          + HangMucChiFragment()
+          + onCreate()
+          + onCreateView()
+          - prepareData()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class HangMucThuFragment {
+          - mColumnCount : int
+          - tenloai : String[]
+          - image : int[]
+          + HangMucThuFragment()
+          + onCreate()
+          + onCreateView()
+          - prepareData()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class ThongKeChiFragment {
+          ~ pieChart : PieChart
+          ~ listThuChi : List<ThuChi>
+          ~ view : View
+          - noItem : TextView
+          - haveItem : LinearLayout
+          - recyclerView : RecyclerView
+          - linearLayoutManager : LinearLayoutManager
+          + ThongKeChiFragment()
+          + onCreateView()
+          - initViews()
+          + TongTien()
+          + checkZeroList()
+          - createPieChart()
+          + onValueSelected()
+          + onNothingSelected()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class MyPercentFormatter {
+          ~ mFormat : DecimalFormat
+          - pieChart : PieChart
+          - percentSignSeparated : boolean
+          ~ MyPercentFormatter()
+          ~ MyPercentFormatter()
+          + MyPercentFormatter()
+          + getFormattedValue()
+          + getPieLabel()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class ThongKeThuFragment {
+          ~ pieChart : PieChart
+          ~ listThuChi : List<ThuChi>
+          ~ view : View
+          - noItem : TextView
+          - haveItem : LinearLayout
+          + ThongKeThuFragment()
+          + onCreateView()
+          + TongTien()
+          + checkZeroList()
+          - createPieChart()
+          + onValueSelected()
+          + onNothingSelected()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class MyPercentFormatter {
+          ~ mFormat : DecimalFormat
+          - pieChart : PieChart
+          - percentSignSeparated : boolean
+          ~ MyPercentFormatter()
+          ~ MyPercentFormatter()
+          + MyPercentFormatter()
+          + getFormattedValue()
+          + getPieLabel()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class ThuTienFragment {
+          ~ view : View
+          ~ mNgay : TextView
+          ~ textCurrency : TextView
+          ~ mChonHangMuc : LinearLayout
+          ~ mLuu : Button
+          ~ mSoTien : EditText
+          ~ mMoTa : EditText
+          ~ imageViTien : ImageView
+          ~ imageHangMuc : ImageView
+          ~ textHangMuc : TextView
+          ~ textViTien : TextView
+          ~ btnLoaiTaiKhoan : LinearLayout
+          ~ _idViTien : int
+          ~ listTaiKhoan : List<TaiKhoan>
+          - linearLayoutManager : LinearLayoutManager
+          - mDatabase : DatabaseReference
+          ~ calendar : Calendar
+          ~ pos : int
+          ~ begin : int
+          ~ simpleDateFormat : SimpleDateFormat
+          - mReceiver : BroadcastReceiver
+          + ThuTienFragment()
+          + onCreateView()
+          + onResume()
+          + goToHangMuc()
+          + popUpDialog()
+          - chonNgay()
+          + writeNewData()
+          + them()
+          + anhXa()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.fragment {
+      class TimePickerFragment {
+          + onCreateDialog()
+          + onTimeSet()
+      }
+    }
+  }
+  
+
+  ChiTienFragment -up-|> Fragment
+  ChiTienFragment o-- ChuyenImage : chuyendoi
+  ChiTienFragment o-- TaiKhoanHelper : database
+  ChiTienFragment o-- AlertDialogAdapter : adapter
+  SavedState -up-|> Parcelable
+  DatePickerFragment -up-|> OnDateSetListener
+  DatePickerFragment -up-|> DialogFragment
+  SavedState -up-|> Parcelable
+  HangMucChiFragment -up-|> Fragment
+  SavedState -up-|> Parcelable
+  HangMucThuFragment -up-|> Fragment
+  SavedState -up-|> Parcelable
+  ThongKeChiFragment -up-|> OnChartValueSelectedListener
+  ThongKeChiFragment -up-|> Fragment
+  ThongKeChiFragment o-- ThuChiHelper : tc_database
+  ThongKeChiFragment o-- ThongKeAdapter : adapter
+  ThongKeChiFragment +-down- MyPercentFormatter
+  MyPercentFormatter -up-|> ValueFormatter
+  SavedState -up-|> Parcelable
+  ThongKeThuFragment -up-|> OnChartValueSelectedListener
+  ThongKeThuFragment -up-|> Fragment
+  ThongKeThuFragment o-- ThuChiHelper : tc_database
+  ThongKeThuFragment +-down- MyPercentFormatter
+  MyPercentFormatter -up-|> ValueFormatter
+  SavedState -up-|> Parcelable
+  ThuTienFragment -up-|> Fragment
+  ThuTienFragment o-- ChuyenImage : chuyendoi
+  ThuTienFragment o-- TaiKhoanHelper : database
+  ThuTienFragment o-- AlertDialogAdapter : adapter
+  SavedState -up-|> Parcelable
+  TimePickerFragment -up-|> OnTimeSetListener
+  TimePickerFragment -up-|> DialogFragment
+  SavedState -up-|> Parcelable
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

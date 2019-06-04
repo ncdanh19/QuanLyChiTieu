@@ -28,12 +28,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sinhvien.quanlychitieu.Database.HanMuc;
+import com.sinhvien.quanlychitieu.Database.HanMucHelper;
 import com.sinhvien.quanlychitieu.Database.TaiKhoan;
 import com.sinhvien.quanlychitieu.Database.TaiKhoanHelper;
 import com.sinhvien.quanlychitieu.Database.ThuChiHelper;
 import com.sinhvien.quanlychitieu.R;
 import com.sinhvien.quanlychitieu.adapter.AlertDialogAdapter;
 import com.sinhvien.quanlychitieu.adapter.ChuyenImage;
+import com.sinhvien.quanlychitieu.adapter.HanMucAdapter;
 import com.sinhvien.quanlychitieu.adapter.OnPagerItemSelected;
 
 import java.text.DecimalFormat;
@@ -45,28 +48,29 @@ import java.util.Locale;
 
 public class CustomThuChi extends AppCompatActivity {
 
-    private TextView mNgay;
-    private LinearLayout mChonHangMuc;
-    private EditText mSoTien;
-    private EditText mMoTa;
-    private Button btnLuu;
-    private ImageView imageViTien;
-    private TextView textViTien;
-    private LinearLayout btnLoaiTaiKhoan;
-    private ImageView imageHangMuc;
-    private TextView textHangMuc;
-    private TextView textCurrency;
+    TextView mNgay;
+    LinearLayout mChonHangMuc;
+    EditText mSoTien;
+    EditText mMoTa;
+    Button btnLuu;
+    Button btnXoa;
+    ImageButton btnTroLai;
+    ImageView imageViTien;
+    TextView textViTien;
+    LinearLayout btnLoaiTaiKhoan;
+    ImageView imageHangMuc;
+    TextView textHangMuc;
+    TextView textCurrency;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     final Calendar calendar = Calendar.getInstance();
-    int idThuChi, idViTienMoi, trangThaiCu ,trangThaiMoi;
-    int idViTienCu, soTienCu,soTienMoi;
-    String ngayCu,ngayMoi;
+    int idThuChi, idViTienMoi, trangThaiCu, trangThaiMoi;
+    int idViTienCu, soTienCu, soTienMoi;
+    String ngayCu, ngayMoi;
     String hangMucCu;
+    String moTaCu;
     ThuChiHelper tc_database;
     TaiKhoanHelper tk_database;
-    private Button btnXoa;
     int pos, begin;
-    private ImageButton btnTroLai;
     List<TaiKhoan> listTaiKhoan;
     AlertDialogAdapter adapter;
     Context thisContext;
@@ -176,7 +180,6 @@ public class CustomThuChi extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         dialog.show();
-
     }
 
     //hiển thị popup chọn ngày
@@ -202,12 +205,12 @@ public class CustomThuChi extends AppCompatActivity {
                     tk_database.xuLy(idViTienCu, 1, soTienCu); //xóa dữ liệu cũ vì chưa thay đổi
                 else
                     tk_database.xuLy(idViTienCu, 0, soTienCu);
+                updateHanMuc();
                 finish();
                 Toast.makeText(getBaseContext(), "Xóa giao dịch thành công", Toast.LENGTH_SHORT).show();
             } else
                 Toast.makeText(this, "Xóa thất bại", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-
+        } catch (Exception ignored) {
         }
     }
 
@@ -226,7 +229,6 @@ public class CustomThuChi extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String text = mSoTien.getText().toString();
 
                 mSoTien.removeTextChangedListener(this);
                 try {
@@ -270,7 +272,7 @@ public class CustomThuChi extends AppCompatActivity {
         String imgViTien = ChuyenImage.getString(bmapViTien);
         String imgHangMuc = ChuyenImage.getString(bmapHangMuc);
         String tenHangMuc = textHangMuc.getText().toString();
-        String moTa = mMoTa.getText().toString();
+        String moTaMoi = mMoTa.getText().toString();
         ngayMoi = mNgay.getText().toString();
         String tenViTien = textViTien.getText().toString();
         boolean flag = true;
@@ -281,14 +283,14 @@ public class CustomThuChi extends AppCompatActivity {
         if (flag) {
             soTienMoi = Integer.parseInt(formatSoTien);
             if (soTienCu == soTienMoi) {
-                if (idViTienMoi == idViTienCu && hangMucCu.equals(tenHangMuc) && trangThaiCu==trangThaiMoi&&ngayCu.equals(ngayMoi)) {
+                if (idViTienMoi == idViTienCu && hangMucCu.equals(tenHangMuc) && trangThaiCu == trangThaiMoi && ngayCu.equals(ngayMoi) && moTaCu.equals(moTaMoi)) {
                     Toast.makeText(getBaseContext(), "Không có thay đổi", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     ThuChiHelper tc_database = new ThuChiHelper(thisContext);
                     boolean trt = tc_database.updateThuChi(idThuChi, idViTienMoi, soTienMoi, imgHangMuc, tenHangMuc,
-                            moTa, ngayMoi, imgViTien, tenViTien, trangThaiMoi);
-                    Boolean xuly= tk_database.xuLyUpdate(idViTienMoi,  soTienMoi, idViTienCu, soTienCu,trangThaiCu,trangThaiMoi);
-                     if (trt) {
+                            moTaMoi, ngayMoi, imgViTien, tenViTien, trangThaiMoi);
+                    Boolean xuly = tk_database.xuLyUpdate(idViTienMoi, soTienMoi, idViTienCu, soTienCu, trangThaiCu, trangThaiMoi);
+                    if (trt) {
                         Toast.makeText(getBaseContext(), "Sửa thành công", Toast.LENGTH_SHORT).show();
                         finish();
                     }
@@ -296,15 +298,24 @@ public class CustomThuChi extends AppCompatActivity {
             } else {
                 ThuChiHelper tc_database = new ThuChiHelper(thisContext);
                 boolean trt = tc_database.updateThuChi(idThuChi, idViTienMoi, soTienMoi, imgHangMuc, tenHangMuc,
-                        moTa, ngayMoi, imgViTien, tenViTien, trangThaiMoi);
-                Boolean xuly = tk_database.xuLyUpdate(idViTienMoi,  soTienMoi, idViTienCu, soTienCu,trangThaiCu,trangThaiMoi);
+                        moTaMoi, ngayMoi, imgViTien, tenViTien, trangThaiMoi);
+                Boolean xuly = tk_database.xuLyUpdate(idViTienMoi, soTienMoi, idViTienCu, soTienCu, trangThaiCu, trangThaiMoi);
 
                 if (trt) {
+                    updateHanMuc();
                     Toast.makeText(getBaseContext(), "Sửa thành công", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
         }
+    }
+
+    public void updateHanMuc() {
+        HanMucHelper hm_database = new HanMucHelper(thisContext);
+        List<HanMuc> listHanMuc = hm_database.getdata();
+        //gắn list vào adapter
+        HanMucAdapter adapter = new HanMucAdapter(thisContext, listHanMuc);
+        adapter.updateData(listHanMuc);
     }
 
     public void goToHangMuc(View v) {
@@ -358,16 +369,16 @@ public class CustomThuChi extends AppCompatActivity {
         soTienCu = Integer.parseInt(extras.getStringExtra("soTien"));
         hangMucCu = extras.getStringExtra("tenHangMuc");
         String imageHangMuc = extras.getStringExtra("imageHangMuc");
-        String moTa = extras.getStringExtra("moTa");
+        moTaCu = extras.getStringExtra("moTa");
         ngayCu = extras.getStringExtra("ngayThang");
-        ngayMoi=ngayCu;
+        ngayMoi = ngayCu;
         String tenViTien = extras.getStringExtra("tenViTien");
         String imageViTien = extras.getStringExtra("imageViTien");
         idViTienCu = extras.getIntExtra("idViTien", -1);
         idViTienMoi = idViTienCu;
         trangThaiCu = extras.getIntExtra("trangThai", -1);
-        trangThaiMoi=trangThaiCu;
-        setDuLieu(soTienCu, hangMucCu, imageHangMuc, moTa, ngayCu, tenViTien, imageViTien, trangThaiCu);
+        trangThaiMoi = trangThaiCu;
+        setDuLieu(soTienCu, hangMucCu, imageHangMuc, moTaCu, ngayCu, tenViTien, imageViTien, trangThaiCu);
     }
 
     public void setDuLieu(int soTien, String tenHangMuc, String imgHangMuc, String moTa,

@@ -17,45 +17,46 @@ import android.widget.Toast;
 
 import com.sinhvien.quanlychitieu.Database.HangMuc;
 import com.sinhvien.quanlychitieu.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MyHangMucChiRecyclerViewAdapter extends RecyclerView.Adapter<MyHangMucChiRecyclerViewAdapter.ViewHolder> {
+public class MyHangMucChiRecyclerViewAdapter extends RecyclerView.Adapter<MyHangMucChiRecyclerViewAdapter.HangMucChiViewHolder> {
 
     private Context context;
     private final List<HangMuc> listHangMuc;
     private OnPagerItemSelected listener;
 
-    public MyHangMucChiRecyclerViewAdapter(Context context, ArrayList<HangMuc> items,OnPagerItemSelected listener) {
-        this.context=context;
+    public MyHangMucChiRecyclerViewAdapter(Context context, ArrayList<HangMuc> items, OnPagerItemSelected listener) {
+        this.context = context;
         this.listHangMuc = items;
-        this.listener=listener;
+        this.listener = listener;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public HangMucChiViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_hangmucchi, parent, false);
-        return new ViewHolder(view);
+        return new HangMucChiViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final HangMucChiViewHolder holder, int position) {
         final HangMuc hangMuc = listHangMuc.get(position);
         holder.imageItem.setImageResource(hangMuc.getImage());
         holder.textItem.setText(hangMuc.getTenHangMuc());
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                if(isLongClick)
-                    Toast.makeText(context, "hihi", Toast.LENGTH_SHORT).show();
-                else {
+                if (isLongClick) {
+//                    Toast.makeText(context, "hihi", Toast.LENGTH_SHORT).show();
+                } else {
                     Bundle bundle = new Bundle();
                     Intent intent = new Intent("hangmucchi");
                     bundle.putString("text", hangMuc.getTenHangMuc());
                     bundle.putInt("img", hangMuc.getImage());
-                    bundle.putInt("page",0); //chuyển về mục chi khi chọn hạng mục của chi tiền
+                    bundle.putInt("page", 0); //chuyển về mục chi khi chọn hạng mục của chi tiền
                     intent.putExtras(bundle);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                     listener.pagerItemSelected();
@@ -67,25 +68,18 @@ public class MyHangMucChiRecyclerViewAdapter extends RecyclerView.Adapter<MyHang
     }
 
 
-    public static Bitmap getStringtoImage(String imageString) {
-        byte[] imageBytes = Base64.decode(imageString, Base64.DEFAULT);
-        Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-        return decodedImage;
-    }
-
-
     @Override
     public int getItemCount() {
         return listHangMuc.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
+    public class HangMucChiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         TextView textItem;
         ImageView imageItem;
         private ItemClickListener itemClickListener;
 
-        public ViewHolder(View view) {
+        HangMucChiViewHolder(View view) {
             super(view);
             imageItem = (ImageView) view.findViewById(R.id.image_vitien);
             textItem = (TextView) view.findViewById(R.id.text_vitien);
@@ -95,17 +89,17 @@ public class MyHangMucChiRecyclerViewAdapter extends RecyclerView.Adapter<MyHang
 
         @Override
         public void onClick(View v) {
-            itemClickListener.onClick(v,getAdapterPosition(),false);
+            itemClickListener.onClick(v, getAdapterPosition(), false);
         }
 
         @Override
         public boolean onLongClick(View v) {
-            itemClickListener.onClick(v,getAdapterPosition(),true);
+            itemClickListener.onClick(v, getAdapterPosition(), true);
             return true;
         }
 
-        public void setItemClickListener(ItemClickListener itemClickListener){
-            this.itemClickListener=itemClickListener;
+        void setItemClickListener(ItemClickListener itemClickListener) {
+            this.itemClickListener = itemClickListener;
         }
     }
 }

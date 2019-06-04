@@ -9,7 +9,7 @@
         android:layout_width="42dp"
         android:layout_height="42dp"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:src="@mipmap/ic_launcher_round" />
 
     <TextView
@@ -17,9 +17,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@id/image_vitien"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@id/image_vitien"
         android:text="text1"
         android:textColor="@color/colorItemText"
-        android:textSize="16dp" />
+        android:textSize="16sp" />
 </RelativeLayout>

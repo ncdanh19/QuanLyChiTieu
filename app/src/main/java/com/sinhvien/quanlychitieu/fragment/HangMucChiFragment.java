@@ -26,14 +26,14 @@ public class HangMucChiFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
 
-    private final String tenloai[] = {
-            "Ăn uống","Mua sắm","Điện thoại","Internet","Điện","Nước","Đi lại","Gửi xe","Bảo dưỡng","Xăng xe"
+    private final String[] tenloai = {
+            "Ăn uống", "Mua sắm", "Điện thoại", "Internet", "Điện", "Nước", "Đi lại", "Gửi xe", "Bảo dưỡng", "Xăng xe"
     };
 
-    private final int image[] = {
-            R.mipmap.ic_anuong,R.mipmap.ic_shopping,R.mipmap.ic_dienthoai,
-            R.mipmap.ic_internet,R.mipmap.ic_electric,R.mipmap.ic_water ,
-            R.mipmap.ic_car,R.mipmap.ic_ticket,R.mipmap.ic_tool,R.mipmap.ic_fuel
+    private final int[] image = {
+            R.mipmap.ic_anuong, R.mipmap.ic_shopping, R.mipmap.ic_dienthoai,
+            R.mipmap.ic_internet, R.mipmap.ic_electric, R.mipmap.ic_water,
+            R.mipmap.ic_car, R.mipmap.ic_ticket, R.mipmap.ic_tool, R.mipmap.ic_fuel
 
     };
 

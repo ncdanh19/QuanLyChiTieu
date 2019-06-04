@@ -8,6 +8,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,8 @@ import com.sinhvien.quanlychitieu.Database.ThuChi;
 import com.sinhvien.quanlychitieu.Database.ThuChiHelper;
 import com.sinhvien.quanlychitieu.R;
 import com.sinhvien.quanlychitieu.adapter.ChuyenImage;
+import com.sinhvien.quanlychitieu.adapter.ThongKeAdapter;
+import com.sinhvien.quanlychitieu.adapter.TongQuanAdapter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -46,6 +51,9 @@ public class ThongKeChiFragment extends Fragment implements OnChartValueSelected
     View view;
     private TextView noItem;
     private LinearLayout haveItem;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
+    private ThongKeAdapter adapter;
 
     public ThongKeChiFragment() {
         // Required empty public constructor
@@ -73,8 +81,26 @@ public class ThongKeChiFragment extends Fragment implements OnChartValueSelected
             noItem.setVisibility(View.GONE);
             haveItem.setVisibility(View.VISIBLE);
             createPieChart();
+            initViews();
         }
         return view;
+    }
+
+    private void initViews() {
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+
+        //chia ngang mỗi item
+        DividerItemDecoration dividerHorizontal =
+                new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerHorizontal);
+
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        //gắn list vào adapter
+        adapter = new ThongKeAdapter(getContext(), listThuChi);
+        recyclerView.setAdapter(adapter);
     }
 
     public int TongTien() {
@@ -145,26 +171,26 @@ public class ThongKeChiFragment extends Fragment implements OnChartValueSelected
         data.setValueFormatter(new MyPercentFormatter(pieChart));
         ArrayList<Integer> colors = new ArrayList<>();
 
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+        final int[] My_COLORS = {
+                Color.parseColor("#bcaaa4"),
+                Color.parseColor("#7c4dff"),
+                Color.parseColor("#ffea00"),
+                Color.parseColor("#b39ddb"),
+                Color.parseColor("#90caf9"),
+                Color.parseColor("#fff59d"),
+                Color.parseColor("#c6ff00"),
+                Color.parseColor("#ffab91"),
+                Color.parseColor("#ff5252"),
+                Color.parseColor("#c5e1a5"),
+                Color.parseColor("#e0e0e0"),
+        };
+        for (int c : My_COLORS)
             colors.add(c);
-
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-
-        colors.add(ColorTemplate.getHoloBlue());
 
         dataSet.setColors(colors);
         dataSet.setDrawIcons(true);
         dataSet.setSliceSpace(2f);
+
 
         dataSet.setValueLinePart1OffsetPercentage(90.0f);
         dataSet.setValueLinePart1Length(1f);
@@ -193,17 +219,17 @@ public class ThongKeChiFragment extends Fragment implements OnChartValueSelected
 
     public class MyPercentFormatter extends ValueFormatter {
 
-        public DecimalFormat mFormat;
+        DecimalFormat mFormat;
         private PieChart pieChart;
         private boolean percentSignSeparated;
 
-        public MyPercentFormatter() {
+        MyPercentFormatter() {
             mFormat = new DecimalFormat("###,###,##0.0");
             percentSignSeparated = true;
         }
 
         // Can be used to remove percent signs if the chart isn't in percent mode
-        public MyPercentFormatter(PieChart pieChart) {
+        MyPercentFormatter(PieChart pieChart) {
             this();
             this.pieChart = pieChart;
         }
@@ -218,7 +244,7 @@ public class ThongKeChiFragment extends Fragment implements OnChartValueSelected
         public String getFormattedValue(float value) {
             if (value < 10)
                 return "";
-            if(checkZeroList())
+            if (checkZeroList())
                 return "";
             return mFormat.format(value) + (percentSignSeparated ? " %" : "%");
         }

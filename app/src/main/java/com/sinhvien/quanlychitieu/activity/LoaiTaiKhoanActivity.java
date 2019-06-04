@@ -25,15 +25,13 @@ import java.util.ArrayList;
 public class LoaiTaiKhoanActivity extends AppCompatActivity {
 
     ImageButton mTroLai;
-    private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
 
-    private final String tenloai[] = {
+    private final String[] tenloai = {
             "Tiền mặt",
             "Tài khoản ngân hàng"
     };
 
-    private final int image[] = {
+    private final int[] image = {
             R.mipmap.ic_tienmat, R.mipmap.ic_nganhang
 
     };
@@ -53,14 +51,14 @@ public class LoaiTaiKhoanActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        recyclerView = (RecyclerView) findViewById(R.id.list_LoaiTaiKhoan);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list_LoaiTaiKhoan);
         recyclerView.setHasFixedSize(true);
         //chia ngang recyclerview
         DividerItemDecoration dividerHorizontal =
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerHorizontal);
 
-        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
         //gắn list vào adapter

@@ -44,7 +44,7 @@
                 android:layout_gravity="center"
                 android:text="Tạo tài khoản"
                 android:textColor="@color/colorItem"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </android.support.v7.widget.Toolbar>
     </LinearLayout>
@@ -60,7 +60,7 @@
             android:id="@+id/tv_soTien"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:text="Số dư ban đầu"
             android:textSize="18sp"
             android:textColor="@color/colorItemText"/>
@@ -76,8 +76,7 @@
                 android:id="@+id/edt_SoTien"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_below="@+id/tv_soTien"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="2dp"
                 android:layout_weight="1"
                 android:background="@drawable/edittext_selector"
@@ -90,7 +89,7 @@
                 android:maxLength="15"
                 android:textColor="@android:color/holo_red_light"
                 android:textCursorDrawable="@drawable/cursor_chitien"
-                android:textSize="32dp" />
+                android:textSize="32sp" />
 
 
             <TextView
@@ -98,11 +97,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginBottom="6dp"
                 android:text="đ"
                 android:textColor="@color/colorItemText"
-                android:textSize="24dp" />
+                android:textSize="24sp" />
         </LinearLayout>
 
     </RelativeLayout>
@@ -120,7 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorItem"
-            android:paddingLeft="9dp">
+            android:paddingStart="9dp">
 
             <ImageView
                 android:id="@+id/icon_vitien"
@@ -138,10 +137,10 @@
                 android:ems="10"
                 android:hint="Tên tài khoản"
                 android:inputType="text"
-                android:paddingLeft="10dp"
-                android:layout_marginLeft="7dp"
+                android:paddingStart="10dp"
+                android:layout_marginStart="7dp"
                 android:textColor="@color/colorItemText"
-                />
+                android:autofillHints="Tên tài khoản" />
         </RelativeLayout>
 
         <View
@@ -149,29 +148,17 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/line_Tentaikhoan"
-            android:layout_marginLeft="65dp"
+            android:layout_marginStart="65dp"
             android:background="@android:color/darker_gray" />
-        <!--<Button-->
-        <!--android:background="@drawable/ripple_effect"-->
-        <!--android:id="@+id/btn_loaitk"-->
-        <!--android:layout_below="@id/line1"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="70dp"-->
-        <!--android:gravity="left|center"-->
-        <!--android:text="Loại tài khoản"-->
-        <!--android:textSize="20dp"-->
-        <!--android:paddingLeft="10dp"-->
-        <!--android:drawableLeft="@drawable/ic_chamhoi"-->
-        <!--android:drawablePadding="10dp"-->
-        <!--/>-->
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        <LinearLayout
             android:id="@+id/btn_loaitk"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@id/line1"
             android:foreground="@drawable/ripple_effect_button"
             android:orientation="horizontal"
-            android:paddingLeft="14dp">
+            android:paddingStart="14dp">
 
             <ImageView
                 android:id="@+id/image_vitien"
@@ -186,10 +173,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:layout_marginLeft="12dp"
-                android:paddingLeft="10dp"
+                android:layout_marginStart="12dp"
+                android:paddingStart="10dp"
                 android:text="LOẠI TÀI KHOẢN"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textColor="@color/colorItemText"/>
         </LinearLayout>
 
@@ -198,7 +185,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/btn_loaitk"
-            android:layout_marginLeft="65dp"
+            android:layout_marginStart="65dp"
             android:background="@android:color/darker_gray" />
 
         <RelativeLayout
@@ -207,7 +194,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/line2"
             android:background="@color/colorItem"
-            android:paddingLeft="14dp">
+            android:paddingStart="14dp">
 
             <ImageView
                 android:id="@+id/icon_mota"
@@ -220,15 +207,15 @@
                 android:id="@+id/edt_chuthich"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_toRightOf="@id/icon_mota"
+                android:layout_toEndOf="@id/icon_mota"
                 android:background="@null"
                 android:ems="10"
                 android:hint="Chú thích"
                 android:inputType="text"
-                android:paddingLeft="10dp"
-                android:layout_marginLeft="12dp"
+                android:paddingStart="10dp"
+                android:layout_marginStart="12dp"
                 android:textColor="@color/colorItemText"
-                />
+                android:autofillHints="Chú thích" />
         </RelativeLayout>
     </RelativeLayout>
 

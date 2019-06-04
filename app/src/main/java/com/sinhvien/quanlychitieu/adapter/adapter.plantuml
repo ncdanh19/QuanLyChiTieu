@@ -1,0 +1,323 @@
+@startuml
+
+title __ADAPTER's Class Diagram__\n
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class AlertDialogAdapter {
+          - listTaiKhoan : List<TaiKhoan>
+          - context : Context
+          + AlertDialogAdapter()
+          + AlertDialogAdapter()
+          + AlertDialogAdapter()
+          + onCreateViewHolder()
+          + onBindViewHolder()
+          + getItemCount()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class AlertDialogViewHolder {
+          ~ imageicon : ImageView
+          ~ tv_tenTaiKhoan : TextView
+          ~ AlertDialogViewHolder()
+          + onClick()
+          + onLongClick()
+          ~ setItemClickListener()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class ChuyenImage {
+          {static} + getString()
+          {static} + getStringtoImage()
+          + getBytes()
+          + getImage()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      interface ItemClickListener {
+          {abstract} + onClick()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class LoaiTaiKhoanViewAdapter {
+          - loaiTaiKhoans : ArrayList<LoaiTaiKhoan>
+          - context : Context
+          + LoaiTaiKhoanViewAdapter()
+          + onCreateViewHolder()
+          + onBindViewHolder()
+          + getItemCount()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class RecyclerViewHolder {
+          ~ textItem : TextView
+          ~ imageItem : ImageView
+          ~ RecyclerViewHolder()
+          + onClick()
+          + onLongClick()
+          ~ setItemClickListener()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class MyHangMucChiRecyclerViewAdapter {
+          - context : Context
+          - listHangMuc : List<HangMuc>
+          + MyHangMucChiRecyclerViewAdapter()
+          + onCreateViewHolder()
+          + onBindViewHolder()
+          + getItemCount()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class HangMucChiViewHolder {
+          ~ textItem : TextView
+          ~ imageItem : ImageView
+          ~ HangMucChiViewHolder()
+          + onClick()
+          + onLongClick()
+          ~ setItemClickListener()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class MyHangMucThuRecyclerViewAdapter {
+          - context : Context
+          - listHangMuc : List<HangMuc>
+          + MyHangMucThuRecyclerViewAdapter()
+          + onCreateViewHolder()
+          + onBindViewHolder()
+          + getItemCount()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class HangMucThuViewHolder {
+          ~ textItem : TextView
+          ~ imageItem : ImageView
+          ~ HangMucThuViewHolder()
+          + onClick()
+          + onLongClick()
+          ~ setItemClickListener()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      interface OnPagerItemSelected {
+          {abstract} + pagerItemSelected()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class TaiKhoanAdapter {
+          - listTaiKhoan : List<TaiKhoan>
+          - context : Context
+          + TaiKhoanAdapter()
+          + TaiKhoanAdapter()
+          + TaiKhoanAdapter()
+          + onCreateViewHolder()
+          + onBindViewHolder()
+          - formatCurrency()
+          + getItemCount()
+          + taoTaiKhoan()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class TaiKhoanViewHolder {
+          ~ buttonTuyChon : ImageButton
+          ~ imageicon : ImageView
+          ~ tv_tenTaiKhoan : TextView
+          ~ tv_SoTien : TextView
+          ~ textCurrency : TextView
+          + recyclerView : RecyclerView
+          ~ TaiKhoanViewHolder()
+          + onClick()
+          + onLongClick()
+          ~ setItemClickListener()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class ThongKeAdapter {
+          - context : Context
+          - listThuChi : List<ThuChi>
+          + ThongKeAdapter()
+          + onCreateViewHolder()
+          + onBindViewHolder()
+          - TongTien()
+          + getItemCount()
+          - formatCurrency()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class ThongKeViewHolder {
+          ~ imageHangMuc : ImageView
+          ~ tenHangMuc : TextView
+          ~ soTien : TextView
+          ~ processBar : ProgressBar
+          ~ textCurrency : TextView
+          ~ percent : TextView
+          ~ ThongKeViewHolder()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class TongQuanAdapter {
+          - listThuChi : List<ThuChi>
+          - context : Context
+          + TongQuanAdapter()
+          + onCreateViewHolder()
+          + onBindViewHolder()
+          - formatCurrency()
+          + getItemCount()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class TongQuanViewHolder {
+          ~ textCurrency : TextView
+          ~ imageHangMuc : ImageView
+          ~ textHangMuc : TextView
+          ~ textNgay : TextView
+          ~ textSoTien : TextView
+          ~ textViTien : TextView
+          ~ TongQuanViewHolder()
+          + onClick()
+          + onLongClick()
+          ~ setItemClickListener()
+          - anhXa()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class ViewPagerAdapter {
+          - mFragmentList : List<Fragment>
+          - mFragmentTitleList : List<String>
+          + ViewPagerAdapter()
+          + getItem()
+          + getCount()
+          + addFragment()
+          + getPageTitle()
+      }
+    }
+  }
+  
+
+  AlertDialogAdapter -up-|> Adapter
+  AlertDialogAdapter o-- OnPagerItemSelected : listener
+  AlertDialogAdapter +-down- AlertDialogViewHolder
+  AlertDialogViewHolder -up-|> OnClickListener
+  AlertDialogViewHolder -up-|> OnLongClickListener
+  AlertDialogViewHolder -up-|> ViewHolder
+  AlertDialogViewHolder o-- ItemClickListener : itemClickListener
+  LoaiTaiKhoanViewAdapter -up-|> Adapter
+  LoaiTaiKhoanViewAdapter o-- OnPagerItemSelected : listener
+  LoaiTaiKhoanViewAdapter +-down- RecyclerViewHolder
+  RecyclerViewHolder -up-|> OnClickListener
+  RecyclerViewHolder -up-|> OnLongClickListener
+  RecyclerViewHolder -up-|> ViewHolder
+  RecyclerViewHolder o-- ItemClickListener : itemClickListener
+  MyHangMucChiRecyclerViewAdapter -up-|> Adapter
+  MyHangMucChiRecyclerViewAdapter o-- OnPagerItemSelected : listener
+  MyHangMucChiRecyclerViewAdapter +-down- HangMucChiViewHolder
+  HangMucChiViewHolder -up-|> OnClickListener
+  HangMucChiViewHolder -up-|> OnLongClickListener
+  HangMucChiViewHolder -up-|> ViewHolder
+  HangMucChiViewHolder o-- ItemClickListener : itemClickListener
+  MyHangMucThuRecyclerViewAdapter -up-|> Adapter
+  MyHangMucThuRecyclerViewAdapter o-- OnPagerItemSelected : listener
+  MyHangMucThuRecyclerViewAdapter +-down- HangMucThuViewHolder
+  HangMucThuViewHolder -up-|> OnClickListener
+  HangMucThuViewHolder -up-|> OnLongClickListener
+  HangMucThuViewHolder -up-|> ViewHolder
+  HangMucThuViewHolder o-- ItemClickListener : itemClickListener
+  TaiKhoanAdapter -up-|> Adapter
+  TaiKhoanAdapter o-- OnPagerItemSelected : listener
+  TaiKhoanAdapter o-- TaiKhoanHelper : tk_database
+  TaiKhoanAdapter o-- ThuChiHelper : tc_database
+  TaiKhoanAdapter o-- TaiKhoanAdapter : adapter
+  TaiKhoanAdapter +-down- TaiKhoanViewHolder
+  TaiKhoanViewHolder -up-|> OnClickListener
+  TaiKhoanViewHolder -up-|> OnLongClickListener
+  TaiKhoanViewHolder -up-|> ViewHolder
+  TaiKhoanViewHolder o-- TaiKhoanAdapter : adapter
+  TaiKhoanViewHolder o-- ItemClickListener : itemClickListener
+  ThongKeAdapter -up-|> Adapter
+  ThongKeAdapter +-down- ThongKeViewHolder
+  ThongKeViewHolder -up-|> ViewHolder
+  TongQuanAdapter -up-|> Adapter
+  TongQuanAdapter +-down- TongQuanViewHolder
+  TongQuanViewHolder -up-|> OnClickListener
+  TongQuanViewHolder -up-|> OnLongClickListener
+  TongQuanViewHolder -up-|> ViewHolder
+  TongQuanViewHolder o-- ItemClickListener : itemClickListener
+  ViewPagerAdapter -up-|> FragmentPagerAdapter
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

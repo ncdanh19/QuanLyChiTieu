@@ -4,11 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.HangMucActivity">
-
-
+    tools:context=".activity.HangMucChiActivity">
     <LinearLayout
-        android:id="@+id/chon_hang_muc"
+        android:id="@+id/chon_hang_muc_chi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorItem"
@@ -26,7 +24,16 @@
             android:contentInsetRight="0dp"
             android:contentInsetEnd="0dp"
             app:contentInsetRight="0dp"
-            app:contentInsetEnd="0dp">
+            app:contentInsetEnd="0dp"
+            >
+            <ImageButton
+                android:id="@+id/trolai"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:background="?selectableItemBackgroundBorderless"
+                android:src="@mipmap/ic_trolai"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,8 +45,11 @@
                 android:textStyle="bold" />
         </android.support.v7.widget.Toolbar>
     </LinearLayout>
-    <ListView
-        android:layout_below="@id/chon_hang_muc"
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_below="@+id/chon_hang_muc_chi"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 </RelativeLayout>

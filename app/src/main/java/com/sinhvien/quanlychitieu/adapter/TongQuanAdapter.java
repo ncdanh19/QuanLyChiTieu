@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class TongQuanAdapter extends RecyclerView.Adapter<TongQuanAdapter.ViewHolder> {
+public class TongQuanAdapter extends RecyclerView.Adapter<TongQuanAdapter.TongQuanViewHolder> {
 
-    private List<ThuChi> listThuChi = new ArrayList<ThuChi>();
+    private List<ThuChi> listThuChi;
     private Context context;
 
 
@@ -38,14 +38,14 @@ public class TongQuanAdapter extends RecyclerView.Adapter<TongQuanAdapter.ViewHo
 
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public TongQuanViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.item_tongquan, viewGroup, false);
-        return new ViewHolder(view);
+        return new TongQuanViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int i) {
+    public void onBindViewHolder(TongQuanViewHolder holder, int i) {
         final ThuChi thuChi = listThuChi.get(i);
         holder.imageHangMuc.setImageBitmap(ChuyenImage.getStringtoImage(thuChi.getImageHangMuc()));
         holder.textHangMuc.setText(thuChi.getTenHangMuc());
@@ -64,38 +64,35 @@ public class TongQuanAdapter extends RecyclerView.Adapter<TongQuanAdapter.ViewHo
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                if (isLongClick)
-                    Toast.makeText(context, "Long Click: " , Toast.LENGTH_SHORT).show();
-                else {
-                    Intent intent = new Intent(context,CustomThuChi.class);
-                    intent.putExtra("idThuChi",thuChi.get_id());
+                if (isLongClick) {
+//                    Toast.makeText(context, "Long Click: ", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(context, CustomThuChi.class);
+                    intent.putExtra("idThuChi", thuChi.get_id());
                     intent.putExtra("soTien", thuChi.getSotien());
                     intent.putExtra("tenHangMuc", thuChi.getTenHangMuc());
                     intent.putExtra("imageHangMuc", thuChi.getImageHangMuc());
                     intent.putExtra("moTa", thuChi.getMota());
                     intent.putExtra("ngayThang", thuChi.getNgaythang());
-                    intent.putExtra("tenViTien",thuChi.getTenViTien());
-                    intent.putExtra("imageViTien",thuChi.getImageViTien());
-                    intent.putExtra("trangThai",thuChi.getTrangThai());
-                    intent.putExtra("idViTien",thuChi.get_idViTien());
+                    intent.putExtra("tenViTien", thuChi.getTenViTien());
+                    intent.putExtra("imageViTien", thuChi.getImageViTien());
+                    intent.putExtra("trangThai", thuChi.getTrangThai());
+                    intent.putExtra("idViTien", thuChi.get_idViTien());
                     context.startActivity(intent);
                 }
-
             }
         });
 
     }
 
     private String formatCurrency(String string) {
-        String originalString = string;
-        Long longval = Long.parseLong(originalString);
+        Long longval = Long.parseLong(string);
 
         DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance(Locale.GERMANY);
         formatter.applyPattern("#,###,###.###");
-        String formattedString = formatter.format(longval);
 
         //setting text after format to EditText
-        return formattedString;
+        return formatter.format(longval);
     }
 
     @Override
@@ -103,8 +100,8 @@ public class TongQuanAdapter extends RecyclerView.Adapter<TongQuanAdapter.ViewHo
         return listThuChi == null ? 0 : listThuChi.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        private final TextView textCurrency;
+    public class TongQuanViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+        TextView textCurrency;
         ImageView imageHangMuc;
         TextView textHangMuc;
         TextView textNgay;
@@ -113,15 +110,9 @@ public class TongQuanAdapter extends RecyclerView.Adapter<TongQuanAdapter.ViewHo
         private ItemClickListener itemClickListener;
 
 
-        ViewHolder(View itemView) {
+        TongQuanViewHolder(View itemView) {
             super(itemView);
-            imageHangMuc = (ImageView) itemView.findViewById(R.id.image_hangmuc);
-            textHangMuc = (TextView) itemView.findViewById(R.id.tv_hangmuc);
-            textNgay = (TextView) itemView.findViewById(R.id.tv_ngay);
-            textSoTien = (TextView) itemView.findViewById(R.id.tv_soTien);
-            textViTien = (TextView) itemView.findViewById(R.id.tv_vitien);
-            textCurrency = (TextView) itemView.findViewById(R.id.currency);
-            textCurrency.setPaintFlags(textCurrency.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+            anhXa();
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
@@ -139,6 +130,16 @@ public class TongQuanAdapter extends RecyclerView.Adapter<TongQuanAdapter.ViewHo
 
         void setItemClickListener(ItemClickListener itemClickListener) {
             this.itemClickListener = itemClickListener;
+        }
+
+        private void anhXa() {
+            imageHangMuc = (ImageView) itemView.findViewById(R.id.image_hangmuc);
+            textHangMuc = (TextView) itemView.findViewById(R.id.tv_hangmuc);
+            textNgay = (TextView) itemView.findViewById(R.id.tv_ngay);
+            textSoTien = (TextView) itemView.findViewById(R.id.tv_soTien);
+            textViTien = (TextView) itemView.findViewById(R.id.tv_vitien);
+            textCurrency = (TextView) itemView.findViewById(R.id.currency);
+            textCurrency.setPaintFlags(textCurrency.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         }
     }
 }
