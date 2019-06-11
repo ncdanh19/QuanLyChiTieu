@@ -88,6 +88,7 @@ public class TongQuanActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(TongQuanActivity.this, ThuChiActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -104,21 +105,20 @@ public class TongQuanActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.tong_quan:
                         return true;
-                    case R.id.hang_muc:
-                        Intent i_hangmuc = new Intent(TongQuanActivity.this, HangMucActivity.class);
-                        startActivity(i_hangmuc);
-                        return true;
                     case R.id.tai_khoan:
                         Intent i_taikhoan = new Intent(TongQuanActivity.this, TaiKhoanActivity.class);
                         startActivity(i_taikhoan);
+                        finish();
                         return true;
                     case R.id.thong_ke:
                         Intent i_thongke = new Intent(TongQuanActivity.this, ThongKeActivity.class);
                         startActivity(i_thongke);
+                        finish();
                         return true;
                     case R.id.han_muc:
                         Intent i_hanmuc = new Intent(TongQuanActivity.this, HanMucChiActivity.class);
                         startActivity(i_hanmuc);
+                        finish();
                         return true;
                     default:
                         Toast.makeText(getApplication(),
@@ -198,17 +198,20 @@ public class TongQuanActivity extends AppCompatActivity {
 
         //gắn list vào adapter
         tc_database = new ThuChiHelper(getApplicationContext());
-
         listThuChi = tc_database.getdata();
+
         adapter = new TongQuanAdapter(this, listThuChi);
         recyclerView.setAdapter(adapter);
     }
 
     private void checkNoItem() {
-        if (listThuChi.size() < 1)
+        if (listThuChi.size() < 1) {
             text_no_item.setVisibility(View.VISIBLE);
-        else
+            recyclerView.setVisibility(View.GONE);
+        }else {
+            recyclerView.setVisibility(View.VISIBLE);
             text_no_item.setVisibility(View.GONE);
+        }
     }
 
     private void checkHanMuc() {
@@ -259,7 +262,7 @@ public class TongQuanActivity extends AppCompatActivity {
         //stackBuilder.addNextIntent(resultIntent);
         stackBuilder.addNextIntentWithParentStack(resultIntent);
         //PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(this,0,resultIntent,PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
 
         notificationManager.notify(0, mBuilder.build());

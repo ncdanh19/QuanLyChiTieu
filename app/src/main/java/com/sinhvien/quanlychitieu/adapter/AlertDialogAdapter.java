@@ -67,7 +67,7 @@ public class AlertDialogAdapter extends RecyclerView.Adapter<AlertDialogAdapter.
                     intent.putExtras(bundle);
                     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
                     listener.pagerItemSelected();
-                    Toast.makeText(context, "" + taikhoan.get_id(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "" + taikhoan.get_id(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

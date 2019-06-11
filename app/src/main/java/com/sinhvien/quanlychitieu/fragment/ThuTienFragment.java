@@ -308,13 +308,19 @@ public class ThuTienFragment extends Fragment {
         if (flag) {
             int soTien = Integer.parseInt(formatSoTien);
             ThuChiHelper tc_database = new ThuChiHelper(getContext());
+            //Lưu vào SQLite
             boolean trt = tc_database.insertThuChi(_idViTien, soTien, imgHangMuc,
                     tenHangMuc, moTa, ngayThang, imgViTien, tenViTien, 1);
+            //Lưu vào FireBase
+            ThuChi thuChi = new ThuChi(_idViTien, String.valueOf(soTien), imgHangMuc, tenHangMuc,
+                    moTa, ngayThang, imgViTien, tenViTien, 1);
+            mDatabase.child("ThuChi").push().setValue(thuChi);
+
             TaiKhoanHelper tk_database = new TaiKhoanHelper(getContext());
             Boolean xuly = tk_database.xuLy(_idViTien, 1, soTien);
             if (trt) {
                 Toast.makeText(getContext(), "Thêm giao dịch thành công", Toast.LENGTH_SHORT).show();
-                mSoTien.setText(0);
+                mSoTien.setText("0");
                 textViTien.setText("CHỌN VÍ");
                 imageViTien.setImageResource(R.mipmap.ic_chamhoi);
                 textHangMuc.setText("Chọn mục thu");

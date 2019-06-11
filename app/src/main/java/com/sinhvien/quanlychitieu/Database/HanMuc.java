@@ -17,8 +17,7 @@ public class HanMuc {
     public HanMuc() {
     }
 
-    public HanMuc(int _id, int soTien, String tenHanMuc, String imageHangMuc, String tenHangMuc, String imageViTien, String tenViTien, String ngayBatDau, String ngayKetThuc, int _idHangMuc, int _idViTien) {
-        this._id = _id;
+    public HanMuc( int soTien, String tenHanMuc, String imageHangMuc, String tenHangMuc, String imageViTien, String tenViTien, String ngayBatDau, String ngayKetThuc, int _idHangMuc, int _idViTien) {
         this.soTien = soTien;
         this.tenHanMuc = tenHanMuc;
         this.imageHangMuc = imageHangMuc;

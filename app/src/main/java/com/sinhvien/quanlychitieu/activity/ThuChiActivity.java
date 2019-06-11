@@ -55,6 +55,14 @@ public class ThuChiActivity extends AppCompatActivity {
     };
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(ThuChiActivity.this, TongQuanActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thu_chi);
@@ -73,7 +81,7 @@ public class ThuChiActivity extends AppCompatActivity {
         mTroLai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
     }

@@ -67,6 +67,8 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
         mTroLai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(TaoTaiKhoanActivity.this, TaiKhoanActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -150,17 +152,6 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
     };
 
 
-    private void writeNewTaiKhoan() {
-        int soTien = Integer.parseInt(edtSoTien.getText().toString());
-        String tenTaiKhoan = edtTenTaiKhoan.getText().toString();
-        mIconItem.buildDrawingCache();
-        Bitmap bmap = mIconItem.getDrawingCache();
-        String bmapViTien = ChuyenImage.getString(bmap);
-        String loaiTaiKhoan = mTextItem.getText().toString();
-        String chuThich = edtChuThich.getText().toString();
-        TaiKhoan taiKhoan = new TaiKhoan(soTien, tenTaiKhoan, bmapViTien, loaiTaiKhoan, chuThich);
-        mDatabase.child("TaiKhoan").push().setValue(taiKhoan);
-    }
 
     public void them() {
         String formatSoTien = edtSoTien.getText().toString().replaceAll("\\.", "");
@@ -178,7 +169,7 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
             flag = false;
         }
         if (tenTaiKhoan.equals("")) {
-            edtTenTaiKhoan.setTextColor(Color.RED);
+            edtTenTaiKhoan.setHintTextColor(Color.RED);
             flag = false;
         }
         if (loaiTaiKhoan.equals("LOẠI TÀI KHOẢN")) {
@@ -187,9 +178,16 @@ public class TaoTaiKhoanActivity extends AppCompatActivity {
         }
         if (flag) {
             TaiKhoanHelper database = new TaiKhoanHelper(getApplicationContext());
+
+            //Thêm vào Sqlite
             boolean trt = database.insertdata(formatSoTien, tenTaiKhoan, loaiTaiKhoan, chuThich, Stringbmap);
+
+            //Thêm vào Firebase
+            TaiKhoan taiKhoan = new TaiKhoan(Integer.parseInt(formatSoTien), tenTaiKhoan, loaiTaiKhoan, chuThich, Stringbmap);
+            mDatabase.child("TaiKhoan").push().setValue(taiKhoan);
+
             Toast.makeText(getBaseContext(), "Thêm giao dịch thành công", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, TaiKhoanActivity.class);
+            Intent intent = new Intent(TaoTaiKhoanActivity.this, TaiKhoanActivity.class);
             startActivity(intent);
             finish();
         }

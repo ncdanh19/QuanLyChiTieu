@@ -4,6 +4,78 @@ title __DATABASE's Class Diagram__\n
 
   package com.sinhvien.quanlychitieu {
     package com.sinhvien.quanlychitieu.Database {
+      class HanMuc {
+          ~ _id : int
+          ~ soTien : int
+          ~ tenHanMuc : String
+          ~ imageHangMuc : String
+          ~ tenHangMuc : String
+          ~ imageViTien : String
+          ~ tenViTien : String
+          ~ ngayBatDau : String
+          ~ ngayKetThuc : String
+          ~ trangThai : int
+          ~ _idViTien : int
+          + HanMuc()
+          + HanMuc()
+          + get_id()
+          + set_id()
+          + getSoTien()
+          + setSoTien()
+          + getTenHanMuc()
+          + setTenHanMuc()
+          + getImageHangMuc()
+          + setImageHangMuc()
+          + getTenHangMuc()
+          + setTenHangMuc()
+          + getImageViTien()
+          + setImageViTien()
+          + getTenViTien()
+          + setTenViTien()
+          + getNgayBatDau()
+          + setNgayBatDau()
+          + getNgayKetThuc()
+          + setNgayKetThuc()
+          + getTrangThai()
+          + setTrangThai()
+          + get_idViTien()
+          + set_idViTien()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.Database {
+      class HanMucHelper {
+          {static} - TEN_DATABASE : String
+          {static} + TEN_BANG_HANMUC : String
+          {static} + COT_ID : String
+          {static} + COT_SOTIEN : String
+          {static} + COT_TEN_HAN_MUC : String
+          {static} + COT_IMAGE_HANGMUC : String
+          {static} + COT_TEN_HANGMUC : String
+          {static} + COT_IMAGE_VITIEN : String
+          {static} + COT_TEN_VITIEN : String
+          {static} + COT_NGAY_BATDAU : String
+          {static} + COT_NGAY_KETTHUC : String
+          {static} + COT_TRANGTHAI : String
+          {static} + COT_ID_VITIEN : String
+          {static} - TAO_BANG_HANMUC : String
+          + HanMucHelper()
+          + onCreate()
+          + onUpgrade()
+          + getdata()
+          + insertHanMuc()
+          + updateTrangThaiHanMuc()
+          + deleteHanMucByIDViTien()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.Database {
       class HangMuc {
           - image : int
           - tenHangMuc : String
@@ -153,11 +225,13 @@ title __DATABASE's Class Diagram__\n
           + updateThuChi()
           + deleteThuChi()
           + deleteByViTienID()
+          + getTienHanMuc()
       }
     }
   }
   
 
+  HanMucHelper -up-|> SQLiteOpenHelper
   LoaiTaiKhoan -up-|> Serializable
   TaiKhoanHelper -up-|> SQLiteOpenHelper
   ThuChiHelper -up-|> SQLiteOpenHelper

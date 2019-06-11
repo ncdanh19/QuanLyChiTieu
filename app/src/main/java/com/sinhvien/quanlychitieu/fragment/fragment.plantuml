@@ -32,7 +32,6 @@ title __FRAGMENT's Class Diagram__\n
           + goToHangMuc()
           + popUpDialog()
           - chonNgay()
-          + writeNewData()
           + them()
           + anhXa()
       }

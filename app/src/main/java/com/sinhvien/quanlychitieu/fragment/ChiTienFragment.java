@@ -262,22 +262,6 @@ public class ChiTienFragment extends Fragment {
     }
 
     //Lưu dữ liệu
-    public void writeNewData() {
-        String soTien = mSoTien.getText().toString();
-        imageViTien.getDrawingCache();
-        imageHangMuc.getDrawingCache();
-        Bitmap bmapViTien = ((BitmapDrawable) imageViTien.getDrawable()).getBitmap();
-        Bitmap bmapHangMuc = ((BitmapDrawable) imageHangMuc.getDrawable()).getBitmap();
-        String imageViTien = ChuyenImage.getString(bmapViTien);
-        String imageHangMuc = ChuyenImage.getString(bmapHangMuc);
-        String tenHangMuc = textHangMuc.getText().toString();
-        String moTa = mMoTa.getText().toString();
-        String ngayThang = mNgay.getText().toString();
-        String tenViTien = textViTien.getText().toString();
-        ThuChi thuChi = new ThuChi(_idViTien, soTien, imageHangMuc, tenHangMuc,
-                moTa, ngayThang, imageViTien, tenViTien, 0);
-        mDatabase.child("ThuChi").push().setValue(thuChi);
-    }
 
     public void them() {
 
@@ -309,9 +293,15 @@ public class ChiTienFragment extends Fragment {
         if (flag) {
             int soTien = Integer.parseInt(formatSoTien);
             ThuChiHelper tc_database = new ThuChiHelper(getContext());
+
+            //Lưu vào SQLite
             boolean trt = tc_database.insertThuChi(_idViTien, soTien, imgHangMuc, tenHangMuc,
                     moTa, ngayThang, imgViTien, tenViTien, 0);
 
+            //Lưu vào Firebase
+            ThuChi thuChi = new ThuChi(_idViTien, String.valueOf(soTien), imgHangMuc, tenHangMuc,
+                    moTa, ngayThang, imgViTien, tenViTien, 0);
+            mDatabase.child("ThuChi").push().setValue(thuChi);
             TaiKhoanHelper tk_database = new TaiKhoanHelper(getContext());
             Boolean xuly = tk_database.xuLy(_idViTien, 0, soTien);
             if (trt) {
@@ -328,6 +318,7 @@ public class ChiTienFragment extends Fragment {
                 //gắn list vào adapter
                 HanMucAdapter adapter = new HanMucAdapter(getContext(), listHanMuc);
                 adapter.updateData(listHanMuc);
+
             }
         }
     }

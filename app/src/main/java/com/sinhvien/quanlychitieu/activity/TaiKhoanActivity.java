@@ -54,6 +54,14 @@ public class TaiKhoanActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(TaiKhoanActivity.this, TongQuanActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tai_khoan);
@@ -67,7 +75,7 @@ public class TaiKhoanActivity extends AppCompatActivity {
         mTroLai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
 
@@ -104,10 +112,11 @@ public class TaiKhoanActivity extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
+
         database = new TaiKhoanHelper(getApplicationContext());
         listTaiKhoan = database.getdata();
         //gắn list vào adapter
-        adapter = new TaiKhoanAdapter(getApplicationContext(), listTaiKhoan, new OnPagerItemSelected() {
+        adapter = new TaiKhoanAdapter(this, listTaiKhoan, new OnPagerItemSelected() {
             @Override
             public void pagerItemSelected() {
                 //finish();

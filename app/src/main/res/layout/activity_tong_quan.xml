@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/backgroundCol"
-            tools:context=".activity.TongQuanActivity"
             tools:ignore="UselessParent">
             <LinearLayout
                 android:id="@+id/layout_title"
@@ -101,7 +100,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:background="@color/colorItem">
+                android:background="@color/colorItem"
+                >
 
 
                 <TextView
@@ -113,7 +113,8 @@
                     android:text="GHI CHÉP GẦN ĐÂY"
                     android:textColor="@color/colorItemText"
                     android:textSize="16sp"
-                    android:gravity="center_vertical"/>
+                    android:gravity="center_vertical"
+                    android:background="@color/colorItem"/>
 
                 <TextView
                     android:id="@+id/tv_no_item"
@@ -123,26 +124,29 @@
                     android:gravity="center_horizontal|center_vertical"
                     android:text="Không có ghi chép nào"
                     android:textColor="@color/colorItemText"
-                    android:visibility="gone" />
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_GhiChep">
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recycler_view"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        app:layout_constraintHeight_default="wrap"
-                        app:layout_constraintHeight_max="225dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        tools:ignore="MissingConstraints" />
-                </android.support.constraint.ConstraintLayout>
+                    android:visibility="gone"
+                    android:background="@color/colorItem"/>
 
             </RelativeLayout>
 
+            <android.support.constraint.ConstraintLayout
+                android:layout_below="@+id/layout_Ghichep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorItem">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="vertical"
+                    app:layout_constrainedHeight="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_max="367dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+            </android.support.constraint.ConstraintLayout>
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/btn_ThuChi"
                 android:layout_width="wrap_content"

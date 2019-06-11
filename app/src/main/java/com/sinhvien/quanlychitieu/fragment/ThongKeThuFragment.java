@@ -7,6 +7,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +31,7 @@ import com.sinhvien.quanlychitieu.Database.ThuChi;
 import com.sinhvien.quanlychitieu.Database.ThuChiHelper;
 import com.sinhvien.quanlychitieu.R;
 import com.sinhvien.quanlychitieu.adapter.ChuyenImage;
+import com.sinhvien.quanlychitieu.adapter.ThongKeAdapter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -43,6 +47,9 @@ public class ThongKeThuFragment extends Fragment implements OnChartValueSelected
     View view;
     private TextView noItem;
     private LinearLayout haveItem;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
+    private ThongKeAdapter adapter;
 
     public ThongKeThuFragment() {
         // Required empty public constructor
@@ -69,8 +76,26 @@ public class ThongKeThuFragment extends Fragment implements OnChartValueSelected
             noItem.setVisibility(View.GONE);
             haveItem.setVisibility(View.VISIBLE);
             createPieChart();
+            initViews();
         }
         return view;
+    }
+
+    private void initViews() {
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+
+        //chia ngang mỗi item
+        DividerItemDecoration dividerHorizontal =
+                new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerHorizontal);
+
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        //gắn list vào adapter
+        adapter = new ThongKeAdapter(getContext(), listThuChi);
+        recyclerView.setAdapter(adapter);
     }
 
     public int TongTien() {

@@ -28,12 +28,15 @@ public class LoaiTaiKhoanActivity extends AppCompatActivity {
 
     private final String[] tenloai = {
             "Tiền mặt",
-            "Tài khoản ngân hàng"
+            "Tài khoản ngân hàng",
+            "Thẻ tín dụng",
+            "Tài khoản đầu tư",
+            "Khác"
     };
 
     private final int[] image = {
-            R.mipmap.ic_tienmat, R.mipmap.ic_nganhang
-
+            R.mipmap.ic_tienmat, R.mipmap.ic_nganhang, R.mipmap.ic_card,
+            R.mipmap.ic_graph, R.mipmap.ic_other_wallet
     };
 
     @Override

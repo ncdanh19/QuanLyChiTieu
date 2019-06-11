@@ -17,6 +17,12 @@ title __APP's Class Diagram__\n
   
 
   package com.sinhvien.quanlychitieu {
+    class BuildConfig {
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
     package com.sinhvien.quanlychitieu.fragment {
       class ChiTienFragment {
       }
@@ -58,6 +64,38 @@ title __APP's Class Diagram__\n
 
   package com.sinhvien.quanlychitieu {
     package com.sinhvien.quanlychitieu.Database {
+      class HanMuc {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class HanMucAdapter {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class HanMucChiActivity {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.Database {
+      class HanMucHelper {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.Database {
       class HangMuc {
       }
     }
@@ -67,6 +105,14 @@ title __APP's Class Diagram__\n
   package com.sinhvien.quanlychitieu {
     package com.sinhvien.quanlychitieu.activity {
       class HangMucActivity {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class HangMucChiActivity {
       }
     }
   }
@@ -171,6 +217,14 @@ title __APP's Class Diagram__\n
   package com.sinhvien.quanlychitieu {
     package com.sinhvien.quanlychitieu.Database {
       class TaiKhoanHelper {
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class TaoHanMucActivity {
       }
     }
   }
@@ -296,8 +350,14 @@ title __APP's Class Diagram__\n
   CustomThuChi o-- AlertDialogAdapter : adapter
   DatePickerFragment -up-|> OnDateSetListener
   DatePickerFragment -up-|> DialogFragment
+  HanMucAdapter -up-|> Adapter
+  HanMucChiActivity -up-|> AppCompatActivity
+  HanMucChiActivity o-- HanMucHelper : hm_database
+  HanMucChiActivity o-- HanMucAdapter : adapter
+  HanMucHelper -up-|> SQLiteOpenHelper
   HangMucActivity -up-|> AppCompatActivity
   HangMucActivity o-- ViewPagerAdapter : adapter
+  HangMucChiActivity -up-|> AppCompatActivity
   HangMucChiFragment -up-|> Fragment
   HangMucThuFragment -up-|> Fragment
   LoaiTaiKhoan -up-|> Serializable
@@ -317,6 +377,9 @@ title __APP's Class Diagram__\n
   TaiKhoanAdapter o-- ThuChiHelper : tc_database
   TaiKhoanAdapter o-- TaiKhoanAdapter : adapter
   TaiKhoanHelper -up-|> SQLiteOpenHelper
+  TaoHanMucActivity -up-|> AppCompatActivity
+  TaoHanMucActivity o-- TaiKhoanHelper : tk_database
+  TaoHanMucActivity o-- AlertDialogAdapter : adapter
   TaoTaiKhoanActivity -up-|> AppCompatActivity
   ThongKeActivity -up-|> AppCompatActivity
   ThongKeAdapter -up-|> Adapter
@@ -339,6 +402,7 @@ title __APP's Class Diagram__\n
   TongQuanActivity o-- TongQuanAdapter : adapter
   TongQuanActivity o-- ThuChiHelper : tc_database
   TongQuanActivity o-- TaiKhoanHelper : tk_database
+  TongQuanActivity o-- HanMucHelper : hm_database
   TongQuanAdapter -up-|> Adapter
   ViewPagerAdapter -up-|> FragmentPagerAdapter
 

@@ -29,6 +29,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.sinhvien.quanlychitieu.Database.HanMuc;
 import com.sinhvien.quanlychitieu.Database.HanMucHelper;
 import com.sinhvien.quanlychitieu.Database.TaiKhoan;
 import com.sinhvien.quanlychitieu.Database.TaiKhoanHelper;
@@ -71,6 +74,7 @@ public class TaoHanMucActivity extends AppCompatActivity {
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     RelativeLayout btnNgayBatDau;
     RelativeLayout btnNgayKetThuc;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,7 @@ public class TaoHanMucActivity extends AppCompatActivity {
         anhXa();
         formatSoTien();
         thisContext = TaoHanMucActivity.this;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         //Button Ngày bắt đầu
         btnNgayBatDau.setOnClickListener(new View.OnClickListener() {
@@ -326,6 +331,11 @@ public class TaoHanMucActivity extends AppCompatActivity {
             HanMucHelper hm_database = new HanMucHelper(thisContext);
             boolean insert = hm_database.insertHanMuc(soTien, tenHanMuc, imgHangMuc, tenHangMuc, imgViTien, tenViTien,
                     ngayBatDau, ngayKetThuc, 0, _idViTien);
+
+            //Lưu vào Firebase
+            HanMuc hanMuc = new HanMuc(soTien, tenHanMuc, imgHangMuc, tenHangMuc, imgViTien, tenViTien,
+                    ngayBatDau, ngayKetThuc, 0, _idViTien);
+            mDatabase.child("HanMuc").push().setValue(hanMuc);
             if (insert) {
                 Toast.makeText(thisContext, "Thêm hạn mức thành công", Toast.LENGTH_SHORT).show();
                 edtSoTien.setText("0");

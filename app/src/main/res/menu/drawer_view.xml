@@ -7,9 +7,6 @@
             android:id="@+id/tong_quan"
             android:title="Tổng quan" />
         <item
-            android:id="@+id/hang_muc"
-            android:title="Hạng mục" />
-        <item
             android:id="@+id/tai_khoan"
             android:title="Tài khoản" />
     </group>

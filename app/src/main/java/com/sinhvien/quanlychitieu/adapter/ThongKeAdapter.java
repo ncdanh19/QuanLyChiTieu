@@ -70,7 +70,7 @@ public class ThongKeAdapter extends RecyclerView.Adapter<ThongKeAdapter.ThongKeV
         holder.tenHangMuc.setText(thuChi.getTenHangMuc());
         DecimalFormat df = new DecimalFormat("#.#");
         holder.percent.setText(MessageFormat.format("({0}%)", df.format(tyLe)));
-        holder.soTien.setText(thuChi.getSotien());
+        holder.soTien.setText(formatCurrency(thuChi.getSotien()));
         holder.processBar.setMax(100);
         holder.processBar.setProgress((int) tyLe);
         //holder.processBar.setBackgroundColor(Color.GRAY);

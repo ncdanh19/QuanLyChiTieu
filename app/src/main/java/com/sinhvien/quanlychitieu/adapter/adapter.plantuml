@@ -46,6 +46,44 @@ title __ADAPTER's Class Diagram__\n
 
   package com.sinhvien.quanlychitieu {
     package com.sinhvien.quanlychitieu.adapter {
+      class HanMucAdapter {
+          ~ context : Context
+          ~ listHanMuc : List<HanMuc>
+          ~ simpleDateFormat : SimpleDateFormat
+          + HanMucAdapter()
+          + HanMucAdapter()
+          + updateData()
+          + onCreateViewHolder()
+          + onBindViewHolder()
+          - formatCurrency()
+          + getItemCount()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
+      class HanMucViewHolder {
+          - imageHangMuc : ImageView
+          - tenHanMuc : TextView
+          - ngayBatDau : TextView
+          - ngayKetThuc : TextView
+          - soTienHanMuc : TextView
+          - soTienConLai : TextView
+          - currentcy1 : TextView
+          - currentcy2 : TextView
+          - ngayConLai : TextView
+          - trangThai : TextView
+          - processBar : ProgressBar
+          + HanMucViewHolder()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.adapter {
       interface ItemClickListener {
           {abstract} + onClick()
       }
@@ -158,7 +196,6 @@ title __ADAPTER's Class Diagram__\n
           + onBindViewHolder()
           - formatCurrency()
           + getItemCount()
-          + taoTaiKhoan()
       }
     }
   }
@@ -269,6 +306,9 @@ title __ADAPTER's Class Diagram__\n
   AlertDialogViewHolder -up-|> OnLongClickListener
   AlertDialogViewHolder -up-|> ViewHolder
   AlertDialogViewHolder o-- ItemClickListener : itemClickListener
+  HanMucAdapter -up-|> Adapter
+  HanMucAdapter +-down- HanMucViewHolder
+  HanMucViewHolder -up-|> ViewHolder
   LoaiTaiKhoanViewAdapter -up-|> Adapter
   LoaiTaiKhoanViewAdapter o-- OnPagerItemSelected : listener
   LoaiTaiKhoanViewAdapter +-down- RecyclerViewHolder

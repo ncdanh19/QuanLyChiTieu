@@ -63,6 +63,7 @@ title __ACTIVITY's Class Diagram__\n
           ~ ngayCu : String
           ~ ngayMoi : String
           ~ hangMucCu : String
+          ~ moTaCu : String
           ~ pos : int
           ~ begin : int
           ~ listTaiKhoan : List<TaiKhoan>
@@ -76,9 +77,28 @@ title __ACTIVITY's Class Diagram__\n
           - xoaDuLieu()
           - formatSoTien()
           - luuDuLieu()
+          + updateHanMuc()
           + goToHangMuc()
           + truyenDuLieu()
           + setDuLieu()
+          - anhXa()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class HanMucChiActivity {
+          ~ btnTroLai : ImageButton
+          ~ btnThem : ImageButton
+          ~ noItem : TextView
+          + recyclerView : RecyclerView
+          ~ listHanMuc : List<HanMuc>
+          # onResume()
+          # onCreate()
+          - checkNoItem()
+          - initViews()
           - anhXa()
       }
     }
@@ -94,6 +114,15 @@ title __ACTIVITY's Class Diagram__\n
           # onCreate()
           + onOptionsItemSelected()
           - anhXa()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class HangMucChiActivity {
+          # onCreate()
       }
     }
   }
@@ -123,9 +152,48 @@ title __ACTIVITY's Class Diagram__\n
           ~ listTaiKhoan : List<TaiKhoan>
           - noItem : TextView
           # onResume()
+          + checkNull()
           # onCreate()
           + onOptionsItemSelected()
           - initViews()
+          - anhXa()
+      }
+    }
+  }
+  
+
+  package com.sinhvien.quanlychitieu {
+    package com.sinhvien.quanlychitieu.activity {
+      class TaoHanMucActivity {
+          ~ btnTroLai : ImageButton
+          ~ btnLuu : Button
+          - edtTenHanMuc : EditText
+          - btnHangMuc : LinearLayout
+          - btnTaiKhoan : LinearLayout
+          - edtSoTien : EditText
+          ~ listTaiKhoan : List<TaiKhoan>
+          ~ pos : int
+          ~ begin : int
+          ~ _idViTien : int
+          ~ thisContext : Context
+          ~ imageHangMuc : ImageView
+          ~ textHangMuc : TextView
+          ~ textViTien : TextView
+          ~ imageViTien : ImageView
+          ~ mNgayBatDau : TextView
+          ~ mNgayKetThuc : TextView
+          ~ calendar : Calendar
+          ~ simpleDateFormat : SimpleDateFormat
+          ~ btnNgayBatDau : RelativeLayout
+          ~ btnNgayKetThuc : RelativeLayout
+          - mDatabase : DatabaseReference
+          - mReceiver : BroadcastReceiver
+          # onCreate()
+          # onResume()
+          + popUpDialog()
+          - formatSoTien()
+          - chonNgay()
+          + them()
           - anhXa()
       }
     }
@@ -151,7 +219,6 @@ title __ACTIVITY's Class Diagram__\n
           # onCreate()
           - formatSoTien()
           # onResume()
-          - writeNewTaiKhoan()
           + them()
           - anhXa()
       }
@@ -201,14 +268,19 @@ title __ACTIVITY's Class Diagram__\n
           ~ textCurrency : TextView
           ~ recyclerView : RecyclerView
           ~ listThuChi : List<ThuChi>
+          ~ listHanMuc : List<HanMuc>
           - mDatabase : DatabaseReference
           - text_no_item : TextView
+          - notificationID : int
           # onCreate()
           # onResume()
           + formatCurrency()
           + onOptionsItemSelected()
           - initViews()
           - checkNoItem()
+          - checkHanMuc()
+          # displayNotification()
+          + createID()
           - anhXa()
       }
     }
@@ -225,14 +297,24 @@ title __ACTIVITY's Class Diagram__\n
   CustomThuChi o-- TaiKhoanHelper : tk_database
   CustomThuChi o-- AlertDialogAdapter : adapter
   HostCallbacks -up-|> FragmentHostCallback
+  HanMucChiActivity -up-|> AppCompatActivity
+  HanMucChiActivity o-- HanMucHelper : hm_database
+  HanMucChiActivity o-- HanMucAdapter : adapter
+  HostCallbacks -up-|> FragmentHostCallback
   HangMucActivity -up-|> AppCompatActivity
   HangMucActivity o-- ViewPagerAdapter : adapter
+  HostCallbacks -up-|> FragmentHostCallback
+  HangMucChiActivity -up-|> AppCompatActivity
   HostCallbacks -up-|> FragmentHostCallback
   LoaiTaiKhoanActivity -up-|> AppCompatActivity
   HostCallbacks -up-|> FragmentHostCallback
   TaiKhoanActivity -up-|> AppCompatActivity
   TaiKhoanActivity o-- TaiKhoanAdapter : adapter
   TaiKhoanActivity o-- TaiKhoanHelper : database
+  HostCallbacks -up-|> FragmentHostCallback
+  TaoHanMucActivity -up-|> AppCompatActivity
+  TaoHanMucActivity o-- TaiKhoanHelper : tk_database
+  TaoHanMucActivity o-- AlertDialogAdapter : adapter
   HostCallbacks -up-|> FragmentHostCallback
   TaoTaiKhoanActivity -up-|> AppCompatActivity
   HostCallbacks -up-|> FragmentHostCallback
@@ -244,6 +326,7 @@ title __ACTIVITY's Class Diagram__\n
   TongQuanActivity o-- TongQuanAdapter : adapter
   TongQuanActivity o-- ThuChiHelper : tc_database
   TongQuanActivity o-- TaiKhoanHelper : tk_database
+  TongQuanActivity o-- HanMucHelper : hm_database
   HostCallbacks -up-|> FragmentHostCallback
 
 

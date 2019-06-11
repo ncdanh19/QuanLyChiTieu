@@ -1,5 +1,6 @@
 package com.sinhvien.quanlychitieu.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -49,6 +50,14 @@ public class ThongKeActivity extends AppCompatActivity {
 
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(ThongKeActivity.this, TongQuanActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thong_ke);
@@ -65,7 +74,7 @@ public class ThongKeActivity extends AppCompatActivity {
         mTrolai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
 

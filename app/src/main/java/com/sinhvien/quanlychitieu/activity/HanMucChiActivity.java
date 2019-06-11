@@ -37,6 +37,14 @@ public class HanMucChiActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(HanMucChiActivity.this, TongQuanActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_han_muc_chi);
@@ -50,7 +58,7 @@ public class HanMucChiActivity extends AppCompatActivity {
         btnTroLai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                onBackPressed();
             }
         });
         btnThem.setOnClickListener(new View.OnClickListener() {

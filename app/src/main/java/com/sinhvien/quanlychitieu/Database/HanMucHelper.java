@@ -127,7 +127,7 @@ public class HanMucHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COT_TRANGTHAI, trangThai);
 
-        long result = db.update(TEN_BANG_HANMUC, contentValues, COT_ID_VITIEN + "=" + id, null);
+        long result = db.update(TEN_BANG_HANMUC, contentValues, COT_ID + "=" + id, null);
 
         if (result == -1) {
             return false;
